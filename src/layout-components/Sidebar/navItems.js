@@ -186,23 +186,14 @@ export default [
     ]
   },
   {
-    "label": "Others",
+    "label": "Settings",
     "icon": "ChatIcon",
     "content": [
+
       {
-        "label": "Apex Charts",
-        "description": "Wonderful animated charts built with ApexCharts components.",
-        "to": "/ApexCharts"
-      },
-      {
-        "label": "Maps",
-        "description": "Implement in your applications Google or vector maps.",
-        "to": "/Maps"
-      },
-      {
-        "label": "List Groups",
-        "description": "These can be used with other components and elements to create stunning and unique new elements for your UIs.",
-        "to": "/ListGroups"
+        "label": "Users",
+        "description": "Users Management.",
+        "to": "/Users"
       }
     ]
   }

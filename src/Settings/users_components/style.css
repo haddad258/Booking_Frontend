@@ -1,0 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap");
+
+.ubuntu {
+  font-family: "Ubuntu", sans-serif;
+}
+.pointer {
+  cursor: pointer;
+}
+.customFlex {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+}

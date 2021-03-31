@@ -25,6 +25,7 @@ import RegularTables1 from './example-pages/RegularTables1';
 import RegularTables4 from './example-pages/RegularTables4';
 import FormsControls from './example-pages/FormsControls';
 
+
 const DashboardDefault = lazy(() => import('./example-pages/DashboardDefault'));
 const Cards3 = lazy(() => import('./example-pages/Cards3'));
 const LandingPage = lazy(() => import('./example-pages/LandingPage'));
@@ -36,6 +37,10 @@ const Tabs = lazy(() => import('./example-pages/Tabs'));
 const ApexCharts = lazy(() => import('./example-pages/ApexCharts'));
 const Maps = lazy(() => import('./example-pages/Maps'));
 const ListGroups = lazy(() => import('./example-pages/ListGroups'));
+// Custom pages
+              // Settings
+const Users = lazy(() => import('./Settings/Users'));
+
 
 const Routes = () => {
   const location = useLocation();
@@ -112,7 +117,11 @@ const Routes = () => {
                 '/FormsControls',
                 '/ApexCharts',
                 '/Maps',
-                '/ListGroups'
+                '/ListGroups',
+
+                // custom routes
+
+                '/Users'
               ]}>
               <LeftSidebar>
                 <Switch location={location} key={location.pathname}>
@@ -153,6 +162,8 @@ const Routes = () => {
                     <Route path="/ApexCharts" component={ApexCharts} />
                     <Route path="/Maps" component={Maps} />
                     <Route path="/ListGroups" component={ListGroups} />
+                    {/* custom Routes */}
+                    <Route path="/Users" component={Users} />
                   </motion.div>
                 </Switch>
               </LeftSidebar>
