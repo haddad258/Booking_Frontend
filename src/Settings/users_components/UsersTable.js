@@ -140,9 +140,9 @@ export default function UsersTable(props) {
     axios.delete(url+`users/${id}`).then(response => response.status)
     .then((status) => {
         alert("status : " + status)
-        var element = document.getElementById(id);
-        element.parentNode.removeChild(element);
-    })
+      //  var element = document.getElementById(id);
+      //  element.parentNode.removeChild(element);
+    }).catch(err => alert("status : " + err))
   }
 
   return (
