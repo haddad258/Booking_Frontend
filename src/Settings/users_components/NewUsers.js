@@ -1,5 +1,7 @@
 import './style.css';
 import React from 'react'
+import axios from 'axios'
+
 import {
     Grid,
     IconButton,
@@ -11,9 +13,30 @@ import {
   } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import cfg from '../../cfg';
+import { SettingsInputAntenna } from '@material-ui/icons';
+const url = cfg.url;
 
 const NewUsers = (props) => {
     const {users} = props
+    
+    const updateApprove = (id) =>{
+      alert("update")
+      axios.put(url+`users/${id}`, { "approved" : 1 }).then(response => response.status)
+      .then((status) => {
+          alert("status : " + status)
+          
+      }).catch(err => alert("status : " , err))
+    } 
+    const deleteUser = (id) => {
+      alert("delete")
+      axios.delete(url+`users/${id}`).then(response => response.status)
+      .then((status) => {
+          alert("status : " + status)
+        //  var element = document.getElementById(id);
+        //  element.parentNode.removeChild(element);
+      }).catch(err => alert("status : " + err))
+    }
     return (
         <Card >
             <CardHeader 
@@ -43,11 +66,11 @@ const NewUsers = (props) => {
                         </Grid>
                        
                         <Grid item  xs={6} sm={3}>
-                        <span className="m-1 badge badge-primary pointer" > approve</span>
+                        <span className="m-1 badge badge-primary pointer" onClick={() => updateApprove(user.id)}> approve</span>
                         </Grid>
 
                         <Grid item  xs={6} sm={3}>
-                        <span className="m-1 badge badge-danger pointer" > deny</span>
+                        <span className="m-1 badge badge-danger pointer" onClick={() => deleteUser(user.id)} > deny</span>
                         </Grid>
                         
                     </Grid>
