@@ -194,6 +194,11 @@ export default [
         "label": "Users",
         "description": "Users Management.",
         "to": "/Users"
+      },
+      {
+        "label": "Common",
+        "description": "For reserved Management.",
+        "to": "/ForReserved"
       }
     ]
   }
