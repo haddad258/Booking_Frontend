@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-
-
 import {
   TableBody,
   Table,
@@ -25,7 +23,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 
 import axios from 'axios'
-
+import EditUserModal from './EditUserModal'
 import cfg from '../../cfg';
 const url = cfg.url;
 
@@ -112,7 +110,7 @@ const useStyles2 = makeStyles({
 });
 
 export default function UsersTable(props) {
-  const {users} = props
+  const {users , privileges} = props
   const classes = useStyles2();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -174,11 +172,7 @@ export default function UsersTable(props) {
 
 
               <TableCell align="right">
-              <FontAwesomeIcon
-                icon={['far', 'edit']}
-                className="font-size-xxl"
-                style={{color:"green" , cursor : "pointer"}}
-              />
+              <EditUserModal privileges={privileges} user={row}/>
               </TableCell>
               
               <TableCell align="right">

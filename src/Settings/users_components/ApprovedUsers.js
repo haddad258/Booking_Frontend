@@ -32,7 +32,7 @@ import AddUserModal from './AddUserModal'
             </PerfectScrollbar>
             */}
 
-            <UsersTable users = {users} />
+            <UsersTable users = {users} privileges={privileges}/>
             
             </CardContent>
         
