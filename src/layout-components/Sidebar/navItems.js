@@ -196,7 +196,7 @@ export default [
         "to": "/Users"
       },
       {
-        "label": "Common",
+        "label": "For Reserved",
         "description": "For reserved Management.",
         "to": "/ForReserved"
       }

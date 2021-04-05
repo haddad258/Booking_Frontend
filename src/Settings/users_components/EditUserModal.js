@@ -21,7 +21,7 @@ const url = cfg.url;
 
 const EditUserModal = (props) => {
     const {privileges, user} = props
-    const [open1, setOpen1] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
     
     const [values, setValues] = useState(user);
     const handleChange = event => {
@@ -40,18 +40,18 @@ const EditUserModal = (props) => {
        axios.put(url + `users/${user.id}`, values).then(response => response.status)
             .then((status) => {
                 alert(JSON.stringify({"User Updated": values.firstName,  "status ": status}))
-                if (status === 200) setOpen1(false)
+                if (status === 200) setOpen(false)
             })
 
         //alert(JSON.stringify(values, null, 4))
     }
 
-    const handleClickOpen1 = () => {
-      setOpen1(true);
+    const handleClickOpen = () => {
+      setOpen(true);
     };
   
-    const handleClose1 = () => {
-      setOpen1(false);
+    const handleClose = () => {
+      setOpen(false);
     };
 
     return (
@@ -60,12 +60,12 @@ const EditUserModal = (props) => {
                 icon={['far', 'edit']}
                 className="font-size-xxl"
                 style={{color:"green" , cursor : "pointer"}}
-                onClick={handleClickOpen1}
+                onClick={handleClickOpen}
               />
 
         <Dialog
-            open={open1}
-            onClose={handleClose1}
+            open={open}
+            onClose={handleClose}
             aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">EDIT USER INFORMATIONS</DialogTitle>
             <DialogContent>
@@ -153,10 +153,10 @@ const EditUserModal = (props) => {
                 </TextField>
             </DialogContent>
             <DialogActions>
-            <Button onClick={handleClose1} color="primary">
+            <Button onClick={handleClose} color="primary">
                 Cancel
             </Button>
-            <Button onClick={handleClose1, submitValue} color="primary">
+            <Button onClick={handleClose, submitValue} color="primary">
                 UPDATE
             </Button>
             </DialogActions>
