@@ -13,18 +13,18 @@ import Add from "./buildings_components/Add";
 // import Delete from "./buildings_components/Delete";
 
 import cfg from '../../cfg'
-const buildingURL = cfg.url + "buildings/list"
+const url = cfg.url + "buildings/"
 
 
 const Buildings = (props) => {
     const {
         buildingsList, zonesList, floorsList, roomsList,
     } = props;
-
+   
     const [sliding, setSliding] = useState(true);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [page, setPage] = useState(0);
-
+    let obj = [ [] , ...buildingsList]
 
     const handlePageChange = (event, page) => {
         setPage(page);
@@ -34,20 +34,19 @@ const Buildings = (props) => {
         setRowsPerPage(event.target.value);
         setPage(0);
     };
-    const addBuilding = async (Building) => {
+    const addItem = async (objj) => {
         
-        console.log(JSON.stringify(Building, null, 4))
-        axios.post(buildingURL, Building).then(response => response.status)
+        alert(JSON.stringify(objj, null, 4))
+        axios.post(url, objj).then(response => response.status)
             .then((status) => {
-                alert(JSON.stringify(status, null, 4))
-
+                (status === 200) ? obj =[...obj, objj] : alert(status)
             })
 
     }
     const deleteBuilding = (buildingID) => {
         //alert(JSON.stringify(`Uncomment deletBuilding Function Content for deleting User with id ${buildingID}`, null, 4))
 
-        axios.delete(buildingURL + `${buildingID}`).then(response => response.status)
+        axios.delete(url + `${buildingID}`).then(response => response.status)
             .then((status) => {
                 console.log("Building with Id", buildingID, " deleted")
                 var element = document.getElementById(buildingID);
@@ -60,7 +59,7 @@ const Buildings = (props) => {
 
 
         alert(JSON.stringify(Builiding))
-        axios.put(buildingURL + `${id}`, Builiding).then(response => response.status)
+        axios.put(url + `${id}`, Builiding).then(response => response.status)
             .then((status) => {
                 console.log("Builiding with Id", id, " updated")
             })
@@ -74,11 +73,11 @@ const Buildings = (props) => {
             <ListGroupItem
                 style={{borderRadius:0}}
             ><ApartmentIcon color="primary" /> Buildings
-            <Add target={"buildings"} />
+            <Add target={"buildings"} addItem={addItem} />
                 <ExpandMoreIcon onClick={(e) => { setSliding(!sliding) }} style={{ position: "absolute", top: 10, right: 20, cursor: "pointer" }} /></ListGroupItem>
 
             {(sliding) ? <div>
-                {buildingsList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((b) =>
+                {obj.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((b) =>
 
                     <ListGroupItem  style={{borderRadius:0}} id={b.id}>
                     {b.name}

@@ -23,7 +23,7 @@ const url = cfg.url;
  
 
 const Add = (props) => {
-    const {target, buildings, zones, floors} = props
+    const {target, buildings, zones, floors, addItem} = props
     const [open, setOpen] = React.useState(false);
     
     const [values, setValues] = useState({});
@@ -36,12 +36,13 @@ const Add = (props) => {
     };
     const submitValue = async () => {
         alert(JSON.stringify(values))
-        axios.post(url + `${target}/`, values).then(response => response.status)
-            .then((status) => {
-                alert(JSON.stringify({"Mrigel" : "jawwik behi", "status ": status}))
-                if (status === 200) setOpen(false)
-            })
-
+        addItem(values)
+        // axios.post(url + `${target}/`, values).then(response => response.status)
+        //     .then((status) => {
+        //         alert(JSON.stringify({"Mrigel" : "jawwik behi", "status ": status}))
+        //         if (status === 200) setOpen(false)
+        //     })
+        setOpen(false)
     }
 
     const handleClickOpen = () => {
@@ -62,7 +63,7 @@ const Add = (props) => {
             open={open}
             onClose={handleClose}
             aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">Add NEW BUILDING</DialogTitle>
+            <DialogTitle id="form-dialog-title">ADD FORM</DialogTitle>
             <DialogContent>
             <DialogContentText>
                 please enter all required fields here.
