@@ -2,7 +2,7 @@ import React ,{useState} from 'react'
 import faker from 'faker'
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import EditIcon from '@material-ui/icons/Edit';
 import {
     Dialog,
     DialogActions,
@@ -22,8 +22,8 @@ const url = cfg.url;
 
  
 
-const Add = (props) => {
-    const {target, buildings, zones, floors, addItem} = props
+const Edit = (props) => {
+    const {target,id, buildings, zones, floors } = props
     const [open, setOpen] = React.useState(false);
     
     const [values, setValues] = useState({});
@@ -36,12 +36,12 @@ const Add = (props) => {
     };
     const submitValue = async () => {
         alert(JSON.stringify(values))
-        addItem(values)
-        // axios.post(url + `${target}/`, values).then(response => response.status)
-        //     .then((status) => {
-        //         alert(JSON.stringify({"Mrigel" : "jawwik behi", "status ": status}))
-        //         if (status === 200) setOpen(false)
-        //     })
+   
+        axios.post(url + `${target}/`, values).then(response => response.status)
+            .then((status) => {
+                alert(JSON.stringify({"Mrigel" : "jawwik behi", "status ": status}))
+                if (status === 200) setOpen(false)
+            })
         setOpen(false)
     }
 
@@ -58,12 +58,12 @@ const Add = (props) => {
     
     return (
         <div style={{ }}>
-        <AddCircleIcon onClick={handleClickOpen} color="primary" style={{ position: "absolute", top: 10, right: 60, cursor: "pointer" }} />
+        <EditIcon onClick={handleClickOpen} color="primary" style={{color:"green", position: "absolute", top: 10, right: 60, cursor: "pointer" }} />
         <Dialog
             open={open}
             onClose={handleClose}
             aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">ADD FORM</DialogTitle>
+            <DialogTitle id="form-dialog-title">EDIT FORM</DialogTitle>
             <DialogContent>
             <DialogContentText>
                 please enter all required fields here.
@@ -128,4 +128,4 @@ const Add = (props) => {
     )
 }
 
-export default  Add
+export default  Edit

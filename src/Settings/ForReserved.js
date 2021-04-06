@@ -4,11 +4,9 @@ import axios from "axios";
 import {
     Grid,
   } from '@material-ui/core';
-import Buildings from "./forReserved_components/Buildings"
-import Zones from "./forReserved_components/Zones"
-import Floors from "./forReserved_components/Floors"
-import Rooms from "./forReserved_components/Rooms"
 
+
+import List from "./forReserved_components/global_components/List"
 import cfg from '../../src/cfg'; 
 
 const url = cfg.url;
@@ -50,16 +48,16 @@ function ForReserved() {
      
            <Grid container spacing={4} >
             <Grid item lg={3} xs={12} md={6} xl={3}>
-                <Buildings buildingsList={buildings}  />
+            <List targetObject={buildings} target={"buildings"} />
             </Grid>
             <Grid item lg={3} xs={12} md={6} xl={3} >
-                <Zones zonesList={zones}  buildingsList={buildings}/>
+            <List targetObject={zones} target={"zones"} buildings={buildings} />
             </Grid>
             <Grid item lg={3} xs={12} md={6} xl={3}>
-                <Floors floorsList={floors} zonesList={zones}  buildingsList={buildings}  />
+            <List targetObject={floors} target={"floors"} zones={zones}  buildings={buildings}  />
             </Grid>
             <Grid item lg={3} xs={12} md={6} xl={3} >
-                <Rooms  roomsList={rooms} floorsList={floors} zonesList={zones}  buildingsList={buildings} />
+            <List targetObject={rooms} target={"rooms"} floors={floors} zones={zones}  buildings={buildings} />
             </Grid>
            </Grid>
            
