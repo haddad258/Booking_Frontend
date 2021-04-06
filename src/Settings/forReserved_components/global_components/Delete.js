@@ -33,12 +33,12 @@ const Delete = (props) => {
     };
     const deleteItem = async () => {
         
-        // axios.post(url + `${target}/`, values).then(response => response.status)
-        //     .then((status) => {
-        //         alert(JSON.stringify({"Mrigel" : "jawwik behi", "status ": status}))
-        //         if (status === 200) setOpen(false)
-        //     })
-        setOpen(false)
+        axios.delete(url + `${target}/${id}`, values).then(response => response.status)
+            .then((status) => {
+                alert(JSON.stringify({"Mrigel" : "jawwik behi", "status ": status}))
+                if (status === 200) setOpen(false)
+            })
+        
     }
 
     const handleClickOpen = () => {
