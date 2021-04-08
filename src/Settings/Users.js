@@ -20,8 +20,8 @@ function Users() {
     useEffect(() => {
         axios.all([requestUsers, requestPrivileges]).then(axios.spread((...responses) => {
 
-            setUsers(responses[0].data.content)
-            setPrivileges(responses[1].data.content)
+            setUsers(responses[0].items.content)
+            setPrivileges(responses[1].items.content)
             
 
 

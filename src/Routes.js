@@ -40,7 +40,7 @@ const ListGroups = lazy(() => import('./example-pages/ListGroups'));
 // Custom pages
               // Settings
 const Users = lazy(() => import('./Settings/Users'));
-
+const Transport = lazy(() => import('./Settings/Transport'));
 
 const Routes = () => {
   const location = useLocation();
@@ -121,7 +121,8 @@ const Routes = () => {
 
                 // custom routes
 
-                '/Users'
+                '/Users',
+                '/Transport'
               ]}>
               <LeftSidebar>
                 <Switch location={location} key={location.pathname}>
@@ -164,6 +165,7 @@ const Routes = () => {
                     <Route path="/ListGroups" component={ListGroups} />
                     {/* custom Routes */}
                     <Route path="/Users" component={Users} />
+                    <Route path="/Transport" component={Transport} />
                   </motion.div>
                 </Switch>
               </LeftSidebar>
