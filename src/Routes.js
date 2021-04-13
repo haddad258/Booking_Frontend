@@ -41,6 +41,7 @@ const ListGroups = lazy(() => import('./example-pages/ListGroups'));
               // Settings
 const Users = lazy(() => import('./Settings/Users'));
 const ForReserved = lazy(() => import('./Settings/ForReserved'));
+const Galleries = lazy(() => import('./Settings/Galleries'));
 
 
 const Routes = () => {
@@ -124,6 +125,7 @@ const Routes = () => {
 
                 '/Users',
                 '/ForReserved',
+                '/Galleries',
               ]}>
               <LeftSidebar>
                 <Switch location={location} key={location.pathname}>
@@ -167,6 +169,7 @@ const Routes = () => {
                     {/* custom Routes */}
                     <Route path="/Users" component={Users} />
                     <Route path="/ForReserved" component={ForReserved} />
+                    <Route path="/Galleries" component={Galleries} />
                   </motion.div>
                 </Switch>
               </LeftSidebar>

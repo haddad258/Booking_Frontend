@@ -186,6 +186,29 @@ export default [
     ]
   },
   {
+    "label": "Galleries",
+    "icon": "ChatIcon",
+    "content": [
+
+      {
+        "label": "Rooms",
+        "description": "Booking Galleries.",
+        "to": "/Galleries"
+      },
+      {
+        "label": "Cars",
+        "description": "Booking Galleries.",
+        "to": "/Galleries"
+      },
+      {
+        "label": "Tickets",
+        "description": "Booking Galleries.",
+        "to": "/Galleries"
+      }
+
+    ]
+  },
+  {
     "label": "Settings",
     "icon": "ChatIcon",
     "content": [
