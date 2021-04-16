@@ -49,7 +49,7 @@ const RoomDetails = (props) => {
                {room.description}
                 
             </DialogContentText>
-            <img alt="..." className="card-img-top" src={room.image} />
+            
             
             </DialogContent>
             <DialogActions>

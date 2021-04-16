@@ -35,10 +35,10 @@ function Users() {
         <div>
             {/*users.map((user) => <h1>{user.firstName}</h1>)*/ }
            <Grid container spacing={3} >
-            <Grid item lg={4} sm={12}>
+            <Grid item lg={4} xs={12}>
                 <NewUsers users={users} />
             </Grid>
-            <Grid item lg={8} sm={12} >
+            <Grid item lg={8} xs={12} >
                 <ApprovedUsers users={users} privileges={privileges} />
             </Grid>
            </Grid>
