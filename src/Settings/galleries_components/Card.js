@@ -3,18 +3,18 @@ import {
      Card, CardContent, Button, Badge
   } from '@material-ui/core';
 import Sliding from './Sliding';
-
+import RoomDetails from './RoomDetails'
 const  CustomCard = (props) => {
     const imgs =[
         "https://www.aver.com/Upload/Expert/31/Main.jpg",
-        "https://cdn.business2community.com/wp-content/uploads/2016/08/conference-room-338563_640-300x199.jpg.jpg",
-        "https://www.zdnet.com/a/hub/i/2020/07/21/2a460e27-b484-47e5-86f2-73f414ac07d6/teamsroomsmanagement.jpg"
+        "https://www.italydreamdesign.com/wp-content/uploads/IME02.jpg",
+        "https://assets.website-files.com/5bf604124fac8067e66a2889/5cc8df3c1273fae158f4642b_meet-space.jpg"
     ]
-    const {img , title , description ,reserved}  = props
+    const {img , title , description ,reserved, room}  = props
     return (
         
         <Card className="mb-4">
-        <Sliding imgs={imgs} />
+        <Sliding imgs={imgs} title={title}/>
         <CardContent className="p-3">
         <h5 className="card-title font-weight-bold font-size-lg">
             {title}
@@ -22,9 +22,7 @@ const  CustomCard = (props) => {
         <p className="card-text">
             {description}
         </p>
-        <Button color="primary" variant="contained">
-            Details
-        </Button>{" "}
+        <RoomDetails room={room} />{" "}
         
         {(reserved) ? <span className="m-1 badge badge-danger" > Reserved Now</span> : <span className="m-1 badge badge-succed" >Avaliable</span>}
         </CardContent>
