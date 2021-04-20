@@ -1,6 +1,7 @@
 import React ,{useState} from 'react'
 import axios from 'axios'
 
+
 import {
     FormControlLabel,
     Dialog,
@@ -9,7 +10,6 @@ import {
     DialogContentText,
     DialogTitle,
     Checkbox,
-    MenuItem,
     Button,
     List,
     ListItem,
@@ -21,7 +21,24 @@ import {
 import AddIcon from '@material-ui/icons/Add';
 import { FormLabel, FormGroup } from '@material-ui/core';
 
-
+const currencies = [
+  {
+    value: 'USD',
+    label: '$'
+  },
+  {
+    value: 'EUR',
+    label: '€'
+  },
+  {
+    value: 'BTC',
+    label: '฿'
+  },
+  {
+    value: 'JPY',
+    label: '¥'
+  }
+];
 
 const Addtransport = (props) => {
     const {privileges} = props
@@ -37,20 +54,12 @@ const Addtransport = (props) => {
       
     
      const handleChanges= event => {
-       if (event.target.files && event.target.files[0])
-       {
         setSelectedFile(
-        
-URL.createObjectURL(event.target.files[0])
+        URL.createObjectURL(event.target.files[0])
       )
-      
       setIsFilePicked(true);
-      setValues({
-        ...values,
-        [event.target.id]: event.target.value,
-    });
     }
-  }   
+       
      
         // Request made to the backend api 
         // Send formData object
@@ -62,13 +71,13 @@ URL.createObjectURL(event.target.files[0])
           });
         } 
 
-        
+    
     const submitValue = async () => {
       
        
        
 
-       axios.post("http://localhost:3002/forResrvation/add/transport_tools", values).then(response => response.status)
+       axios.post("http://localhost:3002/forResrvation/add/equipment", values).then(response => response.status)
             .then((status) => {
                alert(JSON.stringify({"User Added": values.image}))
                 if (status == 200) setOpen1(false)
@@ -94,53 +103,32 @@ URL.createObjectURL(event.target.files[0])
             variant="outlined"
             color="primary"
             onClick={handleClickOpen1}>
-            Add NEW VEHICLE
+            Add NEW Equipment
             </Button>
 
         <Dialog
             open={open1}
             onClose={handleClose1}
             aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">Add NEW VEHICLE</DialogTitle>
+            <DialogTitle id="form-dialog-title">Add NEW Equipment</DialogTitle>
             <DialogContent>
             <DialogContentText>
-                To add a new VEHICLE to this website, please enter all required fields here.
+                To add a new Equipment to this website, please enter all required fields here.
                 <div>
-            <input id="image" type="file"  onChange={handleChanges} value={values.image} />
-            <img  src={selectedFile} />
+            <input type="file" onChange={handleChanges}/>
+            <img src={selectedFile}/>
             
           </div>
           </DialogContentText>
-          <TextField
-                    autoFocus
-                    margin="dense"
-                    id="description"
-                    label="description"
-                    
-                    fullWidth
-                    onChange={handleChange}
-                    value={values.description}
-                />  
-            
                 <TextField
                     autoFocus
                     margin="dense"
-                    id="brand"
-                    label="brand"
+                    id="image"
+                    source={selectedFile}
                     
                     fullWidth
                     onChange={handleChange}
-                    value={values.brand}
-                />
-                <TextField
-                    autoFocus
-                    margin="dense"
-                    id="matricule"
-                    label="matricule"
-                    
-                    fullWidth
-                    onChange={handleChange}
-                    value={values.matricule}
+                    value={values.image}
                 />
         
                 <TextField
@@ -152,16 +140,16 @@ URL.createObjectURL(event.target.files[0])
                     fullWidth
                     onChange={handleChange}
                     value={values.price}
-                    />
+                />
                 <TextField
                     autoFocus
                     margin="dense"
-                    id="color"
-                    label="color"
+                    id="description"
+                    label="description"
 
                     fullWidth
                     onChange={handleChange}
-                    value={values.color}
+                    value={values.description}
                 />
                 <div> 
         </div> 

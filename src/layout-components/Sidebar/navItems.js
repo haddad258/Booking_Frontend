@@ -175,16 +175,38 @@ export default [
     ]
   },
   {
-    "label": "Forms Elements",
-    "icon": "BarChartIcon",
+  "label": "Cars",
+    "icon": "ChatIcon",
     "content": [
-      {
-        "label": "Controls",
-        "description": "Wide selection of forms controls, using a standardised code base, specifically for React.",
-        "to": "/FormsControls"
-      }
-    ]
-  },
+  {
+    "label": "cars",
+    "description": "cars Management.",
+    "to": "/cars"
+  }
+]
+},
+{
+  "label": "Equipment",
+    "icon": "ChatIcon",
+    "content": [
+  {
+    "label": "equipment",
+    "description": "equipment Management.",
+    "to": "/equipment"
+  }
+]
+},
+{
+  "label": "Hotels",
+    "icon": "ChatIcon",
+    "content": [
+  {
+    "label": "hotels",
+    "description": "hotels Management.",
+    "to": "/hotels"
+  }
+]
+},
   {
     "label": "Settings",
     "icon": "ChatIcon",
@@ -199,6 +221,11 @@ export default [
         "label": "transport tools",
         "description": "transport reservation",
         "to": "/Transport"
+      },
+      {
+        "label": "equipment",
+        "description": "equipment reservation",
+        "to": "/Equipmentreservation"
       }
 
     ]

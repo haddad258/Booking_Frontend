@@ -41,7 +41,10 @@ const ListGroups = lazy(() => import('./example-pages/ListGroups'));
               // Settings
 const Users = lazy(() => import('./Settings/Users'));
 const Transport = lazy(() => import('./Settings/Transport'));
-
+const Equipmentreservation = lazy(() => import('./Settings/Equipmentreservation'));
+const Cars = lazy(() => import('./Cars/cars'));
+const Equipment = lazy(() => import('./Equipment/equipment'));
+const Hotels = lazy(() => import('./Hotels/hotel'));
 const Routes = () => {
   const location = useLocation();
 
@@ -118,7 +121,10 @@ const Routes = () => {
                 '/ApexCharts',
                 '/Maps',
                 '/ListGroups',
-
+                '/Equipmentreservation',
+                '/Hotels',
+                '/Cars',
+                '/Equipment',
                 // custom routes
 
                 '/Users',
@@ -166,6 +172,10 @@ const Routes = () => {
                     {/* custom Routes */}
                     <Route path="/Users" component={Users} />
                     <Route path="/Transport" component={Transport} />
+                    <Route path="/Equipmentreservation" component={Equipmentreservation} />
+                    <Route path="/cars" component={Cars} />
+                    <Route path="/hotels" component={Hotels} />
+                    <Route path="/equipment" component={Equipment} />
                   </motion.div>
                 </Switch>
               </LeftSidebar>
