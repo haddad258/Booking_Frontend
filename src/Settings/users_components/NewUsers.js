@@ -18,24 +18,23 @@ import { SettingsInputAntenna } from '@material-ui/icons';
 const url = cfg.url;
 
 const NewUsers = (props) => {
-    const {users} = props
+    const {users , getData} = props
     
     const updateApprove = (id) =>{
-      alert("update")
-      axios.put(url+`users/${id}`, { "approved" : 1 }).then(response => response.status)
+      
+      axios.put(url+`users/${id}`, { "approved" : true }).then(response => response.status)
       .then((status) => {
-          alert("status : " + status)
-          
+        getData()
       }).catch(err => alert("status : " , err))
+      
     } 
     const deleteUser = (id) => {
-      alert("delete")
-      axios.delete(url+`users/${id}`).then(response => response.status)
-      .then((status) => {
-          alert("status : " + status)
-        //  var element = document.getElementById(id);
-        //  element.parentNode.removeChild(element);
-      }).catch(err => alert("status : " + err))
+      axios.delete(url+`users/${id}`).then(
+       (res)=> {
+        alert("status : " + res.status)
+        getData()
+       }
+      ).catch(err => alert("status : " + err))
     }
     return (
         <Card >
@@ -46,7 +45,7 @@ const NewUsers = (props) => {
             />
             <CardContent>
                 <PerfectScrollbar className="scroll-area-lg shadow-overflow" style={{ paddingTop: 5}} >
-                {users.map((user) => (user.approved == 0) ? 
+                {users.map((user) => (!user.approved) ? 
                     <CardContent>
                     <Grid container spacing={4}>
                         <Grid item xs={3} >
@@ -66,11 +65,11 @@ const NewUsers = (props) => {
                         </Grid>
                        
                         <Grid item  xs={3} >
-                        <span className="m-1 badge badge-primary pointer" onClick={() => updateApprove(user.id)}> approve</span>
+                        <span className="m-1 badge badge-primary pointer" onClick={() => updateApprove(user._id)}> approve</span>
                         </Grid>
 
                         <Grid item  xs={3} >
-                        <span className="m-1 badge badge-danger pointer" onClick={() => deleteUser(user.id)} > deny</span>
+                        <span className="m-1 badge badge-danger pointer" onClick={() => deleteUser(user._id)} > deny</span>
                         </Grid>
                         
                     </Grid>

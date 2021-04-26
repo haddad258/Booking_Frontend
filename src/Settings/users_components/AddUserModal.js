@@ -22,32 +22,37 @@ import AddIcon from '@material-ui/icons/Add';
 import cfg from '../../cfg';
 const url = cfg.url;
 const AddUserModal = (props) => {
-    const {privileges} = props
+    const {} = props
     const [open1, setOpen1] = React.useState(false);
     
     const [values, setValues] = useState([]);
     const handleChange = event => {
+        (event.target.id === "privileges") ? setValues({
+            ...values,
+            "privileges" : [event.target.value]
+        }) :
         setValues({
             ...values,
-            "approved" : 1,
+            "approved" : true,
             "avatar":  faker.image.avatar(),
+            
             [event.target.id]: event.target.value,
+            
+            
             
         });
     };
     const submitValue = async () => {
        values.phonePro = parseInt(values.phonePro)
        values.phoneFix = parseInt(values.phoneFix)
-       
-       
 
-       axios.post(url + `users`, values).then(response => response.status)
+       axios.post(url + `users/`, values).then(response => response.status)
             .then((status) => {
-               // alert(JSON.stringify({"User Added": values.firstName,  "status ": status}))
+                
                 if (status == 200) setOpen1(false)
             })
-
-        //alert(JSON.stringify(values, null, 4))
+       
+        
     }
 
     const handleClickOpen1 = () => {
@@ -99,16 +104,25 @@ const AddUserModal = (props) => {
                     onChange={handleChange}
                     value={values.lastName}
                 />
-        
                 <TextField
                     autoFocus
                     margin="dense"
-                    id="addressMail"
+                    id="username"
+                    label="username"
+                    
+                    fullWidth
+                    onChange={handleChange}
+                    value={values.username}
+                />
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    id="email"
                     label="Email Address"
                     type="email"
                     fullWidth
                     onChange={handleChange}
-                    value={values.addressMail}
+                    value={values.email}
                 />
                 <TextField
                     autoFocus
@@ -135,8 +149,8 @@ const AddUserModal = (props) => {
                     fullWidth
                     label="Select Role"
                     margin="dense"
-                    name="privilege"
-                    id="privilege"
+                    name="privileges"
+                    id="privileges"
                     onChange={handleChange}
                     // onChange={(e) => { setIdGroup(e.target.value) }}
                     required
@@ -147,9 +161,10 @@ const AddUserModal = (props) => {
                     variant="outlined"
                 >
 
-                    {privileges.map((privilege) => (
-                        <option value={privilege.id}>{privilege.name} : {privilege.description}</option>
-                    ))}
+                        <option value="SIMPLE_USER">SELECT ONE</option>
+                        <option value="SIMPLE_USER">Simple User</option>
+                        <option value="ADMIN">Administrator</option>
+                   
 
                 </TextField>
             </DialogContent>

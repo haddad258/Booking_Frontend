@@ -110,13 +110,13 @@ const useStyles2 = makeStyles({
 });
 
 export default function UsersTable(props) {
-  const {users , privileges} = props
+  const {users} = props
   const classes = useStyles2();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setrows] = React.useState([])
   for (let index = 0; index < users.length; index++) {
-    if(users[index].approved == 1){
+    if(users[index].approved){
       rows.push(users[index])
     }
     
@@ -142,7 +142,7 @@ export default function UsersTable(props) {
       //  element.parentNode.removeChild(element);
     }).catch(err => alert("status : " + err))
   }
-
+  
   return (
     <Fragment>
       <TableContainer component={Paper}>
@@ -152,7 +152,7 @@ export default function UsersTable(props) {
               ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               : rows
             ).map(row => 
-              (row.approved == 1) ? <TableRow key={row.id}>
+              (row.approved) ? <TableRow key={row.id}>
               <TableCell>
               <div className="avatar-icon-wrapper rounded-circle d-80 mx-auto">
                 <div className="d-block p-0 avatar-icon-wrapper rounded-circle m-0">
@@ -165,14 +165,14 @@ export default function UsersTable(props) {
               <TableCell component="th" scope="row">
                 {row.firstName} {row.lastName}
                 <br/>
-                {row.addressMail}
+                {row.email}
                 <br />
                 {row.phoneFix}
               </TableCell>
 
 
               <TableCell align="right">
-              <EditUserModal privileges={privileges} user={row}/>
+              <EditUserModal user={row}/>
               </TableCell>
               
               <TableCell align="right">

@@ -11,8 +11,10 @@ import {
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import UsersTable from './UsersTable'
 import AddUserModal from './AddUserModal'
+
+
   const ApprovedUsers = (props) => {
-    const {users , privileges} = props
+    const {users } = props
 
 
 
@@ -21,18 +23,13 @@ import AddUserModal from './AddUserModal'
             
               <div className="customFlex">
                 <h1  className="ubuntu">Approved Users</h1>
-                <AddUserModal privileges={privileges} />
+                <AddUserModal />
               </div>
             
             
             <CardContent>
-            {/*
-            <PerfectScrollbar className="scroll-area-lg shadow-overflow" style={{ paddingTop: 5}}>
-             {users.map((user) => (user.approved != 0) ? <h5>{user.firstName}</h5> : null)}  
-            </PerfectScrollbar>
-            */}
 
-            <UsersTable users = {users} privileges={privileges}/>
+            <UsersTable users = {users}/>
             
             </CardContent>
         

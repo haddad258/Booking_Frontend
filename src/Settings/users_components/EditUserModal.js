@@ -20,7 +20,7 @@ const url = cfg.url;
 
 
 const EditUserModal = (props) => {
-    const {privileges, user} = props
+    const { user} = props
     const [open, setOpen] = React.useState(false);
     
     const [values, setValues] = useState(user);
@@ -146,9 +146,9 @@ const EditUserModal = (props) => {
                     variant="outlined"
                 >
 
-                    {privileges.map((privilege) => (
-                        <option value={privilege.id}>{privilege.name} : {privilege.description}</option>
-                    ))}
+                    <option value="SIMPLE_USER">SELECT ONE</option>
+                    <option value="SIMPLE_USER">Simple User</option>
+                    <option value="ADMIN">Administrator</option>
 
                 </TextField>
             </DialogContent>
