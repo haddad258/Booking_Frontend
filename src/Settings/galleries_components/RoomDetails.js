@@ -36,7 +36,7 @@ const RoomDetails = (props) => {
     return (
         <>
         <Button color="primary" variant="contained" onClick={handleClickOpen}>
-            Details
+            Booking
         </Button>
 
         <Dialog

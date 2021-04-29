@@ -10,7 +10,7 @@ import Filter from "./galleries_components/Filter"
 import cfg from '../../src/cfg'; 
 import CustomCard from "./galleries_components/Card";
 
-const url = cfg.url;
+const url = cfg.url + "common/";
 const buildingsURL = axios.get(url + "buildings/");
 const zonesURL = axios.get(url + "zones/");
 const floorsURL = axios.get(url + "floors/");
@@ -34,10 +34,10 @@ function Galleries() {
         ]).then(axios.spread((...responses) => {
 
         
-            setBuildings(responses[0].data.content)
-            setZones(responses[1].data.content)
-            setFloors(responses[2].data.content)
-            setRooms(responses[3].data.content)
+            setBuildings(responses[0].data)
+            setZones(responses[1].data)
+            setFloors(responses[2].data)
+            setRooms(responses[3].data)
 
 
         })).catch(errors => {
@@ -64,10 +64,10 @@ function Galleries() {
            </Paper>
                 </Grid>
                 {rooms.map(room => <Grid item lg={3} xs={12} md={6} xl={3}>
-                   <CustomCard room={room}/>
-                    
-                        
-                </Grid>)}
+                    <CustomCard room={room}/>
+                     
+                         
+                 </Grid>)}
             
            </Grid>
            
