@@ -180,7 +180,7 @@ export default function UsersTable(props) {
                 icon={['far', 'trash-alt']}
                 className="font-size-xxl"
                 style={{color:"red" , cursor : "pointer"}}
-                onClick={() => { deleteUser(row.id) }}
+                onClick={() => { deleteUser(row._id) }}
               />
               </TableCell>
             </TableRow> : null

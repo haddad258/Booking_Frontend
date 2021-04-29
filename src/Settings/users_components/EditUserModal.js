@@ -37,7 +37,7 @@ const EditUserModal = (props) => {
        
        delete values.id
        
-       axios.put(url + `users/${user.id}`, values).then(response => response.status)
+       axios.put(url + `users/${user._id}`, values).then(response => response.status)
             .then((status) => {
                 alert(JSON.stringify({"User Updated": values.firstName,  "status ": status}))
                 if (status === 200) setOpen(false)

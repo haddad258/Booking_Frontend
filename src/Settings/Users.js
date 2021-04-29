@@ -23,7 +23,8 @@ function Users() {
             console.log(errors) }) }, [])
 
     const getData = () =>{
-        axios.get(url + "users/").then(res => setUsers(res.data))
+        
+        axios.get(url + "users/").then(res =>  setUsers(res.data))
     }
    
 

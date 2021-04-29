@@ -10,10 +10,10 @@ import List from "./forReserved_components/global_components/List"
 import cfg from '../../src/cfg'; 
 
 const url = cfg.url;
-const buildingsURL = axios.get(url + "buildings/list");
-const zonesURL = axios.get(url + "zones/list");
-const floorsURL = axios.get(url + "floors/list");
-const roomsURL = axios.get(url + "rooms/list");
+const buildingsURL = axios.get(url + "buildings/");
+const zonesURL = axios.get(url + "zones/");
+const floorsURL = axios.get(url + "floors/");
+const roomsURL = axios.get(url + "rooms/");
 
 
 function ForReserved() {

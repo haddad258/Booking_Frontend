@@ -23,20 +23,14 @@ const Delete = (props) => {
     const {target, id} = props
     const [open, setOpen] = React.useState(false);
     
-    const [values, setValues] = useState({});
-    const handleChange = event => {
-        setValues({
-            ...values,
-            [event.target.name]: event.target.value,
-            
-        });
-    };
+
+   
     const deleteItem = async () => {
         
-        axios.delete(url + `${target}/${id}`, values).then(response => response.status)
+        axios.delete(url + `${target}/${id}`).then(response => response.status)
             .then((status) => {
-                alert(JSON.stringify({"Mrigel" : "jawwik behi", "status ": status}))
-                if (status === 200) setOpen(false)
+                alert(JSON.stringify({"status ": status}))
+                if (status === 200) handleClose()
             })
         
     }

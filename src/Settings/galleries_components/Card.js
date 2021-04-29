@@ -10,21 +10,21 @@ const  CustomCard = (props) => {
         "https://www.italydreamdesign.com/wp-content/uploads/IME02.jpg",
         "https://assets.website-files.com/5bf604124fac8067e66a2889/5cc8df3c1273fae158f4642b_meet-space.jpg"
     ]
-    const {img , title , description ,reserved, room}  = props
+    const {room}  = props
     return (
         
         <Card className="mb-4">
-        <Sliding imgs={imgs} title={title}/>
+        <Sliding imgs={imgs} title={room.title}/>
         <CardContent className="p-3">
         <h5 className="card-title font-weight-bold font-size-lg">
-            {title}
+            {room.title}
         </h5>
         <p className="card-text">
-            {description}
+            {room.description}
         </p>
         <RoomDetails room={room} />{" "}
         
-        {(reserved) ? <span className="m-1 badge badge-danger" > Reserved Now</span> : <span className="m-1 badge badge-succed" >Avaliable</span>}
+        {(room.reserved) ? <span className="m-1 badge badge-danger" > Reserved Now</span> : <span className="m-1 badge badge-succed" >Avaliable</span>}
         </CardContent>
         </Card>
         

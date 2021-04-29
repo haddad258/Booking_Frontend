@@ -37,10 +37,10 @@ const Edit = (props) => {
     const submitValue = async () => {
         alert(JSON.stringify(values))
    
-        axios.post(url + `${target}/`, values).then(response => response.status)
+        axios.put(url + `${target}/${id}`, values).then(response => response.status)
             .then((status) => {
-                alert(JSON.stringify({"Mrigel" : "jawwik behi", "status ": status}))
-                if (status === 200) setOpen(false)
+                alert(JSON.stringify({"Content" : values, "status ": status}))
+                if (status === 200) handleClose()
             })
         setOpen(false)
     }

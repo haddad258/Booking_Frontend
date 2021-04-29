@@ -39,8 +39,8 @@ const Add = (props) => {
        
         axios.post(url + `${target}/`, values).then(response => response.status)
             .then((status) => {
-                alert(JSON.stringify({"Mrigel" : "jawwik behi", "status ": status}))
-                if (status === 200) setOpen(false)
+                alert(JSON.stringify({"content" : values, "status ": status}))
+                if (status === 200) handleClose()
             })
         
     }

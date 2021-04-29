@@ -11,10 +11,10 @@ import cfg from '../../src/cfg';
 import CustomCard from "./galleries_components/Card";
 
 const url = cfg.url;
-const buildingsURL = axios.get(url + "buildings/list");
-const zonesURL = axios.get(url + "zones/list");
-const floorsURL = axios.get(url + "floors/list");
-const roomsURL = axios.get(url + "rooms/list");
+const buildingsURL = axios.get(url + "buildings/");
+const zonesURL = axios.get(url + "zones/");
+const floorsURL = axios.get(url + "floors/");
+const roomsURL = axios.get(url + "rooms/");
 
 
 function Galleries() {
@@ -64,14 +64,8 @@ function Galleries() {
            </Paper>
                 </Grid>
                 {rooms.map(room => <Grid item lg={3} xs={12} md={6} xl={3}>
-                    {/*<CustomCard img={room.image} title={room.name} description={room.description} />*/}
-                    <CustomCard 
-                        img={"https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/family-room-ideas-hbx0613000a-1611614336.jpg"} 
-                        title={room.name} 
-                        description={`Some quick example text to build on the card title and make up the bulk of the card's content.`}
-                        reserved={room.reserved}
-                        room={room}
-                        />
+                   <CustomCard room={room}/>
+                    
                         
                 </Grid>)}
             
