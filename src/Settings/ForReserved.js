@@ -9,7 +9,7 @@ import {
 import List from "./forReserved_components/global_components/List"
 import cfg from '../../src/cfg'; 
 
-const url = cfg.url;
+const url = cfg.url + "common/";
 const buildingsURL = axios.get(url + "buildings/");
 const zonesURL = axios.get(url + "zones/");
 const floorsURL = axios.get(url + "floors/");
@@ -33,10 +33,10 @@ function ForReserved() {
         ]).then(axios.spread((...responses) => {
 
         
-            setBuildings(responses[0].data.content)
-            setZones(responses[1].data.content)
-            setFloors(responses[2].data.content)
-            setRooms(responses[3].data.content)
+            setBuildings(responses[0].data)
+            setZones(responses[1].data)
+            setFloors(responses[2].data)
+            setRooms(responses[3].data)
 
 
         })).catch(errors => {
