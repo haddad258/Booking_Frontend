@@ -23,6 +23,7 @@ import {
   import VisibilityIcon from '@material-ui/icons/Visibility';
 
 import cfg from '../../cfg';
+import RoomBookings from './RoomBookings';
 const url = cfg.url;
 const RoomDetails = (props) => {
     const {room} = props
@@ -72,11 +73,15 @@ const RoomDetails = (props) => {
             aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">{room.name}</DialogTitle>
             <DialogContent>
-            <DialogContentText>
+            
                <Grid>
                <Grid item xs={12}>
-                  <span style={{color:"green" ,fontSize:'20'}}> {room.Bookings.length} Bookings </span>  
-                  <VisibilityIcon style={{color:"blue"}} />
+                  {
+                    (room.bookings.length > 0) ?
+                      <span style={{color:"red" ,fontSize:'20'}}> {room.bookings.length} Bookings </span>
+                    : <span style={{color:"green" ,fontSize:'20'}}> {room.bookings.length} Bookings </span>
+                  }  
+                  <RoomBookings room={room} />
                 </Grid>
                 <Grid item xs={12}>
                     <TextField
@@ -105,7 +110,7 @@ const RoomDetails = (props) => {
                 </Grid>
                </Grid>
                 
-            </DialogContentText>
+            
             
             
             </DialogContent>
