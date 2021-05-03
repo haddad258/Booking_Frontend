@@ -3,21 +3,11 @@ import axios from 'axios';
 import DatePicker from 'react-date-picker';
 
 import {
-    FormControlLabel,
     Dialog,
     DialogActions,
-    DialogContent,
-    DialogContentText,
+    DialogContent,  
     DialogTitle,
-    Checkbox,
     Button,
-    List,
-    ListItem,
-    TextField,
-    FormControl,
-    ListItemText,
-    Card,
-    InputLabel,
     Grid,
   } from '@material-ui/core';
   import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -66,31 +56,26 @@ const RoomBookings = (props) => {
             <DialogTitle id="form-dialog-title">{room.name} Bookings</DialogTitle>
             <DialogContent>
             <Grid container spacing={4}>
-            <Grid item xs={3}>
+            <Grid item xs={4}>
                 Topic
             </Grid>
-            <Grid item xs={3}>
-                User
-            </Grid>
-            <Grid item xs={3}>
+            
+            <Grid item xs={4}>
                 From
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={4}>
                 Until
             </Grid>
            </Grid>
                {bookings.map(b => 
                 <Grid container spacing={4}>
-                <Grid item xs={3}>
+                <Grid item xs={4}>
                     {b.topic}
                 </Grid>
-                <Grid item xs={3}>
-                    {b.user}
-                </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={4}>
                     {b.from}
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={4}>
                     {b.until}
                 </Grid>
                </Grid>

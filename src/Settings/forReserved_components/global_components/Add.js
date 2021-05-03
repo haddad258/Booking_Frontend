@@ -18,7 +18,7 @@ import {
 import cfg from '../../../cfg';
 import Champ from './Champ'
 import SelectChamp from './SelectChamp';
-const url = cfg.url;
+const url = cfg.url + "common/";
 
  
 
@@ -30,6 +30,8 @@ const Add = (props) => {
     const handleChange = event => {
         setValues({
             ...values,
+            "userId" : "608d7c521de0df1dcc502e32",
+            "images" : [],
             [event.target.name]: event.target.value,
             
         });

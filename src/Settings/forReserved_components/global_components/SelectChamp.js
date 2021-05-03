@@ -21,9 +21,9 @@ const SelectChamp = (props) => {
             SelectProps={{ native: true }}
             variant="outlined"
         >
-
+        <option value="">Select One</option>
             {
-                obj.map(item => <option value={item.id}>{item.name}</option>)
+                obj.map(item => <option value={item._id}>{item.name}</option>)
             }    
         
 
