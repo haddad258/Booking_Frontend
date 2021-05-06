@@ -89,19 +89,19 @@ export default function MyCompcaronent() {
                 </tr>
               </thead>
 
-              {items.map(item   => 
+              {items.map(item   => (item.imageRef != null) ?
               <tbody>
               <tr>
                 <td>
                   <div className="d-flex align-items-center">
-                  <img  alt="..." src={item.imageRef} style={{width:150, height:150}} className="p-3" />
+                  <img  alt="..." src={process.env.PUBLIC_URL+ item.imageRef.replace("C:\\fakepath\\", "/")} style={{width:150, height:150}} className="p-3" />
                     <div>
                       <a
                         href="#/"
                         onClick={e => e.preventDefault()}
                         className="font-weight-bold text-black"
                         title="...">
-                        clio
+                        {item.description}
                       </a>
                     </div>
                   </div>
@@ -134,7 +134,8 @@ export default function MyCompcaronent() {
           </div>
                 </td>
               </tr>
-              </tbody>)}
+              </tbody>: null
+              )}
             </table>
           </div>
         </CardContent>

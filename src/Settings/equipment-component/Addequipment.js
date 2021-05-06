@@ -54,10 +54,19 @@ const Addtransport = (props) => {
       
     
      const handleChanges= event => {
-        setSelectedFile(
-        URL.createObjectURL(event.target.files[0])
-      )
-      setIsFilePicked(true);
+      if (event.target.files && event.target.files[0])
+      {
+       setSelectedFile(
+       
+URL.createObjectURL(event.target.files[0])
+     )
+     
+     setIsFilePicked(true);
+     setValues({
+       ...values,
+       [event.target.id]: event.target.value,
+   });
+   }
     }
        
      
@@ -115,21 +124,12 @@ const Addtransport = (props) => {
             <DialogContentText>
                 To add a new Equipment to this website, please enter all required fields here.
                 <div>
-            <input type="file" onChange={handleChanges}/>
-            <img src={selectedFile}/>
+                <input id="image" type="file"  onChange={handleChanges} value={values.image} />
+            <img  src={selectedFile} />
             
           </div>
           </DialogContentText>
-                <TextField
-                    autoFocus
-                    margin="dense"
-                    id="image"
-                    source={selectedFile}
-                    
-                    fullWidth
-                    onChange={handleChange}
-                    value={values.image}
-                />
+               
         
                 <TextField
                     autoFocus

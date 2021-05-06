@@ -18,11 +18,12 @@ import {
     ListItemText,
    
   } from '@material-ui/core';
-  import Dropdown from "../Cars/dropdown";
-const API_URL = 'http://localhost:3002/forResrvation/listDispo/transport_tools'
+const API_URL = 'http://localhost:3002/forResrvation/listDispo/all'
+const API_URL1 = 'http://localhost:3002/forResrvation/listDispo/home'
+
 const API_URL2 = 'http://localhost:3002/forResrvation/listDispo/transport_tools'
 
-function Cars() {
+function Cars(prop) {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
@@ -83,40 +84,39 @@ function Cars() {
       } else {
   return (
     <Fragment>
-      
       <Grid container spacing={4}>
-        {items.map(item   =>
-      
-        <Grid item xs={12} sm={6} md={4}>
-          <Card className="mb-4">
-            <img alt="..." className="card-img-top" src={process.env.PUBLIC_URL+ item.imageRef.replace("C:\\fakepath\\", "/")} />
-            <CardContent className="p-3">
-              <h5 className="card-title font-weight-bold font-size-lg">
-              {item.brand}
-              </h5>
-              <h5 className="card-text">
+        {items.map(item   => (item.imageRef != null) ?
+    
+      <Grid item xs={12} sm={6} md={4}>
+        <Card className="mb-4">
+          <img alt="..." className="card-img-top" src={process.env.PUBLIC_URL+ item.imageRef.replace("C:\\fakepath\\", "/")} />
+          <CardContent className="p-3">
+            <h5 className="card-title font-weight-bold font-size-lg">
+            {item.name}
+            </h5>
+            <h5 className="card-text">
               {item.price} DNT
               </h5>
-              <p className="card-text">
-                {item.description}
-              </p>
-              
-              <div style={{ }}>
-            <Button
+            <p className="card-text">
+              {item.description}
+            </p>
             
-            className="m-2"
-            variant="outlined"
-            color="primary"
-            onClick={handleChanges(item.id),handleClickOpen1}
-            >
-            reserve
-            </Button>
-            </div>
-            </CardContent>
-          </Card>
-        </Grid>
-        
-        )}
+            <div style={{ }}>
+          <Button
+          
+          className="m-2"
+          variant="outlined"
+          color="primary"
+          onClick={handleChanges(item.id),handleClickOpen1}
+          >
+          reserve
+          </Button>
+          </div>
+          </CardContent>
+        </Card>
+      </Grid>: null
+      
+      )}
             <Dialog
             open={open1}
             onClose={handleClose1}

@@ -23,7 +23,7 @@ export default function MyCompcaronent() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
-   
+    const [values, setvalues] = useState([]);
  
     // Remarque : le tableau vide de dépendances [] indique
     // que useEffect ne s’exécutera qu’une fois, un peu comme
@@ -38,6 +38,7 @@ export default function MyCompcaronent() {
       })
     }, [])
     const deletecar = (id) => {
+      values.type="transport_tools"
       alert("delete")
       axios.delete('http://localhost:3002/forResrvation/delete/transport_tools/'+`${id}`).then(response => response.status)
       .then((status) => {

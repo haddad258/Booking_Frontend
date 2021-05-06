@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 import { connect } from 'react-redux';
 
-import { Sidebar, Header, Footer } from '../../layout-components';
+import {   Sidebar,Header, Footer } from '../../layout-components';
 
 const LeftSidebar = props => {
   const {
@@ -23,7 +23,7 @@ const LeftSidebar = props => {
           className={clsx('app-main', {
             'app-main-sidebar-static': !sidebarFixed
           })}>
-          <Sidebar />
+           <Sidebar/>
           <div
             className={clsx('app-content', {
               'app-content-sidebar-collapsed': sidebarToggle,

@@ -39,6 +39,7 @@ const Maps = lazy(() => import('./example-pages/Maps'));
 const ListGroups = lazy(() => import('./example-pages/ListGroups'));
 // Custom pages
               // Settings
+const Acceuil = lazy(() => import('./Acceuil/Acceuil'));
 const Users = lazy(() => import('./Settings/Users'));
 const Transport = lazy(() => import('./Settings/Transport'));
 const Equipmentreservation = lazy(() => import('./Settings/Equipmentreservation'));
@@ -76,14 +77,15 @@ const Routes = () => {
           fallback={
             <div className="d-flex align-items-center vh-100 justify-content-center text-center font-weight-bold font-size-lg py-3">
               <div className="w-50 mx-auto">
-                Please wait while we load the live preview examples
+                
               </div>
             </div>
           }>
           <Switch>
-            <Redirect exact from="/" to="/LandingPage" />
-            <Route path={['/LandingPage']}>
+            <Redirect exact from="/" to="/Acceuil" />
+            <Route path={['/Acceuil']}>
               <PresentationLayout>
+              <LeftSidebar>
                 <Switch location={location} key={location.pathname}>
                   <motion.div
                     initial="initial"
@@ -91,9 +93,10 @@ const Routes = () => {
                     exit="out"
                     variants={pageVariants}
                     transition={pageTransition}>
-                    <Route path="/LandingPage" component={LandingPage} />
+                    <Route path="/Acceuil" component={Acceuil} />
                   </motion.div>
                 </Switch>
+                </LeftSidebar>
               </PresentationLayout>
             </Route>
 
@@ -126,7 +129,7 @@ const Routes = () => {
                 '/Cars',
                 '/Equipment',
                 // custom routes
-
+                
                 '/Users',
                 '/Transport'
               ]}>
@@ -176,6 +179,7 @@ const Routes = () => {
                     <Route path="/cars" component={Cars} />
                     <Route path="/hotels" component={Hotels} />
                     <Route path="/equipment" component={Equipment} />
+                    
                   </motion.div>
                 </Switch>
               </LeftSidebar>
