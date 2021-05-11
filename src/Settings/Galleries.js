@@ -28,8 +28,9 @@ function Galleries() {
     const [searchTerm , setSearchTerm] = useState("")
    
     const searchByRoomName = (rows) => {
-        return rows.filter(row => row.name.toLowerCase().indexOf(searchTerm) > -1)
-    }
+        const columns = rows[0] && Object.keys(rows[0]);
+        return rows.filter(row => columns.some(column => row[column].toString().toLowerCase().indexOf(searchTerm) > -1) )
+    } 
 
     useEffect(() => {
         axios.all([

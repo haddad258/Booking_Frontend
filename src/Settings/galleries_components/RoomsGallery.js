@@ -17,7 +17,7 @@ const RoomsGallery = (props) => {
 
                
                 {rooms.map(room => 
-                    <Grid item lg={3} xs={12} md={6} xl={3}>
+                    <Grid item lg={4} xs={12} md={6} xl={3}>
                         <CustomCard room={room}/>      
                     </Grid>
                 )}
