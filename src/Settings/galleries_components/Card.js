@@ -14,10 +14,10 @@ const  CustomCard = (props) => {
     return (
         
         <Card className="mb-4">
-        <Sliding imgs={room.images} title={room.title}/>
+        <Sliding imgs={room.images} title={room.name}/>
         <CardContent className="p-3">
         <h5 className="card-title font-weight-bold font-size-lg">
-            {room.title}
+            {room.name}
         </h5>
         <p className="card-text">
             {room.description}

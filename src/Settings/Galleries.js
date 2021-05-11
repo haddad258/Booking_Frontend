@@ -2,7 +2,7 @@ import React, { useEffect, useState,  } from "react";
 import axios from "axios";
 
 import {
-    Grid,Paper,Card, CardContent, Button, TextField
+    Grid,Paper,Card, CardContent, Button, Container,TextField
   } from '@material-ui/core';
 
 import cfg from '../../src/cfg'; 
@@ -27,7 +27,9 @@ function Galleries() {
     const [rooms, setRooms] = useState([]);
     const [searchTerm , setSearchTerm] = useState("")
    
-
+    const searchByRoomName = (rows) => {
+        return rows.filter(row => row.name.toLowerCase().indexOf(searchTerm) > -1)
+    }
 
     useEffect(() => {
         axios.all([
@@ -54,10 +56,17 @@ function Galleries() {
         
            <Grid container spacing={4} >
             <Grid item xs={12}>
-                <TextField  id="outlined-basic" label="Search in Buildings" variant="outlined" onChange={(e) => setSearchTerm(e.target.value)} /> 
+                
+                    <TextField  
+                        id="outlined-basic" 
+                        label="Search in Rooms" 
+                        variant="outlined" 
+                        onChange={(e) => setSearchTerm(e.target.value)} 
+                    /> 
+                
             </Grid>
            
-            <RoomsGallery rooms={rooms}/>
+            <RoomsGallery rooms={searchByRoomName(rooms)}/>
             
            </Grid>
            
