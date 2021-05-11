@@ -1,4 +1,4 @@
-import React ,{useState} from 'react';
+import React ,{useState, useEffect} from 'react';
 import axios from 'axios';
 import DatePicker from 'react-date-picker';
 
@@ -32,7 +32,7 @@ const RoomDetails = (props) => {
     const [topic, setTopic] = useState("")
     const [startDate, setFrom] = useState(new Date())
     const [endDate, setUntil] = useState(new Date())
-
+    
     const values = {
       "topic" : topic,
       "room": room._id,
@@ -40,7 +40,7 @@ const RoomDetails = (props) => {
       "from": startDate,
       "until": endDate,
     } 
-    
+   
     const handleSubmit =  async () => {
       alert(JSON.stringify(values))
 
@@ -74,16 +74,16 @@ const RoomDetails = (props) => {
             <DialogTitle id="form-dialog-title">{room.name}</DialogTitle>
             <DialogContent>
             
-               <Grid>
-               <Grid item xs={12}>
-                  {
-                    (room.bookings.length > 0) ?
-                      <span style={{color:"red" ,fontSize:'20'}}> {room.bookings.length} Bookings </span>
-                    : <span style={{color:"green" ,fontSize:'20'}}> {room.bookings.length} Bookings </span>
-                  }  
+            {
+              (room.bookings.length > 0) ?
+                <span style={{color:"red" ,fontSize:'20'}}> {room.bookings.length} Bookings </span>
+              : <span style={{color:"green" ,fontSize:'20'}}> {room.bookings.length} Bookings </span>
+            } 
+               
+                   
                   <RoomBookings room={room} />
-                </Grid>
-                <Grid item xs={12}>
+                
+                
                     <TextField
                     autoFocus
                     margin="dense"
@@ -91,24 +91,24 @@ const RoomDetails = (props) => {
                     fullWidth
                     onChange={(e) => setTopic(e.target.value)}                   
                     />
-                </Grid>
-                <Grid item xs={12}>
+                
+                
                   <br></br>
                   <InputLabel> From :</InputLabel>
                   <DatePicker
                     onChange={setFrom}
                     value={startDate}
                   />
-                </Grid>
-                <Grid item xs={12}>
+                
+                
                   <br></br>
                   <InputLabel> to :</InputLabel>
                   <DatePicker
                     onChange={setUntil}
                     value={endDate}
                   />
-                </Grid>
-               </Grid>
+                
+               
                 
             
             

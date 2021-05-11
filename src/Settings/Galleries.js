@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,  } from "react";
 import axios from "axios";
 
 import {
-    Grid,Paper,Card, CardContent, Button
+    Grid,Paper,Card, CardContent, Button, TextField
   } from '@material-ui/core';
 
-
-import Filter from "./galleries_components/Filter"
 import cfg from '../../src/cfg'; 
 import CustomCard from "./galleries_components/Card";
+import RoomsGallery from "./galleries_components/RoomsGallery";
 
 const url = cfg.url + "common/";
 const buildingsURL = axios.get(url + "buildings/");
 const zonesURL = axios.get(url + "zones/");
 const floorsURL = axios.get(url + "floors/");
 const roomsURL = axios.get(url + "rooms/");
+
+
 
 
 function Galleries() {
@@ -24,6 +25,9 @@ function Galleries() {
     const [zones, setZones] = useState([]);
     const [floors, setFloors] = useState([]);
     const [rooms, setRooms] = useState([]);
+    const [searchTerm , setSearchTerm] = useState("")
+   
+
 
     useEffect(() => {
         axios.all([
@@ -43,31 +47,17 @@ function Galleries() {
         })).catch(errors => {
             console.log(errors)
         })
-    }, [])
+    }, )
 
     return (
      
         
            <Grid container spacing={4} >
-           <Grid item lg={12}>
-           <Paper square elevation={2} className="app-page-title">
-           <div>
-            <div className="app-page-title--first">
-                <div className="app-page-title--heading">
-                <h1>Filter Zone</h1>
-                <div className="app-page-title--description">
-                    Do it later InshaAllah
-                </div>
-                </div>
-            </div>
-            </div>
-           </Paper>
-                </Grid>
-                {rooms.map(room => <Grid item lg={3} xs={12} md={6} xl={3}>
-                    <CustomCard room={room}/>
-                     
-                         
-                 </Grid>)}
+            <Grid item xs={12}>
+                <TextField  id="outlined-basic" label="Search in Buildings" variant="outlined" onChange={(e) => setSearchTerm(e.target.value)} /> 
+            </Grid>
+           
+            <RoomsGallery rooms={rooms}/>
             
            </Grid>
            

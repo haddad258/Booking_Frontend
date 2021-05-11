@@ -21,16 +21,8 @@ const RoomBookings = (props) => {
     const bookingsURL = axios.get(url + `bookings/byroom/${room._id}`);
     
     useEffect(() => {
-        axios.all([
-            bookingsURL ,
-            
-        ]).then(axios.spread((...responses) => {
-
-        
+        axios.all([ bookingsURL ]).then(axios.spread((...responses) => {
             setBookings(responses[0].data)
-            
-
-
         })).catch(errors => {
             console.log(errors)
         })
