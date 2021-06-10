@@ -37,6 +37,30 @@ const RoomBookings = (props) => {
       setOpen(false);
     };
 
+    const getBookingHours = ( dateOne, dateTwo) => {
+    
+        const milliseconds = Math.abs(new Date(dateTwo) - new Date(dateOne));
+        const hours = milliseconds / 36e5;
+        console.log(hours )
+
+        var hour = hours;
+        var day = 0;
+        if (hour>24){
+            day = parseInt(hour / 24);
+            hour = parseInt(hour % 24);
+            return day.toString()+" d"
+        }else{
+            hour = parseInt(hour); 
+            return hour.toString()+" h"
+    }
+//alert (day);
+///alert(hour);
+       
+
+    }
+    
+
+
     return (
         <>
     
@@ -48,27 +72,32 @@ const RoomBookings = (props) => {
             <DialogTitle id="form-dialog-title">{room.name} Bookings</DialogTitle>
             <DialogContent>
             <Grid container spacing={4}>
-            <Grid item xs={4}>
+            <Grid item xs={3}>
                 Topic
             </Grid>
-            
-            <Grid item xs={4}>
+            <Grid item xs={3}>
+                Hours
+            </Grid>
+            <Grid item xs={3}>
                 From
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={3}>
                 Until
             </Grid>
            </Grid>
                {bookings.map(b => 
                 <Grid container spacing={4}>
-                <Grid item xs={4}>
+                <Grid item xs={3}>
                     {b.topic}
                 </Grid>
-                <Grid item xs={4}>
-                    {b.from}
+                <Grid item xs={3}>
+                    {getBookingHours(b.from, b.until)}
                 </Grid>
-                <Grid item xs={4}>
-                    {b.until}
+                <Grid item xs={3}>
+                    <span style={{"fontSize":10}}>{b.from}</span>
+                </Grid>
+                <Grid item xs={3}>
+                    <span style={{"fontSize":10}}>{b.until}</span>
                 </Grid>
                </Grid>
                )}

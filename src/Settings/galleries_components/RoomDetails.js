@@ -3,22 +3,13 @@ import axios from 'axios';
 import DatePicker from 'react-date-picker';
 
 import {
-    FormControlLabel,
     Dialog,
     DialogActions,
-    DialogContent,
-    DialogContentText,
+    DialogContent,   
     DialogTitle,
-    Checkbox,
     Button,
-    List,
-    ListItem,
     TextField,
-    FormControl,
-    ListItemText,
-    Card,
     InputLabel,
-    Grid,
   } from '@material-ui/core';
   import VisibilityIcon from '@material-ui/icons/Visibility';
 
@@ -95,17 +86,30 @@ const RoomDetails = (props) => {
                 
                   <br></br>
                   <InputLabel> From :</InputLabel>
-                  <DatePicker
-                    onChange={setFrom}
-                    value={startDate}
+                 
+                  <TextField
+                    id="datetime-local"
+                    label="Start Date"
+                    type="datetime-local"
+                    defaultValue= {startDate}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    onChange={(e)=> setFrom(e.target.value)}
                   />
                 
                 
                   <br></br>
                   <InputLabel> to :</InputLabel>
-                  <DatePicker
-                    onChange={setUntil}
-                    value={endDate}
+                  <TextField
+                    id="datetime-local"
+                    label="Start Date"
+                    type="datetime-local"
+                    defaultValue= {endDate}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    onChange={(e)=> setUntil(e.target.value)}
                   />
                 
                

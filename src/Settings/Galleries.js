@@ -6,7 +6,6 @@ import {
   } from '@material-ui/core';
 
 import cfg from '../../src/cfg'; 
-import CustomCard from "./galleries_components/Card";
 import RoomsGallery from "./galleries_components/RoomsGallery";
 
 const url = cfg.url + "common/";
@@ -29,7 +28,7 @@ function Galleries() {
    
     const searchByRoomName = (rows) => {
         const columns = rows[0] && Object.keys(rows[0]);
-        return rows.filter(row => columns.some(column => row[column].toString().toLowerCase().indexOf(searchTerm) > -1) )
+        return rows.filter(row => columns.some(column => row[column].toString().toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) )
     } 
 
     useEffect(() => {
