@@ -1,6 +1,5 @@
 import React ,{useState, useEffect} from 'react';
 import axios from 'axios';
-import DatePicker from 'react-date-picker';
 
 import {
     Dialog,
@@ -11,7 +10,9 @@ import {
     TextField,
     InputLabel,
   } from '@material-ui/core';
-  import VisibilityIcon from '@material-ui/icons/Visibility';
+
+import { DatePicker } from '@material-ui/pickers'
+
 
 import cfg from '../../cfg';
 import RoomBookings from './RoomBookings';
@@ -91,11 +92,13 @@ const RoomDetails = (props) => {
                     id="datetime-local"
                     label="Start Date"
                     type="datetime-local"
+
                     defaultValue= {startDate}
                     InputLabelProps={{
                       shrink: true,
                     }}
                     onChange={(e)=> setFrom(e.target.value)}
+                    
                   />
                 
                 
