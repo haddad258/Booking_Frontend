@@ -16,7 +16,8 @@ import {
 } from '@material-ui/core';
 
 import Addtransport from './Addtransport'
-
+import Edit from './edit'
+import Display from './Display'
 const API_URL = 'http://localhost:3002/forResrvation/list/transport_tools'
   
 export default function MyCompcaronent() {
@@ -63,20 +64,8 @@ export default function MyCompcaronent() {
       return <div>Chargement...</div>;
     } else {
       return (
-        //     <ul>
-        //   {items.map(item => (
-        //     <li key={item.matricule}>
-        //       {item.st} 
-        //     </li>
-        //   ))}
-        // </ul> 
       <Card className="card-box mb-4">
-        <div className="card-header pr-2">
-          <div className="card-header--title">list of cars</div>
-        </div>
-        <CardContent > 
-          
-        
+        <CardContent >      
         <CardContent className="p-4">
         
           <div className="table-responsive">
@@ -89,6 +78,7 @@ export default function MyCompcaronent() {
                   <th className="text-center">matricule</th>
                   <th className="text-center">Status</th>
                   <th className="text-center">price</th>
+                  <th style={{ width: '10%' }}></th>
                   <th style={{ width: '10%' }}>action</th>
                 </tr>
               </thead>
@@ -138,15 +128,18 @@ export default function MyCompcaronent() {
                 <div className="font-weight-bold text-black">
                   {item.price}
                   </div>
+                  
                 </td>
+                <td className="text-center">
+                <div className="font-weight-bold text-black">
+                <Display imageRef={item.imageRef} id={item.id}/>
+                  </div>
+                  
+                </td>
+                
                 <td>
                 <div className="card-footer d-flex justify-content-between">
-                <FontAwesomeIcon
-                icon={['far', 'edit']}
-                className="font-size-l"
-                style={{color:"gray" , cursor : "pointer"}}
-                
-              />  
+              <Edit  id={item.id} matricule={item.matricule} brand={item.brand} description={item.description} color={item.color} price={item.price} />
               <FontAwesomeIcon
                 icon={['far', 'trash-alt']}
                 className="font-size-l"

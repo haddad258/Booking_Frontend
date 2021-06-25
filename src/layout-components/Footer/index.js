@@ -15,7 +15,5 @@ const Footer = props => {
   );
 };
 
-const mapStateToProps = state => ({
-  footerFixed: state.ThemeOptions.footerFixed
-});
+
 export default connect(mapStateToProps)(Footer);

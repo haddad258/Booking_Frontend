@@ -43,12 +43,12 @@ const Sidebar = props => {
       <Hidden lgUp>
         <Drawer
           anchor="left"
-          //open={sidebarToggleMobile}
-          //onClose={closeDrawer}
+          open={sidebarToggleMobile}
+          onClose={closeDrawer}
           variant="temporary"
           elevation={4}
           className="app-sidebar-wrapper-lg">
-          
+          <SidebarHeader />
           <PerfectScrollbar>{sidebarMenuContent}</PerfectScrollbar>
         </Drawer>
       </Hidden>
@@ -60,7 +60,7 @@ const Sidebar = props => {
           })}
           square
           elevation={sidebarShadow ? 11 : 3}>
-          
+          <SidebarHeader />
           <div
             className={clsx({
               'app-sidebar-menu': sidebarFixed

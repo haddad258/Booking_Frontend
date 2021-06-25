@@ -41,7 +41,7 @@ const AddUserModal = (props) => {
        
        
 
-       axios.post(url + `users`, values).then(response => response.status)
+       axios.post(url + `/users/add`, values).then(response => response.status)
             .then((status) => {
                // alert(JSON.stringify({"User Added": values.firstName,  "status ": status}))
                 if (status == 200) setOpen1(false)

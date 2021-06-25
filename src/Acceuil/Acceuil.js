@@ -1,8 +1,21 @@
 import React, { Fragment } from 'react';
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Grid, Card, CardContent, Button } from '@material-ui/core';
+import {RangeStepInput} from 'react-range-step-input';
+import { Grid, Card, CardContent,
+  CardHeader, Button, Paper } from '@material-ui/core';
 import { format } from "date-fns";
+import {DatePicker } from 'antd';
+import { Menu, Slider, Checkbox, Radio } from "antd";
+
+import {
+  DollarOutlined,
+  DownSquareOutlined,
+  StarOutlined,
+} from "@ant-design/icons";
+import 'antd/dist/antd.css';
+import Box from '@material-ui/core/Box';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
     FormControlLabel,
     Dialog,
@@ -10,7 +23,7 @@ import {
     DialogContent,
     DialogContentText,
     DialogTitle,
-    Checkbox,
+
     List,
     ListItem,
     TextField,
@@ -22,16 +35,56 @@ const API_URL = 'http://localhost:3002/forResrvation/listDispo/all'
 const API_URL1 = 'http://localhost:3002/forResrvation/listDispo/home'
 
 const API_URL2 = 'http://localhost:3002/forResrvation/listDispo/transport_tools'
-
-function Cars(prop) {
+const { SubMenu, ItemGroup } = Menu;
+function Cars(props) {
+  
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
     const [open1, setOpen1] = React.useState(false);
-    
+    const [price, setPrice] = useState([0, 4999]);
     const [values, setValues] = useState([]);
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setendDate] = useState(new Date());
+    const [ok, setOk] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [categoryIds, setCategoryIds] = useState([]);
+  const [star, setStar] = useState("");
+  const [subs, setSubs] = useState([]);
+  const [sub, setSub] = useState("");
+  const [brands, setBrands] = useState([  "BMW",
+  "peugeot",
+  "mercedes",
+]);
+const handleSlider = (value) => {
+  
+
+  // reset
+
+  setPrice(value);
+  setStar("");
+  setSub("");
+  setBrand("");
+  setColor("");
+  setShipping("");
+  setTimeout(() => {
+    setOk(!ok);
+  }, 300);
+};
+ 
+   
+
+ 
+    const [brand, setBrand] = useState("");
+    const [colors, setColors] = useState([
+      "Black",
+      "red",
+      "gray",
+      "White",
+      "blue",
+    ]);
+    const [color, setColor] = useState("");
+  const [shipping, setShipping] = useState("");  
     const handleChange = event => {
         setValues({
             ...values,
@@ -66,7 +119,89 @@ function Cars(prop) {
     const handleClose1 = () => {
       setOpen1(false);
     };
-    
+    const handleBrand = (e) => {
+      setPrice([0, 0]);
+      setStar("");
+      setColor("");
+      setBrand(e.target.value);
+      setShipping("");
+      
+    };
+    const showBrands = () =>
+      brands.map((b) => (
+        <Radio
+          key={b}
+          value={b}
+          name={b}
+          checked={b === brand}
+          onChange={handleBrand}
+          className="pb-1 pl-4 pr-4"
+        >
+          {b}
+        </Radio>
+      ));
+  
+    // 8. show products based on color
+    const showColors = () =>
+      colors.map((c) => (
+        <Radio
+          key={c}
+          value={c}
+          name={c}
+          checked={c === color}
+          onChange={handleColor}
+          className="pb-1 pl-4 pr-4"
+        >
+          {c}
+        </Radio>
+      ));
+  
+    const handleColor = (e) => {
+      setSub("");
+      
+      setPrice([0, 0]);
+      setCategoryIds([]);
+      setStar("");
+      setBrand("");
+      setColor(e.target.value);
+      setShipping("");
+   
+    };
+  
+    // 9. show products based on shipping yes/no
+    const showShipping = () => (
+      <>
+        <Checkbox
+          className="pb-2 pl-4 pr-4"
+          onChange={handleShippingchange}
+          value="Yes"
+          checked={shipping === "Yes"}
+        >
+          Yes
+        </Checkbox>
+  
+        <Checkbox
+          className="pb-2 pl-4 pr-4"
+          onChange={handleShippingchange}
+          value="No"
+          checked={shipping === "No"}
+        >
+          No
+        </Checkbox>
+      </>
+    );
+  
+    const handleShippingchange = (e) => {
+      setSub("");
+      
+      setPrice([0, 0]);
+      setCategoryIds([]);
+      setStar("");
+      setBrand("");
+      setColor("");
+      setShipping(e.target.value);
+      
+    };
     useEffect(() => {
   
       axios.get(API_URL).then((response)=>{
@@ -76,7 +211,12 @@ function Cars(prop) {
     setItems(response.data.content);
       })
     }, [])
-    
+    const filtered = (props) => {
+    items.filter(item => {
+      return item.type.toLowerCase().includes(props.toLowerCase())
+    }) 
+  }
+  
     if (error) {
         return <div>Erreur : {error.message}</div>;
       } else if (!isLoaded) {
@@ -84,12 +224,16 @@ function Cars(prop) {
       } else {
   return (
     <Fragment>
+     
+     <Grid container spacing={3}>
+      <Grid item xs={9}>
       <Grid container spacing={4}>
-        {items.map(item   => (item.imageRef != null) ?
-    
+        {items.map(item   => {
+            
+        return(
       <Grid item xs={12} sm={6} md={4}>
-        <Card className="mb-4">
-          <img alt="..." className="card-img-top" src={process.env.PUBLIC_URL+ item.imageRef.replace("C:\\fakepath\\", "/")} />
+        <Card className="mb-4"style={{height:410}}>
+          <img alt="..." className="card-img-top" src={process.env.PUBLIC_URL+ item.imageRef.replace("C:\\fakepath\\", "/")} style={{width:150, height:150}}/>
           <CardContent className="p-3">
             <h5 className="card-title font-weight-bold font-size-lg">
             {item.name}
@@ -114,7 +258,10 @@ function Cars(prop) {
           </div>
           </CardContent>
         </Card>
-      </Grid>: null
+      </Grid>
+        );
+      }  
+        
       
       )}
             <Dialog
@@ -176,13 +323,10 @@ function Cars(prop) {
             </Button>
             </DialogActions>
         </Dialog>
-            
-
-        
-              
-              
-            
         </Grid>
+        </Grid>
+        
+      </Grid>
     </Fragment>
   );
 }

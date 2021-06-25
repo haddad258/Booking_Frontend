@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
-
+import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
-
+import HomeIcon from '@material-ui/icons/Home';
 import { IconButton, Box } from '@material-ui/core';
 
 import projectLogo from '../../assets/images/react.svg';
@@ -13,20 +13,18 @@ const HeaderLogo = () => {
       <div className={clsx('app-header-logo', {})}>
         <Box
           className="header-logo-wrapper"
-          title="Carolina React Admin Dashboard with Material-UI Free">
-          <Link to="/DashboardDefault" className="header-logo-wrapper-link">
+          title="booking">
+          <Link to="/Acceuil" className="header-logo-wrapper-link">
             <IconButton
               color="primary"
-              size="medium"
+              size="large"
               className="header-logo-wrapper-btn">
-              <img
-                className="app-header-logo-img"
-                alt="Carolina React Admin Dashboard with Material-UI Free"
-                src={projectLogo}
-              />
+             
+             
+              <HomeIcon/>
             </IconButton>
           </Link>
-          <Box className="header-logo-text">Carolina</Box>
+          <Box className="header-logo-text">booking</Box>
         </Box>
       </div>
     </Fragment>

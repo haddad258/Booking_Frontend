@@ -16,7 +16,7 @@ import {
 } from '@material-ui/core';
 
 import Addequipment from './Addequipment'
-
+import Edit from './edit'
 const API_URL = 'http://localhost:3002/forResrvation/list/equipment'
   
 export default function MyCompcaronent() {
@@ -46,7 +46,7 @@ export default function MyCompcaronent() {
       }).catch(err => alert("status : " + err))
     }
     const addcar = (id) => {
-      alert("delete")
+      
       axios.delete('/forResrvation/delete/equipment/'+`${id}`).then(response => response.status)
       .then((status) => {
           alert("status : " + status)
@@ -84,7 +84,11 @@ export default function MyCompcaronent() {
                   <th style={{ width: '20%' }}>equipment</th>
                   
                   <th className="text-center">Status</th>
+                  
+                  <th className="text-center">brand</th>
+                  <th className="text-center">color</th>
                   <th className="text-center">price</th>
+
                   <th style={{ width: '10%' }}>action</th>
                 </tr>
               </thead>
@@ -95,14 +99,16 @@ export default function MyCompcaronent() {
                 <td>
                   <div className="d-flex align-items-center">
                   <img  alt="..." src={process.env.PUBLIC_URL+ item.imageRef.replace("C:\\fakepath\\", "/")} style={{width:150, height:150}} className="p-3" />
-                    <div>
+                  <div>
                       <a
                         href="#/"
                         onClick={e => e.preventDefault()}
                         className="font-weight-bold text-black"
                         title="...">
-                        {item.description}
+                        {item.name}
                       </a>
+                        
+                    
                     </div>
                   </div>
                 </td>
@@ -112,6 +118,17 @@ export default function MyCompcaronent() {
                   {item.status}
                   </div>
                 </td>
+                
+                <td className="text-center">
+                <div className="font-weight-bold text-black">
+                  {item.brand}
+                  </div>
+                </td>
+                <td className="text-center">
+                <div className="font-weight-bold text-black">
+                  {item.color}
+                  </div>
+                </td>
                 <td className="text-center">
                 <div className="font-weight-bold text-black">
                   {item.price}
@@ -119,12 +136,8 @@ export default function MyCompcaronent() {
                 </td>
                 <td>
                 <div className="card-footer d-flex justify-content-between">
-                <FontAwesomeIcon
-                icon={['far', 'edit']}
-                className="font-size-l"
-                style={{color:"gray" , cursor : "pointer"}}
-                
-              />  
+                <Edit  id={item.id} name={item.name} brand={item.brand} description={item.description} color={item.color} price={item.price} />
+               
               <FontAwesomeIcon
                 icon={['far', 'trash-alt']}
                 className="font-size-l"

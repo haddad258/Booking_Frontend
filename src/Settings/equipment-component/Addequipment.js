@@ -151,6 +151,36 @@ URL.createObjectURL(event.target.files[0])
                     onChange={handleChange}
                     value={values.description}
                 />
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    id="brand"
+                    label="brand"
+
+                    fullWidth
+                    onChange={handleChange}
+                    value={values.brand}
+                />
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    id="color"
+                    label="color"
+
+                    fullWidth
+                    onChange={handleChange}
+                    value={values.color}
+                />
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    label="type"
+
+                    fullWidth
+                    onChange={handleChange}
+                    value={values.name}
+                />
                 <div> 
         </div> 
             </DialogContent>

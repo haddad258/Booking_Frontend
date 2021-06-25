@@ -9,8 +9,8 @@ import NewUsers from "./users_components/NewUsers"
 import ApprovedUsers from "./users_components/ApprovedUsers"
   
 const url = cfg.url;
-const requestUsers = axios.get(url + "users/list");
-const requestPrivileges = axios.get(url + "privilege/list");
+const requestUsers =url + "users/list";
+const requestPrivileges = url + "privilege/list";
 
 function Users() {
 
@@ -18,14 +18,14 @@ function Users() {
     const [privileges, setPrivileges] = useState([]);
     
     useEffect(() => {
-        axios.all([requestUsers, requestPrivileges]).then(axios.spread((...responses) => {
+        axios.get(requestUsers).then((responses) => {
 
-            setUsers(responses[0].items.content)
-            setPrivileges(responses[1].items.content)
+            setUsers(responses.data.content)
+       
             
 
 
-        })).catch(errors => {
+        }).catch(errors => {
             console.log(errors)
         })
     }, [])

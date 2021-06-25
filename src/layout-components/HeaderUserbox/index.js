@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {
@@ -32,7 +32,8 @@ export default function HeaderUserbox() {
         onClick={handleClick}
         className="text-capitalize px-3 text-left btn-inverse d-flex align-items-center">
         <Box>
-          <Avatar sizes="44" alt="Emma Taylor" src={avatar5} />
+         <AccountCircleIcon color="primary" fontSize="large"/>
+          
         </Box>
         <div className="d-none d-xl-block pl-3">
           <div className="font-weight-bold pt-2 line-height-1">Ryan Kent</div>
@@ -61,7 +62,7 @@ export default function HeaderUserbox() {
         <div className="dropdown-menu-right dropdown-menu-lg overflow-hidden p-0">
           <List className="text-left bg-transparent d-flex align-items-center flex-column pt-0">
             <Box>
-              <Avatar sizes="44" alt="Emma Taylor" src={avatar5} />
+            <AccountCircleIcon color="primary"/>
             </Box>
             <div className="pl-3  pr-3">
               <div className="font-weight-bold text-center pt-2 line-height-1">
