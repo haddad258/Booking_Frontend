@@ -14,6 +14,17 @@ import {
   name,
 } from "../../helpers/validation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import {
+  Avatar,
+  Box,
+  Menu,
+  Button,
+  List,
+  ListItem,
+  Tooltip,
+  Divider
+} from '@material-ui/core';
 import {
   faTwitter,
   faFacebookF,
@@ -30,31 +41,46 @@ const SignUpForm = (props) => {
       className={`needs-validation ${submitFailed ? "was-validated" : ""}`}
       noValidate
     >
-      <div className="row mb-3">
-        <div className="col-md-6">
-          <Field
+    <div className="col- text-center">
+     <div>
+        
+          <input
             name="firstName"
             type="text"
-            label="First Name"
+            label="First name"
+            icon={IconShieldLockFill}
             component={renderFormField}
             placeholder="First Name"
             validate={[required, name]}
             required={true}
+            className="mb-3"
           />
-        </div>
-        <div className="col-md-6">
-          <Field
+         </div>
+         <div>
+          <input
             name="lastName"
             type="text"
-            label="Last Name"
+            label="Last name"
             component={renderFormField}
             placeholder="Last Name"
             validate={[required, name]}
             required={true}
+            className="mb-3"
           />
         </div>
-      </div>
-      <Field
+       
+      <input
+        name="mobileNo"
+        type="text"
+        
+        component={renderFormGroupField}
+        placeholder="addressMail"
+   
+       
+        className="mb-3"
+      />
+        <div>
+      <input
         name="mobileNo"
         type="number"
         label="Mobile no"
@@ -67,7 +93,9 @@ const SignUpForm = (props) => {
         min="9999"
         className="mb-3"
       />
-      <Field
+      </div>
+      <div>
+      <input
         name="password"
         type="password"
         label="Your password"
@@ -80,13 +108,16 @@ const SignUpForm = (props) => {
         minLength="8"
         className="mb-3"
       />
+      </div>
       <button
+     
         type="submit"
         className="btn btn-primary btn-block mb-3"
         disabled={submitting}
       >
         Create
       </button>
+      </div>
       <Link className="float-left" to="/account/signin" title="Sign In">
         Sing In
       </Link>
@@ -105,13 +136,31 @@ const SignUpForm = (props) => {
         </div>
         <div className="col- text-center">
           <Link to="/" className="btn text-white bg-twitter mr-3">
-            <FontAwesomeIcon icon={faTwitter} />
+          <Tooltip arrow title="Twitter">
+                <Button color="default" className="text-twitter">
+                  <span className="btn-wrapper--icon">
+                    <FontAwesomeIcon icon={['fab', 'twitter']} />
+                  </span>
+                </Button>
+              </Tooltip>
           </Link>
           <Link to="/" className="btn text-white mr-3 bg-facebook">
-            <FontAwesomeIcon icon={faFacebookF} className="mx-1" />
+          <Tooltip arrow title="facebook">
+          <Button color="default" className="text-facebook">
+                  <span className="btn-wrapper--icon">
+                    <FontAwesomeIcon icon={['fab', 'facebook']} />
+                  </span>
+                </Button>
+              </Tooltip>
           </Link>
           <Link to="/" className="btn text-white mr-3 bg-google">
-            <FontAwesomeIcon icon={faGoogle} className="mx-1" />
+          <Tooltip arrow title="google">
+          <Button color="default" className="text-google">
+                  <span className="btn-wrapper--icon">
+                    <FontAwesomeIcon icon={['fab', 'google']} />
+                  </span>
+                </Button>
+              </Tooltip>
           </Link>
         </div>
       </div>

@@ -24,7 +24,7 @@ import { FormLabel, FormGroup } from '@material-ui/core';
 
 
 const Addtransport = (props) => {
-    const {privileges} = props
+    var {id} = props
     const [open1, setOpen1] = React.useState(false);
     
     const [values, setValues] = useState([]);
@@ -43,6 +43,7 @@ const Addtransport = (props) => {
         const handleChange = event => {
           setValues({
               ...values,
+              'forReservation':id,
               [event.target.id]: event.target.value,
               
           });
@@ -54,7 +55,7 @@ const Addtransport = (props) => {
        
        
 
-       axios.post("http://localhost:3002/calendar/add", values).then(response => response.status)
+       axios.post("http://localhost:3002/calendar/create", values).then(response => response.status)
             .then((status) => {
                alert(JSON.stringify("success"))
                 if (status == 200) setOpen1(false)
@@ -88,35 +89,26 @@ const Addtransport = (props) => {
             <DialogContentText>
              
           </DialogContentText>
-          <TextField
-                    autoFocus
-                    margin="dense"
-                    id="event"
-                    label="event"
-                    
-                    fullWidth
-                    onChange={handleChange}
-                    value={values.event}
-                />  
+          
             
                 <TextField
                     autoFocus
                     margin="dense"
                     id="addressMail"
-                    label="organisator"
+                    label="client"
                     
                     fullWidth
                     onChange={handleChange}
                     value={values.addressMail}
                 />
-                <Grid container spacing={3} >
+                 <Grid container spacing={3} >
                 <Grid item md={6} xs={12} >
                 <TextField
                     autoFocus
                     margin="dense"
                     id="dateDebut"
                     label="start from"
-                    
+                    type="date"
                     fullWidth
                     onChange={handleChange}
                     value={values.dateDebut}
@@ -127,8 +119,9 @@ const Addtransport = (props) => {
                     autoFocus
                     margin="dense"
                     id="heuredebut"
-                    label="from"
                     
+                    label="from"
+                    type="time"
                     fullWidth
                     onChange={handleChange}
                     value={values.heuredebut}
@@ -140,6 +133,7 @@ const Addtransport = (props) => {
                     autoFocus
                     margin="dense"
                     id="dateFin"
+                    type="date"
                     label="end"
                     
                     fullWidth
@@ -152,6 +146,7 @@ const Addtransport = (props) => {
                     autoFocus
                     margin="dense"
                     id="heurefin"
+                    type="time"
                     label="to"
                     
                     fullWidth

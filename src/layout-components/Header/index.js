@@ -3,6 +3,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import MenuIcon from '@material-ui/icons/Menu';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import clsx from 'clsx';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import HomeIcon from '@material-ui/icons/Home';
 import { NotificationActions, NotifcationContainer } from 'material-ui-notifications';
@@ -139,7 +140,6 @@ const Header = props => {
     </Fragment>
   );
 };
-
 const mapStateToProps = state => ({
   headerShadow: state.ThemeOptions.headerShadow,
   headerFixed: state.ThemeOptions.headerFixed,
@@ -150,4 +150,4 @@ const mapDispatchToProps = dispatch => ({
   setSidebarToggleMobile: enable => dispatch(setSidebarToggleMobile(enable))
 });
 
-export default Header;
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -41,6 +41,7 @@ var iconsMap = {
 export default [
   {
     label: 'Navigation menu',
+  
     content: JSON.parse(
       `[
   

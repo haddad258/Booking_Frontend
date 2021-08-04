@@ -47,7 +47,7 @@ function Equipment() {
   const [values, setValues] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setendDate] = useState(new Date());
-
+  const [etat, setetat] = useState(2);
   const [ok, setOk] = useState(false);
   const [color_black, setcolor_black] = useState([]);
   const [categoryIds, setCategoryIds] = useState([]);
@@ -228,150 +228,130 @@ const classes = {
     } else if (!isLoaded) {
       return <div>Chargement...</div>;
     } else {
-return (
-  <Fragment>
-    <Grid container spacing={3}>
-      <Grid item xs={9}>
-      <Grid container spacing={4}>
-      {items.map(item   => {
-          if(((item.price >price[0])&&(item.price <price[1]))||(item.brand ==brand)||(item.color ==color)) {  
-        return(
+      return (
+        <Fragment>
+          <Grid container spacing={3}>
+          <Grid item xs={9}>
+          <Grid container spacing={4}>
+            {items.map((item)   =>{
+              if((item.brand ==brand)||((item.status != etat))||(item.color ==color)) {  
+            return(
+          <Grid item xs={12} sm={6} md={4}>
+              <Card className="mb-4">
+                <img alt="..." className="card-img-top" src={process.env.PUBLIC_URL+ item.imageRef.replace("C:\\fakepath\\", "/")} style={{width:150, height:150}} />
+                <CardContent className="p-3">
+                  <h5 className="card-title font-weight-bold font-size-lg">
+                  {item.brand}
+                  </h5>
+                  <p className="card-text">
+                {item.status==0 && <p style={{ color: 'green' }}>ouverte</p>}
+                {item.status==1 && <p style={{ color: 'red' }}>confirmé</p>}
+                {item.status==2 && <p style={{ color: 'gold' }}>encours</p>}
+                </p>
+                  <p className="card-text">
+                    {item.description}
+                  </p>
+                  
+                  <div style={{ }}>
+                <Button
+                
+                className="m-2"
+                variant="outlined"
+                color="primary"
+                onClick={handleChanges(item.id),handleClickOpen1}
+                >
+                reserve
+                </Button>
+                </div>
+                </CardContent>
+              </Card>
+            </Grid>
+          );
+        }  
+          }
+            )}
+                <Dialog
+                open={open1}
+                onClose={handleClose1}
+                aria-labelledby="form-dialog-title"
+                classes={{ paper : classes.dialogPaper}} >
+                  <Time id={values.forReservation}/>
+               
+            </Dialog>
+            </Grid>
+            </Grid>
+            <Grid item xs={3}
+            className="col-md-5"
+            style={{backgroundColor:"#eeeeee"}}>
+            <div className="container-fluid" >
+          <div className="row">
+            <div className="col-md-3 pt-2">
+              <h4>Filter</h4>
+              <hr />
     
-      <Grid item xs={12} sm={6} md={4}>
-        <Card className="mb-4">
-          <img alt="..." className="card-img-top" src={process.env.PUBLIC_URL+ item.imageRef.replace("C:\\fakepath\\", "/")} />
-          <CardContent className="p-3">
-            <h5 className="card-title font-weight-bold font-size-lg">
-             {item.name}
-            </h5>
+              <Menu
+              style={{backgroundColor:"#eeeeee"}}
+                defaultOpenKeys={["1", "2", "3", "4"]}
+                mode="inline"
+              >
+                {/* disponibilité */}
+                <SubMenu
+                  key="1"
+                  title={
+                    <span className="h6">
+                      <DownSquareOutlined /> disponibilité
+                    </span>
+                  }
+                >
+                  <div>
+                  <select id="dis" onChange={handleSlider} value={etat}  style={{width: '100%'}} >
+                        <option value="2">All</option>
+                        <option value="0">reservé</option>
+                        <option value="1">disponible</option>
+                        <option value="3">encours</option>
+                        </select>
+                  </div>
+                </SubMenu>
+    
+    
+                {/* brands */}
+                <SubMenu
+                  key="3"
+                  title={
+                    <span className="h6">
+                      <DownSquareOutlined /> Brands
+                    </span>
+                  }
+                >
+                  <div style={{ maringTop: "-10px" }} className="pr-5">
+                    {showBrands()}
+                  </div>
+                </SubMenu>
+    
+                {/* colors */}
+                <SubMenu
+                  key="4"
+                  title={
+                    <span className="h6">
+                      <DownSquareOutlined /> Colors
+                    </span>
+                  }
+                >
+                  <div style={{ maringTop: "-10px" }} className="pr-5">
+                    {showColors()}
+                  </div>
+                </SubMenu>
+              </Menu>
+            </div>
+    
             
-            <p className="card-text">
-              {item.description}
-            </p>
-            
-            <div style={{ }}>
-          <Button
-          
-          className="m-2"
-          variant="outlined"
-          color="primary"
-          onClick={handleChanges(item.id),handleClickOpen1}
-          >
-          reserve
-          </Button>
-          <Button  style={{ backgroundColor: green[500]}}>in stock</Button>
           </div>
-          </CardContent>
-        </Card>
-      </Grid> );
-    }  
-      }
-      
-      )}
-         <Dialog
-            open={open1}
-            onClose={handleClose1}
-            aria-labelledby="form-dialog-title"
-            classes={{ paper : classes.dialogPaper}} >
-              <Time/>
-      </Dialog>
-      </Grid>
-        </Grid>
-        <Grid item xs={3}style={{backgroundColor:"grey"}}>
-        <div className="container-fluid" >
-      <div className="row">
-        <div className="col-md-3 pt-2">
-          <h4>Filter</h4>
-          <hr />
-
-          <Menu
-          style={{backgroundColor:"grey"}}
-            defaultOpenKeys={["1", "2", "3", "4", "5", "6", "7"]}
-            mode="inline"
-          >
-            {/* price */}
-            <SubMenu
-              key="1"
-              title={
-                <span className="h6">
-                  <DollarOutlined /> Price
-                </span>
-              }
-            >
-              <div>
-                <Slider
-                  className="ml-4 mr-4"
-                  tipFormatter={(v) => `$${v}`}
-                  range
-                  value={price}
-                  onChange={handleSlider}
-                  max="4999"
-                />
-              </div>
-            </SubMenu>
-
-            
-
-            {/* brands */}
-            <SubMenu
-              key="5"
-              title={
-                <span className="h6">
-                  <DownSquareOutlined /> Brands
-                </span>
-              }
-            >
-              <div style={{ maringTop: "-10px" }} className="pr-5">
-                {showBrands()}
-              </div>
-            </SubMenu>
-
-            {/* colors */}
-            <SubMenu
-              key="6"
-              title={
-                <span className="h6">
-                  <DownSquareOutlined /> Colors
-                </span>
-              }
-            >
-              <div style={{ maringTop: "-10px" }} className="pr-5">
-                {showColors()}
-              </div>
-            </SubMenu>
-
-            {/* shipping */}
-            <SubMenu
-              key="7"
-              title={
-                <span className="h6">
-                  <DownSquareOutlined /> Shipping
-                </span>
-              }
-            >
-              <div style={{ maringTop: "-10px" }} className="pr-5">
-                {showShipping()}
-              </div>
-            </SubMenu>
-          </Menu>
         </div>
-
-        
-      </div>
-    </div>
-       
-      </Grid>
-      </Grid> 
-
-      
-            
-            
-          
-     
-
-      
-  </Fragment>
-);
-}
-}
+           
+          </Grid>
+          </Grid>
+        </Fragment>
+      );
+    }
+    }
 export default Equipment

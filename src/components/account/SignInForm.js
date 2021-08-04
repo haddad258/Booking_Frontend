@@ -11,6 +11,16 @@ import {
   minLengthMobileNo,
   digit,
 } from "../../helpers/validation";
+import {
+  Avatar,
+  Box,
+  Menu,
+  Button,
+  List,
+  ListItem,
+  Tooltip,
+  Divider
+} from '@material-ui/core';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTwitter,
@@ -24,24 +34,25 @@ const SignInForm = (props) => {
   const { handleSubmit, submitting, onSubmit, submitFailed } = props;
   return (
     <form
+    
       onSubmit={handleSubmit(onSubmit)}
       className={`needs-validation ${submitFailed ? "was-validated" : ""}`}
       noValidate
     >
-      <Field
+      <div className="col- text-center">
+      <p > addressMail</p>
+      <input
         name="mobileNo"
-        type="number"
-        label="Mobile no"
+        type="text"
+        
         component={renderFormGroupField}
-        placeholder="Mobile no without country code"
-        icon={IconPhoneFill}
-        validate={[required, maxLengthMobileNo, minLengthMobileNo, digit]}
-        required={true}
-        max="999999999999999"
-        min="9999"
+        placeholder="addressMail or phonenumber"
+   
+       
         className="mb-3"
       />
-      <Field
+      <p> mot de passe</p>
+      <input
         name="password"
         type="password"
         label="Your password"
@@ -54,6 +65,7 @@ const SignInForm = (props) => {
         minLength="8"
         className="mb-3"
       />
+      <div>
       <button
         type="submit"
         className="btn btn-primary btn-block mb-3"
@@ -61,9 +73,13 @@ const SignInForm = (props) => {
       >
         Log In
       </button>
+      </div>
+      </div>
+      <div>
       <Link className="float-left" to="/account/signup" title="Sign Up">
         Create your account
       </Link>
+      </div>
       <Link
         className="float-right"
         to="/account/forgotpassword"
@@ -79,13 +95,31 @@ const SignInForm = (props) => {
         </div>
         <div className="col- text-center">
           <Link to="/" className="btn text-white bg-twitter mr-3">
-            <FontAwesomeIcon icon={faTwitter} />
+          <Tooltip arrow title="Twitter">
+                <Button color="default" className="text-twitter">
+                  <span className="btn-wrapper--icon">
+                    <FontAwesomeIcon icon={['fab', 'twitter']} />
+                  </span>
+                </Button>
+              </Tooltip>
           </Link>
           <Link to="/" className="btn text-white mr-3 bg-facebook">
-            <FontAwesomeIcon icon={faFacebookF} className="mx-1" />
+          <Tooltip arrow title="facebook">
+          <Button color="default" className="text-facebook">
+                  <span className="btn-wrapper--icon">
+                    <FontAwesomeIcon icon={['fab', 'facebook']} />
+                  </span>
+                </Button>
+              </Tooltip>
           </Link>
           <Link to="/" className="btn text-white mr-3 bg-google">
-            <FontAwesomeIcon icon={faGoogle} className="mx-1" />
+          <Tooltip arrow title="google">
+          <Button color="default" className="text-google">
+                  <span className="btn-wrapper--icon">
+                    <FontAwesomeIcon icon={['fab', 'google']} />
+                  </span>
+                </Button>
+              </Tooltip>
           </Link>
         </div>
       </div>

@@ -34,6 +34,13 @@ import { LeftSidebar, PresentationLayout } from './layout-blueprints';
 
 // Custom pages
               // Settings
+const SignInView = lazy(() => import("./views/account/SignIn"));
+const SignUpView = lazy(() => import("./views/account/SignUp"));
+const ForgotPasswordView = lazy(() => import("./views/account/ForgotPassword"));
+const OrdersView = lazy(() => import("./views/account/Orders"));
+
+const NotificationView = lazy(() => import("./views/account/Notification"));
+const MyProfileView = lazy(() => import("./views/account/MyProfile"));
 const Forreserved = lazy(() => import('./Settings/ForReserved'));
 const Cart = lazy(() => import('./Cart/Cart'));
 const Galleries = lazy(() => import('./Settings/Galleries'));
@@ -122,7 +129,14 @@ const Routes  = props => {
                 // custom routes
                 '/Galleries',
                 '/Users',
-                '/Transport'
+                '/Transport',
+                '/account/profile',
+                '/account/orders',
+                '/account/signin',
+                '/account/signup',
+                '/account/forgotpassword',
+                '/account/Notification'
+
               ]}>
               <LeftSidebar>
                 <Switch location={location} key={location.pathname}>
@@ -149,6 +163,20 @@ const Routes  = props => {
                     <Route path="/Cart" component={Cart} />
                     <Route path="/Forreserved" component={Forreserved} />
                     <Route path="/Galleries" component={Galleries} />
+                    <Route  path="/account/signin" component={SignInView} />
+            <Route  path="/account/signup" component={SignUpView} />
+            <Route
+             
+              path="/account/forgotpassword"
+              component={ForgotPasswordView}
+            />
+            <Route  path="/account/profile" component={MyProfileView} />
+            <Route  path="/account/orders" component={OrdersView} />
+          
+            <Route
+              path="/account/Notification"
+              component={NotificationView}
+            />
                   </motion.div>
                 </Switch>
               </LeftSidebar>

@@ -68,7 +68,7 @@ function Cars() {
   const [price, setPrice] = useState([0, 4999]);
   const [date, setdate] = useState(new Date(), new Date());
   const [ok, setOk] = useState(false);
-  const [categories, setCategories] = useState([]);
+  var [idcar, setidcar] = useState("");
   const [categoryIds, setCategoryIds] = useState([]);
   const [star, setStar] = useState("");
   const [subs, setSubs] = useState([]);
@@ -77,12 +77,12 @@ function Cars() {
   "peugeot",
   "mercedes",
 ]);
-const handleSlider = (value) => {
+const handleSlider = (e) => {
   
 
   // reset
   setdate("", "");
-  setPrice(value);
+  setetat(e.target.value);
   setStar("");
   setSub("");
   setBrand("");
@@ -123,7 +123,7 @@ const handletime = (value) => {
   const [shipping, setShipping] = useState("");  
   const [ value, setValue ] = useState(0);
     const [values, setValues] = useState([]);
-    const [startDate, setStartDate] = useState(new Date());
+    const [etat, setetat] = useState(2);
     const [endDate, setendDate] = useState(new Date());
     const handleChange = event => {
         setValues({
@@ -135,9 +135,14 @@ const handletime = (value) => {
     };
     const handleChanges = async (id) => {
       
-          values.forReservation =id
+          idcar =id
  
   };
+  const handleChangess =async (id) => {
+      
+    idcar =id
+
+};
 
   
   const handleBrand = (e) => {
@@ -190,28 +195,6 @@ const handletime = (value) => {
  
   };
 
-  // 9. show products based on shipping yes/no
-  const showShipping = () => (
-    <>
-      <Checkbox
-        className="pb-2 pl-4 pr-4"
-        onChange={handleShippingchange}
-        value="Yes"
-        checked={shipping === "Yes"}
-      >
-        Yes
-      </Checkbox>
-
-      <Checkbox
-        className="pb-2 pl-4 pr-4"
-        onChange={handleShippingchange}
-        value="No"
-        checked={shipping === "No"}
-      >
-        No
-      </Checkbox>
-    </>
-  );
 
   const handleShippingchange = (e) => {
     setSub("");
@@ -269,7 +252,7 @@ const handletime = (value) => {
       <Grid item xs={9}>
       <Grid container spacing={4}>
         {items.map((item)   =>{
-          if(((item.price >price[0])&&(item.price <price[1]))||(item.brand ==brand)||((item.dateDebut == date[0])&&(item.dateFin == date[1]))||(item.color ==color)) {  
+          if((item.brand ==brand)||((item.status != etat))||(item.color ==color)) {  
         return(
       <Grid item xs={12} sm={6} md={4}>
           <Card className="mb-4">
@@ -278,7 +261,11 @@ const handletime = (value) => {
               <h5 className="card-title font-weight-bold font-size-lg">
               {item.brand}
               </h5>
-              
+              <p className="card-text">
+            {item.status==0 && <p style={{ color: 'green' }}>ouverte</p>}
+            {item.status==1 && <p style={{ color: 'red' }}>confirmé</p>}
+            {item.status==2 && <p style={{ color: 'gold' }}>encours</p>}
+            </p>
               <p className="card-text">
                 {item.description}
               </p>
@@ -306,65 +293,14 @@ const handletime = (value) => {
             onClose={handleClose1}
             aria-labelledby="form-dialog-title"
             classes={{ paper : classes.dialogPaper}} >
-              <Time/>
-            {/* <DialogTitle id="form-dialog-title">reserve</DialogTitle>
-            <DialogContent>
-            <DialogContentText>
-               
-                
-            </DialogContentText>
+              <Time id={idcar}/>
            
-            <div className="App">
-        <label htmlFor="date">Start Date</label>
-          
-          <input
-          type="date"
-          id="dateDebut"
-            onChange={date => setStartDate(date)}
-            onChange={handleChange}
-            value={values.dateDebut} />
-         <label htmlFor="date">End Date:</label>
-        <input
-          type="date"
-          id="dateFin"
-          min={format(endDate, "MMMM do, yyyy H:mma")}
-          onChange={date => setendDate(date)} 
-          onChange={handleChange}
-          value={values.dateFin}/> 
-          </div>
-          <TextField
-                    autoFocus
-                    margin="dense"
-                    id="addressMail"
-                    label="address mail"
-
-                    fullWidth
-                    onChange={handleChange}
-                    value={values.addressMail}
-                />
-                <TextField
-                    autoFocus
-                    margin="dense"
-                    
-                    fullWidth
-                    
-                    
-                />
-
-     
-            </DialogContent>
-            <DialogActions>
-            <Button onClick={handleClose1} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={handleClose1, submitValue} color="primary">
-                Reserve
-            </Button>
-            </DialogActions> */}
         </Dialog>
         </Grid>
         </Grid>
-        <Grid item xs={3}style={{backgroundColor:"grey"}}>
+        <Grid item xs={3}
+        className="col-md-5"
+        style={{backgroundColor:"#eeeeee"}}>
         <div className="container-fluid" >
       <div className="row">
         <div className="col-md-3 pt-2">
@@ -372,28 +308,26 @@ const handletime = (value) => {
           <hr />
 
           <Menu
-          style={{backgroundColor:"grey"}}
+          style={{backgroundColor:"#eeeeee"}}
             defaultOpenKeys={["1", "2", "3", "4"]}
             mode="inline"
           >
-            {/* price */}
+            {/* disponibilité */}
             <SubMenu
               key="1"
               title={
                 <span className="h6">
-                  <DollarOutlined /> Price
+                  <DownSquareOutlined /> disponibilité
                 </span>
               }
             >
               <div>
-                <Slider
-                  className="ml-4 mr-4"
-                  tipFormatter={(v) => `$${v}`}
-                  range
-                  value={price}
-                  onChange={handleSlider}
-                  max="4999"
-                />
+              <select id="dis" onChange={handleSlider} value={etat}  style={{width: '100%'}} >
+                    <option value="2">All</option>
+                    <option value="0">reservé</option>
+                    <option value="1">disponible</option>
+                    <option value="3">encours</option>
+                    </select>
               </div>
             </SubMenu>
 

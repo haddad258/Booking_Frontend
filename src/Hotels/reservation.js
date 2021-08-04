@@ -116,7 +116,7 @@ const Addtransport = (props) => {
                     margin="dense"
                     id="dateDebut"
                     label="start from"
-                    
+                    type="date"
                     fullWidth
                     onChange={handleChange}
                     value={values.dateDebut}
@@ -127,8 +127,9 @@ const Addtransport = (props) => {
                     autoFocus
                     margin="dense"
                     id="heuredebut"
-                    label="from"
                     
+                    label="from"
+                    type="time"
                     fullWidth
                     onChange={handleChange}
                     value={values.heuredebut}
@@ -140,6 +141,7 @@ const Addtransport = (props) => {
                     autoFocus
                     margin="dense"
                     id="dateFin"
+                    type="date"
                     label="end"
                     
                     fullWidth
@@ -152,6 +154,7 @@ const Addtransport = (props) => {
                     autoFocus
                     margin="dense"
                     id="heurefin"
+                    type="time"
                     label="to"
                     
                     fullWidth
