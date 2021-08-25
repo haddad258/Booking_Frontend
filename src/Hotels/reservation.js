@@ -1,4 +1,4 @@
-import React ,{useState} from 'react'
+import React ,{useState,useEffect} from 'react'
 import axios from 'axios'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import {
@@ -18,28 +18,13 @@ import {
     ListItemText,
     Card,
   } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import { FormLabel, FormGroup } from '@material-ui/core';
-
-
-
 const Addtransport = (props) => {
-    const {privileges} = props
+    const {room} = props
     const [open1, setOpen1] = React.useState(false);
     
     const [values, setValues] = useState([]);
-    const [state,setState] = React.useState();
-    const [selectedFile, setSelectedFile] = useState();
-	const [isFilePicked, setIsFilePicked] = useState(false);
-      
-    
-      
-      
-    
-     
-     
-        // Request made to the backend api 
-        // Send formData object
+    const [email,setemail] = React.useState();
+ 
         const handleChange = event => {
           setValues({
               ...values,
@@ -47,20 +32,26 @@ const Addtransport = (props) => {
               
           });
         } 
-
+    useEffect(() => {
+        const fetchData = async () => {
+        await axios.get("http://localhost:3002/userInformation").then((res) => {
+        setemail(res.data.email);
+        console.log(res.data.email);
+         });
+         };
+        fetchData();
+          }, []);
         
     const submitValue = async () => {
-      
-       
-       
-
+        values.addressMail=email;
+       values.room=room;
        axios.post("http://localhost:3002/calendar/add", values).then(response => response.status)
             .then((status) => {
                alert(JSON.stringify("success"))
                 if (status == 200) setOpen1(false)
             })
 
-        //alert(JSON.stringify(values, null, 4))
+        alert(JSON.stringify(values, null, 4))
     }
     
       const handleClickOpen1 = () => {
@@ -89,6 +80,8 @@ const Addtransport = (props) => {
              
           </DialogContentText>
           <TextField
+          margin="normal"
+          variant="outlined"
                     autoFocus
                     margin="dense"
                     id="event"
@@ -99,19 +92,11 @@ const Addtransport = (props) => {
                     value={values.event}
                 />  
             
-                <TextField
-                    autoFocus
-                    margin="dense"
-                    id="addressMail"
-                    label="organisator"
-                    
-                    fullWidth
-                    onChange={handleChange}
-                    value={values.addressMail}
-                />
                 <Grid container spacing={3} >
                 <Grid item md={6} xs={12} >
                 <TextField
+                margin="normal"
+                variant="outlined"
                     autoFocus
                     margin="dense"
                     id="dateDebut"
@@ -124,6 +109,8 @@ const Addtransport = (props) => {
                  </Grid>
                  <Grid item md={6} xs={12} >
                  <TextField
+                 margin="normal"
+                 variant="outlined"
                     autoFocus
                     margin="dense"
                     id="heuredebut"
@@ -138,6 +125,8 @@ const Addtransport = (props) => {
        
                 <Grid item md={6} xs={12} >
                 <TextField
+                margin="normal"
+                variant="outlined"
                     autoFocus
                     margin="dense"
                     id="dateFin"
@@ -151,6 +140,8 @@ const Addtransport = (props) => {
                     </Grid>
                      <Grid item md={6} xs={12} >
                  <TextField
+                 margin="normal"
+                 variant="outlined"
                     autoFocus
                     margin="dense"
                     id="heurefin"

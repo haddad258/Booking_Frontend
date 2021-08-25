@@ -1,5 +1,6 @@
-import ThemeOptions from './ThemeOptions';
-
+import ThemeOptions from "./ThemeOptions";
+import userInformation from "./userInformation";
 export default {
-  ThemeOptions
+  ThemeOptions,
+  userInformation,
 };

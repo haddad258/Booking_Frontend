@@ -9,6 +9,9 @@ import {DatePicker } from 'antd';
 import { Menu, Slider, Checkbox, Radio } from "antd";
 import Time from './Time';
 import {
+  MenuFoldOutlined
+} from '@ant-design/icons';
+import {
   DollarOutlined,
   DownSquareOutlined,
   StarOutlined,
@@ -52,7 +55,13 @@ function Equipment() {
   const [color_black, setcolor_black] = useState([]);
   const [categoryIds, setCategoryIds] = useState([]);
   const [star, setStar] = useState("");
-  const [subs, setSubs] = useState([]);
+  const [dispo, setdispo] = useState("");
+  const [disp, setdisp] = useState([  "All",
+  "reservé",
+  "disponible",
+  "encours"
+  
+  ]);
   const [sub, setSub] = useState("");
   const [brands, setBrands] = useState([  "samsung",
   "LG",
@@ -65,7 +74,7 @@ const handleSlider = (value) => {
   // reset
 
   setPrice(value);
-  setStar("");
+  setdispo("");
   setSub("");
   setBrand("");
   setColor("");
@@ -128,7 +137,7 @@ const classes = {
   };
   const handleBrand = (e) => {
     setPrice([0, 0]);
-    setStar("");
+    setdispo("");
     setColor("");
     setBrand(e.target.value);
     setShipping("");
@@ -162,13 +171,32 @@ const classes = {
         {c}
       </Radio>
     ));
-
+    const showdisponibilit= () =>
+    disp.map((d) => (
+      <Radio
+        key={d}
+        value={d}
+        name={d}
+        checked={d === dispo}
+        onChange={handledisp}
+        className="pb-1 pl-4 pr-4"
+      >
+        {d}
+      </Radio>
+    ));
+    const handledisp = (e) => {
+      setStar("");
+      setBrand("");
+      setdispo(e.target.value);
+      setShipping("");
+      
+    };
   const handleColor = (e) => {
     setSub("");
     
     setPrice([0, 0]);
     setCategoryIds([]);
-    setStar("");
+    setdispo("");
     setBrand("");
     setColor(e.target.value);
     setShipping("");
@@ -234,7 +262,7 @@ const classes = {
           <Grid item xs={9}>
           <Grid container spacing={4}>
             {items.map((item)   =>{
-              if((item.brand ==brand)||((item.status != etat))||(item.color ==color)) {  
+              if((item.brand ==brand)||((item.status == dispo))||(item.color ==color)) {  
             return(
           <Grid item xs={12} sm={6} md={4}>
               <Card className="mb-4">
@@ -282,68 +310,43 @@ const classes = {
             </Grid>
             <Grid item xs={3}
             className="col-md-5"
-            style={{backgroundColor:"#eeeeee"}}>
+           >
             <div className="container-fluid" >
           <div className="row">
-            <div className="col-md-3 pt-2">
-              <h4>Filter</h4>
-              <hr />
-    
-              <Menu
-              style={{backgroundColor:"#eeeeee"}}
-                defaultOpenKeys={["1", "2", "3", "4"]}
-                mode="inline"
-              >
-                {/* disponibilité */}
-                <SubMenu
-                  key="1"
-                  title={
-                    <span className="h6">
-                      <DownSquareOutlined /> disponibilité
-                    </span>
-                  }
-                >
-                  <div>
-                  <select id="dis" onChange={handleSlider} value={etat}  style={{width: '100%'}} >
-                        <option value="2">All</option>
-                        <option value="0">reservé</option>
-                        <option value="1">disponible</option>
-                        <option value="3">encours</option>
-                        </select>
-                  </div>
-                </SubMenu>
-    
-    
-                {/* brands */}
-                <SubMenu
-                  key="3"
-                  title={
-                    <span className="h6">
-                      <DownSquareOutlined /> Brands
-                    </span>
-                  }
-                >
-                  <div style={{ maringTop: "-10px" }} className="pr-5">
-                    {showBrands()}
-                  </div>
-                </SubMenu>
-    
-                {/* colors */}
-                <SubMenu
-                  key="4"
-                  title={
-                    <span className="h6">
-                      <DownSquareOutlined /> Colors
-                    </span>
-                  }
-                >
-                  <div style={{ maringTop: "-10px" }} className="pr-5">
-                    {showColors()}
-                  </div>
-                </SubMenu>
-              </Menu>
-            </div>
-    
+          <div style={{ width: 256 }}>
+       
+        
+       <Menu
+         defaultSelectedKeys={['1']}
+         defaultOpenKeys={['sub1','sub2','sub3','sub0']}
+         mode="inline"
+         style={{ backgroundColor: "#f5f5f5" }}
+        
+       >
+         <SubMenu key="sub0" icon={<MenuFoldOutlined />} title="Filtre">
+         
+        
+         <SubMenu key="sub1" icon={<DownSquareOutlined />} title="disponibilité">
+         <div style={{ maringTop: "-10px" }} className="pr-5" >
+               {showdisponibilit()}
+             </div>
+          
+         </SubMenu>
+         <SubMenu key="sub2" icon={<DownSquareOutlined />} title="Couleurs">
+         <div style={{ maringTop: "-10px" }} className="pr-5">
+               {showColors()}
+             </div>
+          
+         </SubMenu>
+         <SubMenu key="sub3" icon={<DownSquareOutlined />} title="Brands">
+         <div style={{ maringTop: "-10px" }} className="pr-5">
+               {showBrands()}
+             </div>
+          
+         </SubMenu>
+         </SubMenu>
+       </Menu>
+     </div>
             
           </div>
         </div>

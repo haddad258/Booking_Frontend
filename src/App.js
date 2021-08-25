@@ -259,7 +259,7 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <BrowserRouter basename="/carolina-react-admin-dashboard-free/">
+        <BrowserRouter basename="/">
           <CssBaseline />
           <ScrollToTop>
             <Routes />

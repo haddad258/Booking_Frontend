@@ -1,25 +1,19 @@
 import React, {Fragment,useState,useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import {Row,Col,Container} from 'reactstrap';
-import {DatePicker } from 'antd';
 import Clock from 'react-live-clock';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import axios from "axios";
-import UpdateIcon from '@material-ui/icons/Update';
 import TimeRangeSlider from 'react-time-range-slider';
-import { time } from 'faker';
-import { Button } from '@material-ui/core';
+
 import Reservation from './reservation';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import StarBorder from '@material-ui/icons/StarBorder';
 
 const API_URL = 'http://localhost:3002/calendar/transport_tools'
 const useStyles = makeStyles((theme) => ({
@@ -246,6 +240,7 @@ const handleChange = event => {
   );
  
 };
+
 useEffect(() => {
   const fetchData = async () => {
     const result = await axios(API_URL+"?date="+`${date}`+"&hours="+`${hours}`+"&id="+`${id}`)
@@ -275,7 +270,7 @@ console.log(id)
         </Col>
                     <Col style={classes.roomName}>
                     <h1 style={{...classes.roomName,textAlign: "right"}}>
-                      <Clock format={'HH:mm:ss'} ticking={true} timezone={'TN/Pacific'} />
+                      <Clock format={'HH:mm:ss'} ticking={true} />
                       </h1>
                     </Col>
                   </Row>

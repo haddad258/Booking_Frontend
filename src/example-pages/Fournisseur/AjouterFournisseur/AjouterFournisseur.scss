@@ -1,0 +1,26 @@
+.contact {
+  display: flex;
+  justify-content: space-between;
+  padding: 34px;
+  border: 1px solid #80c3e8;
+  border-radius: 6px;
+  flex-wrap: wrap;
+  .phone {
+    font-size: 22px;
+  }
+}
+.adresse {
+  display: flex;
+  align-items: center;
+  padding: 34px;
+  border: 1px solid #80c3e8;
+  border-radius: 6px;
+  flex-wrap: wrap;
+}
+.buttons {
+  width: max-content;
+  margin-left: auto;
+  * {
+    margin: 0 10px;
+  }
+}

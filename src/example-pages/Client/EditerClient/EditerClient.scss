@@ -1,0 +1,55 @@
+.contact {
+    display: flex;
+    justify-content: space-between;
+    padding: 34px;
+    border: 1px solid #80c3e8;
+    border-radius: 6px;
+    flex-wrap: wrap;
+    .phone {
+      font-size: 22px;
+    }
+  }
+  .adresse {
+    display: flex;
+    align-items: center;
+    padding: 34px;
+    border: 1px solid #80c3e8;
+    border-radius: 6px;
+    flex-wrap: wrap;
+  }
+  .buttons {
+    width: max-content;
+    margin-left: auto;
+    * {
+      margin: 0 10px;
+    }
+  }
+
+  #particulier {
+    display: none;
+    
+  }
+  .flex1 {
+    display: flex !important;
+  }
+  .infos {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .flex {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+  
+    div {
+      display: flex !important;
+      justify-content: center;
+      align-items: center;
+    }
+    input {
+      margin: 0 10px;
+    }
+  }
+  

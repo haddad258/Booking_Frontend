@@ -10,10 +10,12 @@ const Footer = props => {
   const { footerFixed } = props;
   return (
     <Fragment>
-     
+      
     </Fragment>
   );
 };
 
-
+const mapStateToProps = state => ({
+  footerFixed: state.ThemeOptions.footerFixed
+});
 export default connect(mapStateToProps)(Footer);

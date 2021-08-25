@@ -1,0 +1,65 @@
+.information {
+  padding: 20px;
+
+  .headerInformation {
+    background-color: white;
+    padding: 20px;
+
+    .left {
+      display: flex;
+      * {
+        margin: 10px;
+      }
+      .info {
+        display: flex;
+        align-items: center;
+        margin-top: 4px;
+      }
+    }
+
+    .factures {
+      padding: 40px 60px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      .facture {
+        margin: 20px 10px;
+        h3 {
+          margin: auto;
+          width: max-content;
+        }
+        h5 {
+          color: grey;
+          font-weight: 300;
+        }
+      }
+    }
+  }
+  .tab {
+    flex-wrap: wrap;
+  }
+  .contenu {
+    background-color: white;
+    padding: 20px;
+
+    border-radius: 5px;
+    .last {
+      .cadre {
+        margin: 20px;
+      }
+      .one,
+      .two {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .title {
+        color: #b0b5b9;
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}

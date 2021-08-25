@@ -6,7 +6,10 @@ import { Grid, Card, CardContent,
   CardHeader, Button, Paper } from '@material-ui/core';
 import { format } from "date-fns";
 import {DatePicker } from 'antd';
-import { Menu, Slider, Checkbox, Radio } from "antd";
+import { Menu, Switch, Divider,Radio } from 'antd';
+import {
+  MenuFoldOutlined
+} from '@ant-design/icons';
 import {Row,Col,Container} from 'reactstrap';
 import {
   DollarOutlined,
@@ -14,6 +17,7 @@ import {
   StarOutlined,
 } from "@ant-design/icons";
 import 'antd/dist/antd.css';
+import 'antd/lib/date-picker/style/css'; 
 import Box from '@material-ui/core/Box';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
@@ -61,8 +65,19 @@ function Cars() {
        width: '100%',
         height : '100%'
     }
+    
   
   };
+
+
+    const [collapsed, setcollapsed] = useState(false);
+  
+    
+    const toggleCollapsed = () => {
+      setcollapsed(
+        !collapsed
+      );
+    };
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [price, setPrice] = useState([0, 4999]);
@@ -76,6 +91,14 @@ function Cars() {
   const [brands, setBrands] = useState([  "BMW",
   "peugeot",
   "mercedes",
+  "ferrari",
+  "clio"
+]);
+const [disp, setdisp] = useState([  "All",
+"reservé",
+"disponible",
+"encours"
+
 ]);
 const handleSlider = (e) => {
   
@@ -98,7 +121,7 @@ const handletime = (value) => {
   // reset
   setPrice([0, 0]);
   setdate(value);
-  setStar("");
+  setdispo("");
   setSub("");
   setBrand("");
   setColor("");
@@ -112,10 +135,11 @@ const handletime = (value) => {
     const [items, setItems] = useState([]);
     const [open1, setOpen1] = React.useState(false);
     const [brand, setBrand] = useState("");
+    const [dispo, setdispo] = useState("");
     const [colors, setColors] = useState([
       "Black",
       "red",
-      "gray",
+      "grey",
       "White",
       "blue",
     ]);
@@ -143,12 +167,18 @@ const handletime = (value) => {
     idcar =id
 
 };
-
+const handledisp = (e) => {
+  setStar("");
+  setBrand("");
+  setdispo(e.target.value);
+  setShipping("");
+  
+};
   
   const handleBrand = (e) => {
     setPrice([0, 0]);
     setdate("", "");
-    setStar("");
+    setdispo("");
     setColor("");
     setBrand(e.target.value);
     setShipping("");
@@ -167,7 +197,19 @@ const handletime = (value) => {
         {b}
       </Radio>
     ));
-
+    const showdisponibilit= () =>
+    disp.map((d) => (
+      <Radio
+        key={d}
+        value={d}
+        name={d}
+        checked={d === dispo}
+        onChange={handledisp}
+        className="pb-1 pl-4 pr-4"
+      >
+        {d}
+      </Radio>
+    ));
   // 8. show products based on color
   const showColors = () =>
     colors.map((c) => (
@@ -188,7 +230,7 @@ const handletime = (value) => {
     setdate("", "");
     setPrice([0, 0]);
     setCategoryIds([]);
-    setStar("");
+    setdispo("");
     setBrand("");
     setColor(e.target.value);
     setShipping("");
@@ -252,7 +294,7 @@ const handletime = (value) => {
       <Grid item xs={9}>
       <Grid container spacing={4}>
         {items.map((item)   =>{
-          if((item.brand ==brand)||((item.status != etat))||(item.color ==color)) {  
+          if((item.brand ==brand)||((item.status == dispo))||(item.color ==color)) {  
         return(
       <Grid item xs={12} sm={6} md={4}>
           <Card className="mb-4">
@@ -299,72 +341,46 @@ const handletime = (value) => {
         </Grid>
         </Grid>
         <Grid item xs={3}
-        className="col-md-5"
-        style={{backgroundColor:"#eeeeee"}}>
+       >
         <div className="container-fluid" >
       <div className="row">
-        <div className="col-md-3 pt-2">
-          <h4>Filter</h4>
-          <hr />
-
-          <Menu
-          style={{backgroundColor:"#eeeeee"}}
-            defaultOpenKeys={["1", "2", "3", "4"]}
-            mode="inline"
-          >
-            {/* disponibilité */}
-            <SubMenu
-              key="1"
-              title={
-                <span className="h6">
-                  <DownSquareOutlined /> disponibilité
-                </span>
-              }
-            >
-              <div>
-              <select id="dis" onChange={handleSlider} value={etat}  style={{width: '100%'}} >
-                    <option value="2">All</option>
-                    <option value="0">reservé</option>
-                    <option value="1">disponible</option>
-                    <option value="3">encours</option>
-                    </select>
+      <div style={{ width: 256 }}>
+       
+        
+        <Menu
+          defaultSelectedKeys={['1']}
+          defaultOpenKeys={['sub1','sub2','sub3','sub0']}
+          mode="inline"
+          style={{ backgroundColor: "#f5f5f5" }}
+         
+        >
+          <SubMenu key="sub0" icon={<MenuFoldOutlined />} title="Filtre">
+          
+         
+          <SubMenu key="sub1" icon={<DownSquareOutlined />} title="disponibilité">
+          <div style={{ maringTop: "-10px" }} className="pr-5" >
+                {showdisponibilit()}
               </div>
-            </SubMenu>
-
-
-            {/* brands */}
-            <SubMenu
-              key="3"
-              title={
-                <span className="h6">
-                  <DownSquareOutlined /> Brands
-                </span>
-              }
-            >
-              <div style={{ maringTop: "-10px" }} className="pr-5">
-                {showBrands()}
-              </div>
-            </SubMenu>
-
-            {/* colors */}
-            <SubMenu
-              key="4"
-              title={
-                <span className="h6">
-                  <DownSquareOutlined /> Colors
-                </span>
-              }
-            >
-              <div style={{ maringTop: "-10px" }} className="pr-5">
+           
+          </SubMenu>
+          <SubMenu key="sub2" icon={<DownSquareOutlined />} title="Couleurs">
+          <div style={{ maringTop: "-10px" }} className="pr-5">
                 {showColors()}
               </div>
-            </SubMenu>
-          </Menu>
-        </div>
-
-        
+           
+          </SubMenu>
+          <SubMenu key="sub3" icon={<DownSquareOutlined />} title="Brands">
+          <div style={{ maringTop: "-10px" }} className="pr-5">
+                {showBrands()}
+              </div>
+           
+          </SubMenu>
+          </SubMenu>
+        </Menu>
       </div>
-    </div>
+        </div>
+        </div>
+      
        
       </Grid>
       </Grid>

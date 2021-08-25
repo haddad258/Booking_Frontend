@@ -1,0 +1,21 @@
+.headerContainer {
+  .flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .routeName {
+    padding: 0 10px;
+    font-size: 22px;
+    font-weight: bold;
+  }
+  .subRouteName {
+    font-size: 18px;
+  }
+  .slash {
+    font-size: 18px;
+    font-weight: bold;
+
+    padding: 0 10px;
+  }
+}

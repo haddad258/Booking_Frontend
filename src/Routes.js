@@ -1,46 +1,40 @@
-import React, { Fragment,Component,lazy, Suspense,useState } from 'react';
-import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
-import clsx from 'clsx';
-import { Link } from 'react-router-dom';
+import React, { lazy, Suspense, useState } from "react";
+import { Switch, Route, Redirect, useLocation } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 
-import {
-  Hidden,
-  IconButton,
- 
-  Box,
-  
-  Tooltip
-} from '@material-ui/core';
-import {
-  BrowserRouter as Router,
+import { ThemeProvider } from "@material-ui/styles";
 
-} from 'react-router-dom'
-
-import moment from 'moment'
-import axios from 'axios'
-
-import { AnimatePresence, motion } from 'framer-motion';
-
-import { ThemeProvider } from '@material-ui/styles';
-
-import MuiTheme from './theme';
+import MuiTheme from "./theme";
 
 // Layout Blueprints
 
-import { LeftSidebar, PresentationLayout } from './layout-blueprints';
+import { LeftSidebar, PresentationLayout } from "./layout-blueprints";
+
+// Example Pages
 
 
-// Custom pages
-              // Settings
-const SignInView = lazy(() => import("./views/account/SignIn"));
-const SignUpView = lazy(() => import("./views/account/SignUp"));
-const ForgotPasswordView = lazy(() => import("./views/account/ForgotPassword"));
-const OrdersView = lazy(() => import("./views/account/Orders"));
 
-const NotificationView = lazy(() => import("./views/account/Notification"));
-const MyProfileView = lazy(() => import("./views/account/MyProfile"));
+import Inscription from "example-pages/Insciption/Inscription";
+import ResetPassword from "example-pages/ResetPassword/ResetPassword";
+import NewPassword from "example-pages/NewPassword/NewPassword";
+import Fournisseur from "example-pages/Fournisseur/Fournisseur";
+import AjouterFournisseur from "example-pages/Fournisseur/AjouterFournisseur/AjouterFournisseur";
+import userProfile from "example-pages/userProfile/userProfile";
+import InformationFournisseur from "example-pages/Fournisseur/informationFournisseur/InformationFournisseur";
+import EditerFournisseur from "example-pages/Fournisseur/EditerFournisseur/EditerFournisseur";
+import EditProfile from "example-pages/userProfile/EditProfile/EditProfile";
+import Client from "example-pages/Client/Client";
+
+import { AjouterClient } from "example-pages/Client/AjouterClient/AjouterClient";
+import InformationClient from "example-pages/Client/InformationClient/InformationClient";
+import { EditerClient } from "example-pages/Client/EditerClient/EditerClient";
+import ProduitService from "example-pages/Produit-Service/ProduitService";
+import Ajouter from "example-pages/Produit-Service/Ajouter/Ajouter";
+
+
+const LandingPage = lazy(() => import("./example-pages/LandingPage"));
+
+
 const Forreserved = lazy(() => import('./Settings/ForReserved'));
 const Cart = lazy(() => import('./Cart/Cart'));
 const Galleries = lazy(() => import('./Settings/Galleries'));
@@ -49,6 +43,7 @@ const Acceuil = lazy(() => import('./Acceuil/Acceuil'));
 const Users = lazy(() => import('./Settings/Users'));
 const Transport = lazy(() => import('./Settings/Transport'));
 const Equipmentreservation = lazy(() => import('./Settings/Equipmentreservation'));
+const Calander = lazy(() => import('./Settings/Bigcalander'));
 const Cars = lazy(() => import('./Cars/cars'));
 const Equipment = lazy(() => import('./Equipment/equipment'));
 const Hotels = lazy(() => import('./Hotels/hotel'));
@@ -99,21 +94,29 @@ const Routes  = props => {
             </div>
           }>
           <Switch>
-            <Redirect exact from="/" to="/Acceuil" />
-            <Route path={['/Acceuil']}>
+          <Redirect exact from="/" to="/LandingPage" />
+            <Route path="/inscription">
+              <Inscription />
+            </Route>{" "}
+            <Route path="/resetpassword">
+              <ResetPassword />
+            </Route>
+            <Route path="/new-password/:token">
+              <NewPassword />
+            </Route>
+            <Route path={["/LandingPage"]}>
               <PresentationLayout>
-                <LeftSidebar>
                 <Switch location={location} key={location.pathname}>
                   <motion.div
                     initial="initial"
                     animate="in"
                     exit="out"
                     variants={pageVariants}
-                    transition={pageTransition}>
-                    <Route path="/Acceuil" component={Acceuil} />
+                    transition={pageTransition}
+                  >
+                    <Route path="/LandingPage" component={LandingPage} />
                   </motion.div>
                 </Switch>
-                </LeftSidebar>
               </PresentationLayout>
             </Route>
 
@@ -130,13 +133,15 @@ const Routes  = props => {
                 '/Galleries',
                 '/Users',
                 '/Transport',
-                '/account/profile',
+                '/userProfile',
                 '/account/orders',
                 '/account/signin',
                 '/account/signup',
                 '/account/forgotpassword',
-                '/account/Notification'
-
+                '/account/Notification',
+                '/Acceuil',
+                '/profile/edit-profile',
+                '/Calander'
               ]}>
               <LeftSidebar>
                 <Switch location={location} key={location.pathname}>
@@ -151,7 +156,18 @@ const Routes  = props => {
                       component={Ticket}
                     />
                     
-                    
+                    <Route
+                      path="/Acceuil"
+                      component={Acceuil}
+                    />
+                    <Route
+                      path="/profile/edit-profile'"
+                      component={EditProfile}
+                    />
+                    <Route
+                      path="/userProfile"
+                      component={userProfile}
+                    />
                     
                     {/* custom Routes */}
                     <Route path="/Users" component={Users} />
@@ -163,20 +179,7 @@ const Routes  = props => {
                     <Route path="/Cart" component={Cart} />
                     <Route path="/Forreserved" component={Forreserved} />
                     <Route path="/Galleries" component={Galleries} />
-                    <Route  path="/account/signin" component={SignInView} />
-            <Route  path="/account/signup" component={SignUpView} />
-            <Route
-             
-              path="/account/forgotpassword"
-              component={ForgotPasswordView}
-            />
-            <Route  path="/account/profile" component={MyProfileView} />
-            <Route  path="/account/orders" component={OrdersView} />
-          
-            <Route
-              path="/account/Notification"
-              component={NotificationView}
-            />
+                    <Route path="/Calander" component={Calander}/>
                   </motion.div>
                 </Switch>
               </LeftSidebar>

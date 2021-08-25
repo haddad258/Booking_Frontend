@@ -21,6 +21,23 @@
   .App-intro {
     font-size: large;
   }
+  p {
+
+        text-align: justify;
+  
+      }
+    
+      p span.gauche {
+    
+        float: left;
+    
+      }
+    
+      p span.droite {
+    
+        float: right;
+    
+      }
   
   @keyframes App-logo-spin {
     from { transform: rotate(0deg); }

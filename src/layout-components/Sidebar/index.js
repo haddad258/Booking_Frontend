@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
-
+import { useEffect, useState } from "react";
+import axios from "axios";
 import clsx from 'clsx';
 
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -11,7 +12,7 @@ import SidebarHeader from '../../layout-components/SidebarHeader';
 import SidebarMenu from '../../layout-components/SidebarMenu';
 
 import navItems from './navItems';
-
+import navItemsuser from './navitemsuser';
 import { setSidebarToggleMobile } from '../../reducers/ThemeOptions';
 
 const Sidebar = props => {
@@ -22,12 +23,23 @@ const Sidebar = props => {
 
     sidebarShadow
   } = props;
+  const [userrole, setuserrole] = useState("");
+  useEffect(() => {
+    const fetchData = async () => {
+      await axios.get("http://localhost:3002/role").then((res) => {
+        setuserrole(res.data);
+        console.log(res.data);
+      });
+    };
+    fetchData();
+  }, []);
 
   const closeDrawer = () => setSidebarToggleMobile(!sidebarToggleMobile);
 
   const sidebarMenuContent = (
-    <div>
-      {navItems.map(list => (
+  <div>
+   { <div>
+   {userrole=='ADMIN' && navItems.map(list => (
         <SidebarMenu
           component="div"
           key={list.label}
@@ -35,7 +47,18 @@ const Sidebar = props => {
           title={list.label}
         />
       ))}
-    </div>
+    </div>}
+     {<div>
+     {userrole=='USER'  && navItemsuser.map(list => (
+          <SidebarMenu
+            component="div"
+            key={list.label}
+            pages={list.content}
+            title={list.label}
+          />
+        ))}
+      </div>}
+      </div>
   );
 
   return (

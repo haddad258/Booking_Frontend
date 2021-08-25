@@ -20,8 +20,9 @@ import Reservation from './reservation';
 import Timeline from "./timeline"
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import NativeSelect from '@material-ui/core/NativeSelect';
 import StarBorder from '@material-ui/icons/StarBorder';
-
+import "./style.css"
 const API_URL = 'http://localhost:3002/calendar'
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -73,54 +74,38 @@ function Room() {
     "Novembre:11",
     "Decembre:11",
   ]);
-  const [jours, setjours] = useState([
-    "01",
-    "02",
-    "03",
-    "04",
-    "05",
-    "06",
-    "07",
-    "08",
-    "09",
-    "10",
-    "11",
-    "12",
-    "13",
-    "14",
-    "15",
-    "16",
-    "17",
-    "18",
-    "19",
-    "20",
-    "21",
-    "22",
-    "23",
-    "24",
-    "25",
-    "26",
-    "27",
-    "28",
-    "29",
-    "30",
-  ]);
+ 
   const [times, settimes] = useState([
-    "08:00:00",
-    "09:00:00",
-    "10:00:00",
-    "11:00:00",
-    "12:00:00",
-    "13:00:00",
-    "14:00:00",
-    "15:00:00",
-    "16:00:00",
-    "17:00:00",
-    "18:00:00",
-    "19:00:00",
-    "20:00:00",
+    "08:00",
+    "09:00",
+    "10:00",
+    "11:00",
+    "12:00",
+    "13:00",
+    "14:00",
+    "15:00",
+    "16:00",
+    "17:00",
+    "18:00",
+    "19:00",
+    "20:00",
+    "21:00",
+    "22:00",
+    "23:00",
+   
   ]);
-
+  var getDaysArray = function(year, month) {
+    var monthIndex = month - 1; // 0..11 instead of 1..12
+    var date = new Date(year, monthIndex, 1);
+    var result = [];
+    while (date.getMonth() == monthIndex) {
+      result.push(date.getDate() );
+      date.setDate(date.getDate() + 1);
+    }
+    return result;
+  }
+  const yearn = (new Date()).getFullYear();
+  const years = Array.from(new Array(20),(val, index) => index + yearn);
   var d = new Date();
   var y = d.getFullYear();
   var mm = (d.getMonth()+1);
@@ -128,9 +113,9 @@ function Room() {
   
   if( mm < 10 ){ mm = '0' + mm; }
   if( dd < 10 ){ dd = '0' + dd; }
-  var hours = h + ':' + m + ':' + s
+
   var dat = y+'-'+mm+'-'+dd;
- 
+ var heurss=h + ':' + m + ':' + s;
   var h = d.getHours();
   var m = d.getMinutes();
   var s = d.getSeconds();
@@ -142,6 +127,7 @@ function Room() {
 const [items, setItems] = useState([]);
 const [date, setdate] = useState(dat);
 const [moiss, setmoiss] = useState(mm);
+const [room, setroom] = useState("room1");
 const [year, setyear] = useState(y);
  const classes = {
 
@@ -222,6 +208,12 @@ const change=event =>{
     event.target.value,  
 );
 }
+const changeroom=event =>{
+  console.log("Azhar")
+  setroom(
+    event.target.value,  
+);
+}
 const changes=event =>{
   setyear(
     event.target.value,  
@@ -237,19 +229,20 @@ const handleChange = event => {
   );
  
 };
-useEffect(() => {
-  const fetchData = async () => {
-    const result = await axios(API_URL+"?date="+`${date}`+"&hours="+`${hours}`)
-    
-        setIsLoaded(true);
+const fetchData = async (date,room) => {
+  const result = await axios(API_URL+"?date="+`${date}`+"&hours="+`${hours}`+"&room="+`${room}`)
+  
+      setIsLoaded(true);
 
 setItems(result.data.content);
 
-  };
-  fetchData();
-  
-}, [date])
-console.log(items.x) 
+};
+useEffect(() => {
+
+ 
+   fetchData(date,room);
+}, [date,room])
+//console.log(items.x) 
   return (
 
 
@@ -259,13 +252,22 @@ console.log(items.x)
  
       <Grid>
                      <Row style={classes.header}>
-                    <Col style={classes.flexCenter}>          
+                    <Col style={{...classes.flexCenter,marginInline:350}}>          
         <h1 style={classes.roomName}>Meeting Room </h1>
+        <NativeSelect id="room" onChange={(e)=>changeroom(e)} value={room}  style={{fontSize: 15 }}>
+                    <option value="room1">room1</option>
+                    <option value="room2">room2</option>
+                    <option value="room3">room3</option>
+                    <option value="room4">room4</option>
+                    <option value="room5">room5</option>
+                    <option value="room6">room6</option>
+
+                    </NativeSelect>
         {/* {("1"==="1") && <p>hello </p>} */}
                     </Col>
                     <Col style={classes.roomName}>
                       <h1 style={{textAlign: "right"}}>
-                      <Clock format={'HH:mm:ss'} ticking={true} timezone={'TN/Pacific'} />
+                      <Clock format={'HH:mm:ss'} ticking={true}  />
                       </h1>
                     </Col>
                   </Row>
@@ -275,28 +277,49 @@ console.log(items.x)
                   
                  <Grid >
                       
-                      <Row style={classes.flexCenter}>
+                      <Row style={{...classes.flexCenter,marginInline:250}}>
                        <h1 style={{...classes.userName,margin: "60px"}} >{item.disponible}</h1>
                       </Row>
-                      { (item.disponible==="Reservé")  && <Row style={classes.flexCenter}>
-                      <Grid style={{...classes.flexCenter, paddingHorizontal:40}}>
-                      <Col>
-                     <Row ><h1 style={{...classes.nextBooking , height:22,fontSize: 15 }}>date debut</h1></Row>
-                    <Grid container item xs={12} spacing={1} >
-                     <Grid item md={3} xs={12} style={{backgroundColor:"black"} }> </Grid><Grid item md={3} xs={12}  style={{backgroundColor:"black"} }></Grid><Grid item md={3} xs={12}  style={{backgroundColor:"black"} }></Grid><Grid item md={3} xs={12}  style={{backgroundColor:"black"} }></Grid>
-                     </Grid>
-                     </Col>
-                        </Grid>
+                      { (item.disponible==="Reservé")  && 
+                      <div>
+                        <p><span class="gauche">{item.hd}</span><span class="droite">{item.hf}</span></p>
+                      <Row style={{...classes.flexCenter,paddingHorizontal:50,marginInline:60}}>
+
                       
+                       {item.heurereste.map(heur   =>{
+                         
+                         if((heur<= hours)){
+                          console.log("pf")
+                  return(
+                      <Col>
+                      <Row >
+                       
+                        <Col item md={6} xs={12} style={{backgroundColor:"#BCC0C4",height:14}} h></Col><Col item md={6} xs={12} style={{backgroundColor:"#BCC0C4",height:14}}></Col>
                         
-                      </Row>}
-                      <Row style={{...classes.flexCenter,paddingHorizontal:50}}>
-                        <Col size={25} style={{backgroundColor:"#BCC0C4",height:14}} h></Col><Col size={75} style={{backgroundColor:"white",height:14}}></Col>
                       </Row>
+                      </Col>
+                  )}
+                  else{
+                    return(
+                      <Col>
+                      <Row >
+                       
+                        <Col item md={6} xs={12} style={{backgroundColor:"white",height:14}} h></Col><Col item md={6} xs={12} style={{backgroundColor:"white",height:14}}></Col>
+                        
+                      </Row>
+                      </Col>
+                    )
+
+                  }
+                      })}
+                      </Row>
+                      </div>  
+                     }
+                     
                     </Grid>
                   </Row>
                   <Row style={classes.footer}>
-                    <Col style={{paddingTop:10}}>
+                    <Col style={{paddingTop:10,marginInline:250}}>
                     <Grid style={{textAlign: "center"}}>
                       <Row><h1 style={{...classes.nextBooking , height:22,fontSize: 20 }}> {item.event}  </h1></Row>
                      {(item.disponible==="Reservé")  && <Row><h1 style={{...classes.nextBooking , height:22,fontSize: 20 }}> {item.date} </h1></Row>}
@@ -308,7 +331,7 @@ console.log(items.x)
 
                    
                       <Col >            
-                         <Reservation/>
+                         <Reservation room={room}/>
                       </Col>
                      
                        </Grid>
@@ -327,32 +350,32 @@ console.log(items.x)
                     }
                   
                   >
-                  <ListItem button onClick={handleClick}>
+                  <ListItem button onClick={(e)=>handleClick(e)}>
                   <ListItemText primary="disponibilité de heures pour la date" />
                   <input
                   type="date"
-                  onChange={handleChange}
+                  onChange={(e)=>handleChange(e)}
                   value={date} />
                   {open ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={open} timeout="auto" unmountOnExit>
                 <Grid style={{...classes.flexCenter, paddingHorizontal:40}}>
                    {times.map(time   =>{
-                     console.log(date,item.datedebut,item.datedebut.find(element => (element == date)))
+                    // console.log(date,item.datedebut,item.datedebut.find(element => (element == date)))
                    if(item.datedebut.find(element => (element == date))!=undefined){
                     //console.log(item.to.find(element => element > time),time,(item.from[item.to.findIndex(element => element>= time)].split(/[.:]/))[0],((item.from[item.to.findIndex(element => element>= time)] < (time.split(/[.:]/))[0])&&((item.to.find(element => element >= time)!=undefined))))
                       if(((item.to.find(element => element >= time)!=undefined))&&((item.from[item.to.findIndex(element => element >= time)].split(/[.:]/))[0] <= (time.split(/[.:]/))[0])){
-                        console.log("az")
+                        //console.log("az")
                         return(
                      <Col>
                      <Row ><h1 style={{...classes.nextBooking , height:22,fontSize: 15 }}>{time}</h1></Row>
-                     {(item.to.find(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])!=undefined)&&<Grid container item xs={11} spacing={1} >
-                     {(item.x1[item.to.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]!=0)  &&  <Grid item md={12-item.x1[item.to.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]} xs={12} style={{backgroundColor:"red"} }> </Grid>}{(item.x1[item.to.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]!=0)&&<Grid item md={item.x1[item.to.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]} xs={12}  style={{backgroundColor:bgColor} }></Grid>}{ (item.x1[item.to.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]==0)  &&<Grid item md={12} xs={12} style={{backgroundColor:"red"} }> </Grid>}
+                     {(item.to.find(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])!=undefined)&&<Grid container item xs={12} spacing={1} >
+                     {(item.x1[item.to.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]!=0)  &&  <Grid item md={10-item.x1[item.to.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]} xs={12} style={{backgroundColor:"red"} }> </Grid>}{(item.x1[item.to.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]!=0)&&<Grid item md={item.x1[item.to.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]} xs={12}  style={{backgroundColor:bgColor} }></Grid>}{ (item.x1[item.to.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]==0)  &&<Grid item md={12} xs={12} style={{backgroundColor:"red"} }> </Grid>}
                      </Grid>}
-                     {(item.from.find(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])!=undefined)&&<Grid container item xs={11} spacing={1} >
-                     { (item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]!=0)  &&<Grid item md={12-item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]} xs={12} style={{backgroundColor:bgColor} }> </Grid>}{(item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]!=0)&&<Grid item md={item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]} xs={12}  style={{backgroundColor:"red"} }></Grid>}{ (item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]==0)  &&<Grid item md={item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]} xs={12} style={{backgroundColor:"red"} }> </Grid>}
+                     {(item.from.find(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])!=undefined)&&<Grid container item xs={12} spacing={1} >
+                     { (item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]!=0)  &&<Grid item md={10-item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]} xs={12} style={{backgroundColor:bgColor} }> </Grid>}{(item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]!=0)&&<Grid item md={item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]} xs={12}  style={{backgroundColor:"red"} }></Grid>}{ (item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]==0)  &&<Grid item md={item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]} xs={12} style={{backgroundColor:"red"} }> </Grid>}
                      </Grid>}
-                     {(item.to.find(element => (element.split(/[.:]/))[0] > (time.split(/[.:]/))[0])!=undefined)&&(item.from[item.to.findIndex(element => (element.split(/[.:]/))[0]> (time.split(/[.:]/))[0])]<=(time.split(/[.:]/))[0])&&<Grid container item xs={11} spacing={1} >
+                     {(item.to.find(element => (element.split(/[.:]/))[0] > (time.split(/[.:]/))[0])!=undefined)&&(item.from[item.to.findIndex(element => (element.split(/[.:]/))[0]> (time.split(/[.:]/))[0])]<=(time.split(/[.:]/))[0])&&<Grid container item xs={12} spacing={1} >
                      <Grid item md={6} xs={12} style={{backgroundColor:"red"} }> </Grid><Grid item md={6} xs={12}  style={{backgroundColor:"red"} }></Grid>
                      </Grid>}
                      </Col>)}
@@ -360,7 +383,7 @@ console.log(items.x)
                       return(
                         <Col>
                         <Row ><h1 style={{...classes.nextBooking , height:22,fontSize: 15 }}>{time}</h1></Row>
-                        <Grid container item xs={11} spacing={1} >
+                        <Grid container item xs={12} spacing={1} >
                    <Grid item md={6} xs={12} style={{backgroundColor:bgColor} }> </Grid><Grid item md={6} xs={12}  style={{backgroundColor:bgColor} }></Grid>
                         </Grid>
    
@@ -387,7 +410,7 @@ console.log(items.x)
                     
                    </Grid>
                   </Collapse>
-                  <ListItem button onClick={handleClick1}>
+                  <ListItem button onClick={(e)=>handleClick1(e)}>
                   <ListItemText primary="jours du mois de " />
                   <select id="mois" onChange={change} value={moiss} >
                     <option value="current">select</option>
@@ -409,8 +432,8 @@ console.log(items.x)
                 </ListItem>
                 <Collapse in={open2} timeout="auto" unmountOnExitt>
                 <Grid style={{...classes.flexCenter, paddingHorizontal:40}}>
-                   {jours.map(jour   =>{
-                     console.log(((item.datefin.find(element => (element.split(/[.-]/)[1] >= moiss))!=undefined)&&(item.datedebut[item.datefin.findIndex(element => (element.split(/[.-]/)[2] >= jour))]<= jour)),item.datedebut[item.datefin.findIndex(element => (element.split(/[.-]/)[2] >= jour))],item.datefin.find(element => (element.split(/[.-]/)[2] >= jour)),date,item.datedebut.find(element => (element.split(/[.-]/)[1] == moiss)))
+                   {getDaysArray(2021,moiss).map(jour   =>{
+                    // console.log(((item.datefin.find(element => (element.split(/[.-]/)[1] >= moiss))!=undefined)&&(item.datedebut[item.datefin.findIndex(element => (element.split(/[.-]/)[2] >= jour))]<= jour)),item.datedebut[item.datefin.findIndex(element => (element.split(/[.-]/)[2] >= jour))],item.datefin.find(element => (element.split(/[.-]/)[2] >= jour)),date,item.datedebut.find(element => (element.split(/[.-]/)[1] == moiss)))
                      if(item.datedebut.find(element => (element.split(/[.-]/)[1] == moiss))!=undefined) {
                    if((item.datefin.find(element => (element.split(/[.-]/)[2] == jour)&&(element.split(/[.-]/)[1] == moiss))!=undefined)||(item.datedebut.find(element => (element.split(/[.-]/)[2] == jour)&&(element.split(/[.-]/)[1] == moiss))!=undefined)){
 
@@ -451,31 +474,22 @@ console.log(items.x)
                     
                    </Grid>
                   </Collapse>
-                  <ListItem button onClick={handleClick2}>
+                  <ListItem button onClick={(e)=>handleClick2(e)}>
                   <ListItemText primary="mois de l'année" />
                   <select id="mois" onChange={changes} value={year} >
-                    <option value="2010">2010</option>
-                    <option value="2011">2011</option>
-                    <option value="2012">2012</option>
-                    <option value="2009">2009</option>
-                    <option value="2008">2008</option>
-                    <option value="2013">2013</option>
-                    <option value="2014">2014</option>
-                    <option value="2015">2015</option>
-                    <option value="2016">2016</option>
-                    <option value="2017">2017</option>
-                    <option value="2018">2018</option>
-                    <option value="2019">2019</option>
-                    <option value="2020">2020</option>
-                    <option value="2021">2021</option>
-                    <option value="2022">2022</option>
-                    </select>
+                 
+                    {
+                      years.map((year, index) => {
+                        return <option key={`year${index}`} value={year}>{year}</option>
+                      })
+                    }
+                </select>
                   {open3 ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={open3} timeout="auto" unmountOnExittt>
                 <Grid style={{...classes.flexCenter, paddingHorizontal:40}}>
                    {mois.map(moi   =>{
-                     console.log(date,item.datefin,moi.split(/[.:]/)[1],item.datedebut[item.datefin.findIndex(element => (element.split(/[.-]/)[1] >= moi.split(/[.:]/)[1]))],item.datefin.find(element => (element.split(/[.-]/)[1] >= moi.split(/[.:]/)[1])),(item.datefin.find(element => (element.split(/[.-]/)[1] >= moi.split(/[.:]/)[1]))!=undefined)&&(item.datedebut[item.datefin.findIndex(element => (element.split(/[.-]/)[1] >= moi.split(/[.-]/)[1]))]<= moi.split(/[.:]/)[1]))
+                     //console.log(date,item.datefin,moi.split(/[.:]/)[1],item.datedebut[item.datefin.findIndex(element => (element.split(/[.-]/)[1] >= moi.split(/[.:]/)[1]))],item.datefin.find(element => (element.split(/[.-]/)[1] >= moi.split(/[.:]/)[1])),(item.datefin.find(element => (element.split(/[.-]/)[1] >= moi.split(/[.:]/)[1]))!=undefined)&&(item.datedebut[item.datefin.findIndex(element => (element.split(/[.-]/)[1] >= moi.split(/[.-]/)[1]))]<= moi.split(/[.:]/)[1]))
                      if(item.datedebut.find(element => (element.split(/[.-]/)[0] == year))!=undefined) {
                      if((item.datefin.find(element => (element.split(/[.-]/)[1] == moi.split(/[.:]/)[1])&&(element.split(/[.-]/)[0] == year))!=undefined)||(item.datedebut.find(element => (element.split(/[.-]/)[1] == moi)&&(element.split(/[.-]/)[0] == year))!=undefined)){
                       return(

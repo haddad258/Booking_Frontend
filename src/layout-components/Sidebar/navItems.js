@@ -108,6 +108,11 @@ export default [
         "label": "equipment",
         "description": "equipment reservation",
         "to": "/Equipmentreservation"
+      },
+      {
+        "label": "Calender",
+        "description": "reservation",
+        "to": "/Calander"
       }
 
     ]
