@@ -11,30 +11,12 @@ import MuiTheme from "./theme";
 import { LeftSidebar, PresentationLayout } from "./layout-blueprints";
 
 // Example Pages
-
-
-
 import Inscription from "example-pages/Insciption/Inscription";
 import ResetPassword from "example-pages/ResetPassword/ResetPassword";
 import NewPassword from "example-pages/NewPassword/NewPassword";
-import Fournisseur from "example-pages/Fournisseur/Fournisseur";
-import AjouterFournisseur from "example-pages/Fournisseur/AjouterFournisseur/AjouterFournisseur";
 import userProfile from "example-pages/userProfile/userProfile";
-import InformationFournisseur from "example-pages/Fournisseur/informationFournisseur/InformationFournisseur";
-import EditerFournisseur from "example-pages/Fournisseur/EditerFournisseur/EditerFournisseur";
 import EditProfile from "example-pages/userProfile/EditProfile/EditProfile";
-import Client from "example-pages/Client/Client";
-
-import { AjouterClient } from "example-pages/Client/AjouterClient/AjouterClient";
-import InformationClient from "example-pages/Client/InformationClient/InformationClient";
-import { EditerClient } from "example-pages/Client/EditerClient/EditerClient";
-import ProduitService from "example-pages/Produit-Service/ProduitService";
-import Ajouter from "example-pages/Produit-Service/Ajouter/Ajouter";
-
-
 const LandingPage = lazy(() => import("./example-pages/LandingPage"));
-
-
 const Forreserved = lazy(() => import('./Settings/ForReserved'));
 const Cart = lazy(() => import('./Cart/Cart'));
 const Galleries = lazy(() => import('./Settings/Galleries'));

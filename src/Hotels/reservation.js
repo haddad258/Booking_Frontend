@@ -2,23 +2,19 @@ import React ,{useState,useEffect} from 'react'
 import axios from 'axios'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import {
-    FormControlLabel,
     Dialog,
     DialogActions,
     DialogContent,
     DialogContentText,
     DialogTitle,
-    Checkbox,
-    MenuItem,
     Button,
     Grid,
-    ListItem,
     TextField,
-    FormControl,
-    ListItemText,
-    Card,
   } from '@material-ui/core';
-const Addtransport = (props) => {
+  import cfg from '../../src/cfg';
+  const url = cfg.url;
+  
+const Reservation = (props) => {
     const {room} = props
     const [open1, setOpen1] = React.useState(false);
     
@@ -34,7 +30,7 @@ const Addtransport = (props) => {
         } 
     useEffect(() => {
         const fetchData = async () => {
-        await axios.get("http://localhost:3002/userInformation").then((res) => {
+        await axios.get(url+"userInformation").then((res) => {
         setemail(res.data.email);
         console.log(res.data.email);
          });
@@ -45,7 +41,7 @@ const Addtransport = (props) => {
     const submitValue = async () => {
         values.addressMail=email;
        values.room=room;
-       axios.post("http://localhost:3002/calendar/add", values).then(response => response.status)
+       axios.post(url+"add", values).then(response => response.status)
             .then((status) => {
                alert(JSON.stringify("success"))
                 if (status == 200) setOpen1(false)
@@ -172,4 +168,4 @@ const Addtransport = (props) => {
     )
 }
 
-export default  Addtransport
+export default  Reservation

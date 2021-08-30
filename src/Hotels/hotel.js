@@ -1,64 +1,108 @@
-import React, {Fragment,useState,useEffect} from 'react';
+import React, {useState,useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import {Row,Col,Container} from 'reactstrap';
-import {DatePicker } from 'antd';
+import {Row,Col} from 'reactstrap';
 import Clock from 'react-live-clock';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import axios from "axios";
-import UpdateIcon from '@material-ui/icons/Update';
-import TimeRangeSlider from 'react-time-range-slider';
-import { time } from 'faker';
-import { Button } from '@material-ui/core';
 import Reservation from './reservation';
-import Timeline from "./timeline"
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import NativeSelect from '@material-ui/core/NativeSelect';
-import StarBorder from '@material-ui/icons/StarBorder';
 import "./style.css"
-const API_URL = 'http://localhost:3002/calendar'
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
-  },
-  nested: {
-    paddingLeft: theme.spacing(4),
-  },
-}));
+import cfg from '../../src/cfg';
+const url = cfg.url;
+const API_URL = url+'calendar'
+
 function Room() {
-  const classe = useStyles();
-  const [value, setvalue] = useState({
-        start: "00:00",
-        end: "23:59"
-    });
+  const classes = ({header:{
+      
+    height:80,
+    backgroundColor:"#F0F2F5",
+    
+  },
+   container:{
+    height:350,
+    
+   
+  },
+  footer:{
+    height:150,
+    backgroundColor:"#BCC0C4",
+   
+  },
+  timeLine:{
+    height:150,
+    backgroundColor:"#F0F2F5",
+   
+  },
+ 
+  roomNumber:{
+    height:70,width:"90%",
+    borderRadius: 1,
+    borderStyle: 'dashed',
+    borderWidth: 1,
+    borderColor: 'red',
+  },
+  roomName:{
+    fontSize:24,fontWeight:'bold'
+  },
+  timeNow:{
+    color: "#66bb6a",fontSize:22,fontWeight:'bold',
+  },
+  circle:{
+    backgroundColor:"#FFF",borderRadius:1,
+  },
+  topic: {
+    color: "#FFFFFF",fontSize:24,fontWeight:'bold'
+  },
+  nextBooking: {
+    color: "##212121",fontWeight:'bold'
+  },
+  userName: {
+    color: "#FFFFFF",fontSize:80,fontWeight:'bold'
+  },
+  half:{
+    height:8,margin:2
+  },
+ 
+  close: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+  },
+  flexCenter:{
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  }})
+  const yearn = (new Date()).getFullYear();
+  const years = Array.from(new Array(20),(val, index) => index + yearn);
+  var d = new Date();
+  var y = d.getFullYear();
+  var mm = (d.getMonth()+1);
+  var dd = d.getDate();
+  
+  if( mm < 10 ){ mm = '0' + mm; }
+  if( dd < 10 ){ dd = '0' + dd; }
+
+  var dat = y+'-'+mm+'-'+dd;
+ var heurss=h + ':' + m + ':' + s;
+  var h = d.getHours();
+  var m = d.getMinutes();
+  var s = d.getSeconds();
+  if( h < 10 ){ h = '0' + h; }
+  if( m < 10 ){ m = '0' + m; }
+  if( s < 10 ){ s = '0' + s; }
+  var hours = h + ':' + m + ':' + s
     const [open, setOpen] = useState(true);
-
-  const handleClick = () => {
-    setOpen(!open);
-  };
-  const [open2, setOpen2] = useState(true);
-
-  const handleClick1 = () => {
-    setOpen2(!open2);
-  };
-  const [open3, setOpen3] = useState(true);
-
-  const handleClick2 = () => {
-    setOpen3(!open3);
-  };
-  const [end, setend] = useState("20:00");
-  const [open1, setOpen1] =useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [values, setValues] = useState({});
+    const [open2, setOpen2] = useState(true);
+    const [open3, setOpen3] = useState(true);
+    const [isLoaded, setIsLoaded] = useState(false);
   const [bgColor, setbgcolor] = useState("#43A047");
   const [mois, setmois] = useState([
     "Janvier:01 ",
@@ -94,6 +138,24 @@ function Room() {
     "23:00",
    
   ]);
+  const [items, setItems] = useState([]);
+const [date, setdate] = useState(dat);
+const [moiss, setmoiss] = useState(mm);
+const [room, setroom] = useState("room1");
+const [year, setyear] = useState(y);
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
+  const handleClick1 = () => {
+    setOpen2(!open2);
+  };
+ 
+
+  const handleClick2 = () => {
+    setOpen3(!open3);
+  };
+  
   var getDaysArray = function(year, month) {
     var monthIndex = month - 1; // 0..11 instead of 1..12
     var date = new Date(year, monthIndex, 1);
@@ -104,105 +166,6 @@ function Room() {
     }
     return result;
   }
-  const yearn = (new Date()).getFullYear();
-  const years = Array.from(new Array(20),(val, index) => index + yearn);
-  var d = new Date();
-  var y = d.getFullYear();
-  var mm = (d.getMonth()+1);
-  var dd = d.getDate();
-  
-  if( mm < 10 ){ mm = '0' + mm; }
-  if( dd < 10 ){ dd = '0' + dd; }
-
-  var dat = y+'-'+mm+'-'+dd;
- var heurss=h + ':' + m + ':' + s;
-  var h = d.getHours();
-  var m = d.getMinutes();
-  var s = d.getSeconds();
-  if( h < 10 ){ h = '0' + h; }
-  if( m < 10 ){ m = '0' + m; }
-  if( s < 10 ){ s = '0' + s; }
-  var hours = h + ':' + m + ':' + s
-
-const [items, setItems] = useState([]);
-const [date, setdate] = useState(dat);
-const [moiss, setmoiss] = useState(mm);
-const [room, setroom] = useState("room1");
-const [year, setyear] = useState(y);
- const classes = {
-
-    header:{
-      
-      height:80,
-      backgroundColor:"#F0F2F5",
-      
-    },
-     container:{
-      height:350,
-      
-     
-    },
-    footer:{
-      height:150,
-      backgroundColor:"#BCC0C4",
-     
-    },
-    timeLine:{
-      height:150,
-      backgroundColor:"#F0F2F5",
-     
-    },
-   
-    roomNumber:{
-      height:70,width:"90%",
-      borderRadius: 1,
-      borderStyle: 'dashed',
-      borderWidth: 1,
-      borderColor: 'red',
-    },
-    roomName:{
-      fontSize:24,fontWeight:'bold'
-    },
-    timeNow:{
-      color: "#66bb6a",fontSize:22,fontWeight:'bold',
-    },
-    circle:{
-      backgroundColor:"#FFF",borderRadius:1,
-    },
-    topic: {
-      color: "#FFFFFF",fontSize:24,fontWeight:'bold'
-    },
-    nextBooking: {
-      color: "##212121",fontWeight:'bold'
-    },
-    userName: {
-      color: "#FFFFFF",fontSize:80,fontWeight:'bold'
-    },
-    half:{
-      height:8,margin:2
-    },
-   
-    close: {
-      position: 'absolute',
-      top: 20,
-      right: 20,
-    },
-    flexCenter:{
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    }
-  };
- const changeStartHandler=(time) =>{
-    console.log("Start Handler Called", time);
-};
-
-const timeChangeHandler=(time) =>{
-    setvalue(time);
-}
-const colorChangeHandler=() =>{
-  setbgcolor("#C62828");
-}
 const change=event =>{
   setmoiss(
     event.target.value,  
@@ -219,33 +182,28 @@ const changes=event =>{
     event.target.value,  
 );
 }
-
-const changeCompleteHandler=(time) =>{
-    console.log("Complete Handler Called", time);
-}
 const handleChange = event => {
   setdate(
       event.target.value,  
   );
- 
 };
-const fetchData = async (date,room) => {
+const fetchData = async (date,hours,room) => {
   const result = await axios(API_URL+"?date="+`${date}`+"&hours="+`${hours}`+"&room="+`${room}`)
   
       setIsLoaded(true);
 
 setItems(result.data.content);
-
 };
 useEffect(() => {
-
- 
-   fetchData(date,room);
-}, [date,room])
+   fetchData(date,hours,room);
+   const interval=setInterval(()=>{
+    fetchData(date,hours,room)
+   },10000)
+      
+   return()=>clearInterval(interval)
+}, [date,hours,room])
 //console.log(items.x) 
   return (
-
-
     <Grid style={{width:'100%',height:'100%'}}>
     
        {items.map(item  =>
@@ -286,25 +244,29 @@ useEffect(() => {
                       <Row style={{...classes.flexCenter,paddingHorizontal:50,marginInline:60}}>
 
                       
-                       {item.heurereste.map(heur   =>{
-                         
-                         if((heur<= hours)){
-                          console.log("pf")
+                       {item.heurereste.map((heur,index)   =>{
+                         if((heur <= hours)){
+                          console.log(item.xd[index])
                   return(
                       <Col>
-                      <Row >
+                     
+                      {(item.xd[index] == 0 )&&<Row >
                        
-                        <Col item md={6} xs={12} style={{backgroundColor:"#BCC0C4",height:14}} h></Col><Col item md={6} xs={12} style={{backgroundColor:"#BCC0C4",height:14}}></Col>
-                        
-                      </Row>
+                       <Col item sm={6} xs={6} style={{backgroundColor:"#BCC0C4",height:14}} ></Col><Col item sm={6} xs={6} style={{backgroundColor:"#BCC0C4",height:14}}></Col>
+                      
+                     </Row>}
+                     {(item.xd[index] != 0 )&& <Row >
+                       
+                       <Col item sm={12-item.xd[index]} xs={6} style={{backgroundColor:"green",height:14}} ></Col><Col item sm={item.xd[index]} xs={6} style={{backgroundColor:"white",height:14}}></Col>
+                      
+                     </Row>}
                       </Col>
                   )}
                   else{
                     return(
                       <Col>
                       <Row >
-                       
-                        <Col item md={6} xs={12} style={{backgroundColor:"white",height:14}} h></Col><Col item md={6} xs={12} style={{backgroundColor:"white",height:14}}></Col>
+                        <Col item sm={6} xs={6} style={{backgroundColor:"white",height:14}} ></Col><Col item sm={6} xs={6} style={{backgroundColor:"white",height:14}}></Col>
                         
                       </Row>
                       </Col>
@@ -322,7 +284,7 @@ useEffect(() => {
                     <Col style={{paddingTop:10,marginInline:250}}>
                     <Grid style={{textAlign: "center"}}>
                       <Row><h1 style={{...classes.nextBooking , height:22,fontSize: 20 }}> {item.event}  </h1></Row>
-                     {(item.disponible==="Reservé")  && <Row><h1 style={{...classes.nextBooking , height:22,fontSize: 20 }}> {item.date} </h1></Row>}
+                     {/* {(item.disponible==="Reservé")  && <Row><h1 style={{...classes.nextBooking , height:22,fontSize: 20 }}> {item.date} </h1></Row>} */}
                     </Grid>
                     </Col>
                     <Col>
@@ -412,7 +374,7 @@ useEffect(() => {
                   </Collapse>
                   <ListItem button onClick={(e)=>handleClick1(e)}>
                   <ListItemText primary="jours du mois de " />
-                  <select id="mois" onChange={change} value={moiss} >
+                  <select id="mois" onChange={(e)=>change(e)} value={moiss} >
                     <option value="current">select</option>
                     <option value="02">Fevrier</option>
                     <option value="03">Mars</option>
@@ -476,7 +438,7 @@ useEffect(() => {
                   </Collapse>
                   <ListItem button onClick={(e)=>handleClick2(e)}>
                   <ListItemText primary="mois de l'année" />
-                  <select id="mois" onChange={changes} value={year} >
+                  <select id="mois" onChange={(e)=>changes(e)} value={year} >
                  
                     {
                       years.map((year, index) => {
