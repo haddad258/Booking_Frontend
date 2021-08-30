@@ -14,9 +14,8 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import "./style.css"
-import cfg from '../../src/cfg';
-const url = cfg.url;
-const API_URL = url+'calendar'
+const API_URL = require('../../src/cfg')()+'calendar'
+
 
 function Room() {
   const classes = ({header:{
@@ -257,7 +256,7 @@ useEffect(() => {
                      </Row>}
                      {(item.xd[index] != 0 )&& <Row >
                        
-                       <Col item sm={12-item.xd[index]} xs={6} style={{backgroundColor:"green",height:14}} ></Col><Col item sm={item.xd[index]} xs={6} style={{backgroundColor:"white",height:14}}></Col>
+                       <Col item md={11-item.xd[index]} xs={12} style={{backgroundColor:"#BCC0C4",height:14}} ></Col><Col item md={item.xd[index]} xs={12} style={{backgroundColor:"white",height:14}}></Col>
                       
                      </Row>}
                       </Col>
@@ -394,10 +393,9 @@ useEffect(() => {
                 </ListItem>
                 <Collapse in={open2} timeout="auto" unmountOnExitt>
                 <Grid style={{...classes.flexCenter, paddingHorizontal:40}}>
-                   {getDaysArray(2021,moiss).map(jour   =>{
-                    // console.log(((item.datefin.find(element => (element.split(/[.-]/)[1] >= moiss))!=undefined)&&(item.datedebut[item.datefin.findIndex(element => (element.split(/[.-]/)[2] >= jour))]<= jour)),item.datedebut[item.datefin.findIndex(element => (element.split(/[.-]/)[2] >= jour))],item.datefin.find(element => (element.split(/[.-]/)[2] >= jour)),date,item.datedebut.find(element => (element.split(/[.-]/)[1] == moiss)))
-                     if(item.datedebut.find(element => (element.split(/[.-]/)[1] == moiss))!=undefined) {
-                   if((item.datefin.find(element => (element.split(/[.-]/)[2] == jour)&&(element.split(/[.-]/)[1] == moiss))!=undefined)||(item.datedebut.find(element => (element.split(/[.-]/)[2] == jour)&&(element.split(/[.-]/)[1] == moiss))!=undefined)){
+                   {getDaysArray(y,moiss).map(jour   =>{
+                    console.log(item.datefin[item.datedebut.findIndex(element => (element == y+'-'+moiss+'-'+jour))],(item.datedebut.find(element => (element <= y+'-'+moiss+'-'+jour))),(item.datedebut.find(element => (element <= y+'-'+moiss+'-'+jour))!=undefined),(item.datefin[item.datedebut.findIndex(element => (element == y+'-'+moiss+'-'+jour))]>= y+'-'+moiss+'-'+jour) )
+                   if(item.datetimeline.find(element => ((element.split(/[,]/)[0] <= y+'-'+moiss+'-'+jour)&&(element.split(/[.,]/)[1]>= y+'-'+moiss+'-'+jour)))){
 
                         return(
                      <Col>
@@ -418,19 +416,8 @@ useEffect(() => {
                       )
 
                     }}
-                    else{
-                      return(
-                        <Col>
-                        <Row ><h1 style={{...classes.nextBooking , height:22,fontSize: 15 }}>{jour}</h1></Row>
-                        <Grid container item xs={11} spacing={1} >
-                   <Grid item md={6} xs={12} style={{backgroundColor:bgColor} }> </Grid><Grid item md={6} xs={12}  style={{backgroundColor:bgColor} }></Grid>
-                        </Grid>
-   
-                        </Col>  
-                      )
-
-                    }
-                  }
+                    
+                  
      
                     )}
                     

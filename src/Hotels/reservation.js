@@ -11,8 +11,7 @@ import {
     Grid,
     TextField,
   } from '@material-ui/core';
-  import cfg from '../../src/cfg';
-  const url = cfg.url;
+  const url = require('../../src/cfg')();
   
 const Reservation = (props) => {
     const {room} = props
@@ -41,7 +40,7 @@ const Reservation = (props) => {
     const submitValue = async () => {
         values.addressMail=email;
        values.room=room;
-       axios.post(url+"add", values).then(response => response.status)
+       axios.post(url+"calendar/add", values).then(response => response.status)
             .then((status) => {
                alert(JSON.stringify("success"))
                 if (status == 200) setOpen1(false)
