@@ -10,6 +10,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import axios from "axios";
 import Reservation from './reservation';
+import Room1 from './room';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import NativeSelect from '@material-ui/core/NativeSelect';
@@ -211,15 +212,7 @@ useEffect(() => {
                      <Row style={classes.header}>
                     <Col style={{...classes.flexCenter,marginInline:350}}>          
         <h1 style={classes.roomName}>Meeting Room </h1>
-        <NativeSelect id="room" onChange={(e)=>changeroom(e)} value={room}  style={{fontSize: 15 }}>
-                    <option value="room1">room1</option>
-                    <option value="room2">room2</option>
-                    <option value="room3">room3</option>
-                    <option value="room4">room4</option>
-                    <option value="room5">room5</option>
-                    <option value="room6">room6</option>
-
-                    </NativeSelect>
+        <Room1 />
         {/* {("1"==="1") && <p>hello </p>} */}
                     </Col>
                     <Col style={classes.roomName}>
@@ -353,7 +346,7 @@ useEffect(() => {
                     }}
 
                     else if((item.datetimeline.find(element =>( (element.split(/[.,]/)[0] <= date)&&(element.split(/[.,]/)[1] >= date)&&(element.split(/[.,]/)[0] != element.split(/[.,]/)[1] )))!=undefined)) {
-                      console.log("az here 1")
+                      console.log("az here 1",item.from[item.datetimeline.findIndex(element => element.split(/[.,]/)[0] == date)] <= time)
                       if((item.datetimeline.find(element =>( (element.split(/[.,]/)[0] == date)))!=undefined)&&(item.from[item.datetimeline.findIndex(element => element.split(/[.,]/)[0] == date)] <= time)){
                         
                         return(
