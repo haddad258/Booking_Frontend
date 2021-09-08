@@ -16,7 +16,7 @@ const ResetPassword = () => {
     setEmailState(false);
     setSpinnerCheck(true);
     axios
-      .post("http://localhost:4200/api/resetpassword", data)
+      .post("http://localhost:3002/api/resetpassword", data)
       .then(() => {
         setEmailSended(true);
         setSpinnerCheck(false);

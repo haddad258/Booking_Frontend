@@ -16,6 +16,7 @@ import ResetPassword from "example-pages/ResetPassword/ResetPassword";
 import NewPassword from "example-pages/NewPassword/NewPassword";
 import userProfile from "example-pages/userProfile/userProfile";
 import EditProfile from "example-pages/userProfile/EditProfile/EditProfile";
+import Notifications from "example-pages/Notifications";
 const LandingPage = lazy(() => import("./example-pages/LandingPage"));
 const Forreserved = lazy(() => import('./Settings/ForReserved'));
 const Cart = lazy(() => import('./Cart/Cart'));
@@ -29,6 +30,7 @@ const Calander = lazy(() => import('./Settings/Bigcalander'));
 const Cars = lazy(() => import('./Cars/cars'));
 const Equipment = lazy(() => import('./Equipment/equipment'));
 const Hotels = lazy(() => import('./Hotels/hotel'));
+const Calanderuser = lazy(() => import('./Hotels/calendar'));
 const Routes  = props => {
   const toggleSidebarMobile = () => {
     setSidebarToggleMobile(!sidebarToggleMobile);
@@ -76,7 +78,7 @@ const Routes  = props => {
             </div>
           }>
           <Switch>
-          <Redirect exact from="/" to="/LandingPage" />
+          <Redirect exact from="/" to="/Acceuil" />
             <Route path="/inscription">
               <Inscription />
             </Route>{" "}
@@ -116,14 +118,12 @@ const Routes  = props => {
                 '/Users',
                 '/Transport',
                 '/userProfile',
-                '/account/orders',
-                '/account/signin',
-                '/account/signup',
-                '/account/forgotpassword',
                 '/account/Notification',
                 '/Acceuil',
                 '/profile/edit-profile',
-                '/Calander'
+                '/Calander',
+                '/Calander-user',
+                "/inscription"
               ]}>
               <LeftSidebar>
                 <Switch location={location} key={location.pathname}>
@@ -150,6 +150,10 @@ const Routes  = props => {
                       path="/userProfile"
                       component={userProfile}
                     />
+                    <Route
+                      path='/account/Notification'
+                      component={Notifications}
+                    />
                     
                     {/* custom Routes */}
                     <Route path="/Users" component={Users} />
@@ -162,6 +166,7 @@ const Routes  = props => {
                     <Route path="/Forreserved" component={Forreserved} />
                     <Route path="/Galleries" component={Galleries} />
                     <Route path="/Calander" component={Calander}/>
+                    <Route path="/Calander-user" component={Calanderuser}/>
                   </motion.div>
                 </Switch>
               </LeftSidebar>

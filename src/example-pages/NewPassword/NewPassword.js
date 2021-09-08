@@ -17,7 +17,7 @@ const NewPassword = () => {
     const data = { token: token, password: d.password };
     console.log(data);
     axios
-      .post("http://localhost:4200/change-password", data)
+      .post("http://localhost:3002/change-password", data)
       .then(() => {
         setChanged(true);
       })
@@ -28,7 +28,7 @@ const NewPassword = () => {
   useEffect(() => {
     const data = { token: token };
     axios
-      .post("http://localhost:4200/new-password", data)
+      .post("http://localhost:3002/new-password", data)
       .then(() => {
         setVerify(true);
       })

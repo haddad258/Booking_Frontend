@@ -8,6 +8,7 @@ import axios from "axios";
 import { useHistory, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import "./LandingPage.scss";
+
 function LandingPage() {
   const history = useHistory();
   const [errCnx, setErrCnx] = useState(false);

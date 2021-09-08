@@ -80,11 +80,6 @@ export default [
         "label": "ticket",
         "description": "ticket Management.",
         "to": "/Ticket"
-      },
-      {
-        "label": "Calendar",
-        "description": "calendar Management.",
-        "to": "/Calander-user"
       }
     ]
   }

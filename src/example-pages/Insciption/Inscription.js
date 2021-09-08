@@ -1,5 +1,5 @@
 import React, { Fragment, useRef, useState } from "react";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 
 import { Link } from "react-router-dom";
 import { Button, Form, FormGroup, Input, Alert } from "reactstrap";
@@ -17,27 +17,31 @@ function Inscription(props) {
   email.current = watch("email", "");
 
   const [value, setValue] = useState("");
+  const [pasword, setpasword] = useState("");
   const [errCnx, setErrCnx] = useState(false);
   const history = useHistory();
   const [inscrit, setInscrit] = useState(false);
 
   const onSubmit = (data) => {
+    console.log("azhar1")
     if (value) {
       if (isValidPhoneNumber(value)) {
-        let userInput = { ...data, phone: value };
+        let userInput = { ...data, phonePro: value };
         axios
-          .post("http://localhost:4200/api/signup", userInput)
+          .post("http://localhost:3002/api/signup", userInput)
           .then((res) => {
+            console.log(res.userInput)
             setErrCnx(false);
             setInscrit(true);
-            setTimeout(() => {
+            
               history.push({
                 pathname: "/LandingPage",
                 email: userInput.email,
               });
-            }, 3000);
+           
           })
           .catch((err) => {
+            console.log("azhar")
             setErrCnx(true);
           });
       }
@@ -50,39 +54,39 @@ function Inscription(props) {
         <Alert color="danger">L'adresse email existe déja!</Alert>
       ) : null}
       <FormGroup>
-        <Input
-          type="text"
-          name="name"
-          ref={register({ required: "Le nom est obligatoire" })}
+      <Input
+          name="firstName"
+          value={useLocation().firstName}
+          innerRef={register({ required: "Le nom est obligatoire" })}
           placeholder="Nom"
         />
-        {errors.name ? (
+        {errors.firstName ? (
           <Alert className="Alert" color="danger">
-            {errors.name && errors.name.message}
+            {errors.firstName && errors.firstName.message}
           </Alert>
         ) : null}
       </FormGroup>
       <FormGroup>
-        <Input
-          type="text"
-          name="lastname"
-          ref={register({ required: "Le prenom est obligatoire" })}
+      <Input
+          name="lastName"
+          value={useLocation().lastName}
+          innerRef={register({ required: "Le nom est obligatoire" })}
           placeholder="Prenom"
         />
-        {errors.lastname ? (
+        {errors.lastName ? (
           <Alert className="Alert" color="danger">
-            {errors.lastname && errors.lastname.message}
+            {errors.lastName && errors.lastName.message}
           </Alert>
         ) : null}
       </FormGroup>
       <FormGroup>
-        <Input
+      <Input
           name="email"
+          value={useLocation().email}
           innerRef={register({
-            required: "L 'adresse mail est obligatoire",
+            required: "Email is required",
             pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: "Adresse mail non valide",
+              message: "invalid email address",
             },
           })}
           placeholder="Email"
@@ -94,22 +98,6 @@ function Inscription(props) {
         ) : null}
       </FormGroup>
       <FormGroup>
-        <Input
-          name="email_repeat"
-          innerRef={register({
-            validate: (value) =>
-              value === email.current ||
-              "Les adresses email ne correspondent pas ! ",
-          })}
-          placeholder="Confirmez votre adresse mail"
-        />
-        {errors.email_repeat ? (
-          <Alert className="Alert" color="danger">
-            {errors.email_repeat && errors.email_repeat.message}
-          </Alert>
-        ) : null}
-      </FormGroup>
-      <FormGroup>
         <PhoneInput
           placeholder="Enter phone number"
           value={value}
@@ -117,11 +105,11 @@ function Inscription(props) {
           defaultCountry="TN"
          
           className="phone"
-          name="phone"
+          name="phonePro"
         />
-        {errors.phone ? (
+        {errors.phonePro ? (
           <Alert className="Alert" color="danger">
-            {errors.phone && errors.phone.message}
+            {errors.phonePro && errors.phonePro.message}
           </Alert>
         ) : null}
         {value ? (
@@ -140,12 +128,11 @@ function Inscription(props) {
       </FormGroup>
 
       <FormGroup>
-        <Input
+      <Input
           type="password"
           name="password"
-          ref={register({
-            required: "Le mot de passe est obligatoire",
-          })}
+          innerRef={register({ required: "Password is required" })}
+          onChange={setpasword}
           placeholder="Mot de passe"
         />
         {errors.password ? (
@@ -159,8 +146,8 @@ function Inscription(props) {
           type="password"
           name="password_repeat"
           innerRef={register({
-            validate: (value) =>
-              value === password.current ||
+            validate: (pasword) =>
+            pasword === password.current ||
               "Les mots de passe  ne correspondent pas !",
           })}
           placeholder="Confirmez votre mot de passe"
@@ -170,6 +157,7 @@ function Inscription(props) {
             {errors.password_repeat && errors.password_repeat.message}
           </Alert>
         ) : null}
+        
       </FormGroup>
       <Button className="centerButton" color="success">
         Créer un compte

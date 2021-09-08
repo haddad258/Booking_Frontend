@@ -6,6 +6,7 @@ import { ExampleWrapperSimple } from '../../layout-components';
 
 import NotificationsAlertsBasic from '../../example-components/Notifications/NotificationsAlertsBasic';
 export default function Notifications() {
+  
   return (
     <Fragment>
       <PageTitle

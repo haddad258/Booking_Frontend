@@ -72,7 +72,7 @@ function Reser() {
   }})
 const [items, setItems] = useState([]);
 const [isLoaded, setIsLoaded] = useState(false);
-const [room, setroom] = useState("");
+const [room, setroom] = useState("room1");
 
 const changeroom=event =>{
   setroom(
@@ -88,6 +88,7 @@ const fetchData = async () => {
       console.log("azr",result.data.content);
 
 setItems(result.data.content);
+setroom(result.data.content[0].id)
 };
 useEffect(() => {
    fetchData();

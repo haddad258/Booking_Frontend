@@ -13,6 +13,7 @@ import SidebarMenu from '../../layout-components/SidebarMenu';
 
 import navItems from './navItems';
 import navItemsuser from './navitemsuser';
+import navitemsguest from './navItemsguest';
 import { setSidebarToggleMobile } from '../../reducers/ThemeOptions';
 
 const Sidebar = props => {
@@ -38,6 +39,16 @@ const Sidebar = props => {
 
   const sidebarMenuContent = (
   <div>
+    { <div>
+   {userrole=="" && navitemsguest.map(list => (
+        <SidebarMenu
+          component="div"
+          key={list.label}
+          pages={list.content}
+          title={list.label}
+        />
+      ))}
+    </div>}
    { <div>
    {userrole=='ADMIN' && navItems.map(list => (
         <SidebarMenu
