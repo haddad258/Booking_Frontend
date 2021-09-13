@@ -15,10 +15,10 @@ import {
   } from '@material-ui/core';
 
 
-import cfg from '../../../cfg';
+  const url = require('../../../src/cfg')()
 import Champ from './Champ'
 import SelectChamp from './SelectChamp';
-const url = cfg.url;
+
 
  
 

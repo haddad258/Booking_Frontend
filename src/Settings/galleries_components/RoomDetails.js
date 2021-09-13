@@ -13,9 +13,9 @@ import {
 
 
 
-import cfg from '../../cfg';
+  const url = require('../../../src/cfg')()
 import RoomBookings from './RoomBookings';
-const url = cfg.url;
+
 const RoomDetails = (props) => {
     const {room} = props
     const [open1, setOpen] = useState(false);

@@ -9,7 +9,7 @@ import {
 import List from "./forReserved_components/global_components/List"
 import cfg from '../../src/cfg'; 
 
-const url = cfg.url + "common/";
+const url = require('../../../src/cfg')()
 const buildingsURL = axios.get(url + "buildings/");
 const zonesURL = axios.get(url + "zones/");
 const floorsURL = axios.get(url + "floors/");

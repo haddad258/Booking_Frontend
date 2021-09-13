@@ -6,7 +6,7 @@ import { Button, Input, Alert } from "reactstrap";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Spinner } from "reactstrap";
-
+const url = require('../../../cfg')()
 const ResetPassword = () => {
   const { register, handleSubmit, errors } = useForm();
   const [emailState, setEmailState] = useState(false);
@@ -16,7 +16,7 @@ const ResetPassword = () => {
     setEmailState(false);
     setSpinnerCheck(true);
     axios
-      .post("http://localhost:3002/api/resetpassword", data)
+      .post(url+"resetpassword", data)
       .then(() => {
         setEmailSended(true);
         setSpinnerCheck(false);

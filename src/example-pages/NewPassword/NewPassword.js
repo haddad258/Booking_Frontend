@@ -5,6 +5,7 @@ import "./NewPassword.scss";
 import { Button, Input, Alert, FormGroup } from "reactstrap";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
+const url = require('../../../cfg')()
 
 const NewPassword = () => {
   const { register, handleSubmit, errors, watch } = useForm();
@@ -17,7 +18,7 @@ const NewPassword = () => {
     const data = { token: token, password: d.password };
     console.log(data);
     axios
-      .post("http://localhost:3002/change-password", data)
+      .post(url+"change-password", data)
       .then(() => {
         setChanged(true);
       })
@@ -28,7 +29,7 @@ const NewPassword = () => {
   useEffect(() => {
     const data = { token: token };
     axios
-      .post("http://localhost:3002/new-password", data)
+      .post(url+"new-password", data)
       .then(() => {
         setVerify(true);
       })

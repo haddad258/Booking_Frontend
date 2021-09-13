@@ -7,12 +7,13 @@ import PhoneIcon from "@material-ui/icons/Phone";
 import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import axios from "axios";
 import { Link } from "react-router-dom";
+const url = require('../../../src/cfg')()
 const UserProfile = (props) => {
   const [userInformation, setUserInformation] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
-      await axios.get("http://localhost:3002/userInformation").then((res) => {
+      await axios.get(url+"userInformation").then((res) => {
         setUserInformation(res.data);
         console.log(res.data);
       });

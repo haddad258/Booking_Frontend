@@ -9,6 +9,7 @@ import { Toast, ToastBody, ToastHeader, Spinner } from "reactstrap";
 
 import "./Inscription.scss";
 import axios from "axios";
+const url = require('../../../src/cfg')()
 function Inscription(props) {
   const { register, handleSubmit, errors, watch } = useForm();
   const password = useRef({});
@@ -28,7 +29,7 @@ function Inscription(props) {
       if (isValidPhoneNumber(value)) {
         let userInput = { ...data, phonePro: value };
         axios
-          .post("http://localhost:3002/api/signup", userInput)
+          .post(url+"api/signup", userInput)
           .then((res) => {
             console.log(res.userInput)
             setErrCnx(false);

@@ -20,7 +20,8 @@ import {
   } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { FormLabel, FormGroup } from '@material-ui/core';
-const API_URL = 'http://localhost:3002/booking/view/'
+const url = require('../../../src/cfg')()
+const API_URL = url+'booking/view/'
 
 
 const Display = (props) => {

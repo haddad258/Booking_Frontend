@@ -14,11 +14,10 @@ import {
     Grid
   } from '@material-ui/core';
 
-
-import cfg from '../../../cfg';
+  const urll = require('../../../src/cfg')()
 import Champ from './Champ'
 import SelectChamp from './SelectChamp';
-const url = cfg.url + "/forResrvation/add/home";
+const url = urll + "/forResrvation/add/home";
 
  
 

@@ -14,7 +14,7 @@ function MyCalendar  () {
   const [userInformation, setUserInformation] = useState({});
   useEffect(() => {
     const fetchData = async () => {
-      await axios.get("http://localhost:3002/userInformation").then((res) => {
+      await axios.get(url+"userInformation").then((res) => {
         setUserInformation(res.data);
         console.log(res.data);
       });

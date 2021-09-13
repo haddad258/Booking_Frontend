@@ -5,10 +5,10 @@ import {
     Grid,Paper,Card, CardContent, Button, Container,TextField
   } from '@material-ui/core';
 
-import cfg from '../../src/cfg'; 
+
 import RoomsGallery from "./galleries_components/RoomsGallery";
 
-const url = cfg.url + "common/";
+const url = require('../../../src/cfg')()
 const buildingsURL = axios.get(url + "buildings/");
 const zonesURL = axios.get(url + "zones/");
 const floorsURL = axios.get(url + "floors/");

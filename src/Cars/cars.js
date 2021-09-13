@@ -39,9 +39,9 @@ import {
   import { PageTitle } from '../layout-components';
   import { makeStyles } from "@material-ui/core/styles";
   import Time from './Time';
-
-const API_URL = 'http://localhost:3002/forResrvation/list/transport_tools'
-const API_URL2 = 'http://localhost:3002/forResrvation/listDispo/transport_tools'
+  const url = require('../../../src/cfg')()
+  const API_URL = url+'forResrvation/list/transport_tools'
+const API_URL2 = url+'booking/create'
 
 const { SubMenu, ItemGroup } = Menu;
 function Cars() {
@@ -100,6 +100,7 @@ const [disp, setdisp] = useState([  "All",
 "encours"
 
 ]);
+
 const handleSlider = (e) => {
   
 
@@ -255,7 +256,7 @@ const handledisp = (e) => {
       
        
 
-       axios.post('http://localhost:3002/booking/create', values).then(response => response.status)
+       axios.post(API_URL2, values).then(response => response.status)
             .then((status) => {
               
                 if (status == 200) setOpen1(false)
@@ -335,7 +336,7 @@ const handledisp = (e) => {
             onClose={handleClose1}
             aria-labelledby="form-dialog-title"
             classes={{ paper : classes.dialogPaper}} >
-              <Time id={idcar}/>
+              <Time id={idcar} />
            
         </Dialog>
         </Grid>

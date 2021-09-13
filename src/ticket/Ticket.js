@@ -21,10 +21,8 @@ import {
     ListItemText,
    
   } from '@material-ui/core';
-const API_URL = 'http://localhost:3002/forResrvation/listDispo/all'
-const API_URL1 = 'http://localhost:3002/forResrvation/listDispo/home'
-
-const API_URL2 = 'http://localhost:3002/forResrvation/listDispo/transport_tools'
+  const url = require('../../../src/cfg')()
+const API_URL = url+'forResrvation/listDispo/all'
 
 
 function Cars(props) {
@@ -54,7 +52,7 @@ function Cars(props) {
       
        
 
-       axios.post('http://localhost:3002/booking/create', values).then(response => response.status)
+       axios.post(url+'booking/create', values).then(response => response.status)
             .then((status) => {
               
                 if (status == 200) setOpen1(false)

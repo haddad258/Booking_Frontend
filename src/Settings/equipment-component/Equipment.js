@@ -17,7 +17,8 @@ import {
 
 import Addequipment from './Addequipment'
 import Edit from './edit'
-const API_URL = 'http://localhost:3002/forResrvation/list/equipment'
+const url = require('../../../src/cfg')()
+const API_URL = url+'forResrvation/list/equipment'
   
 export default function MyCompcaronent() {
     const [error, setError] = useState(null);
@@ -38,7 +39,7 @@ export default function MyCompcaronent() {
     }, [])
     const deleteequipment = (id) => {
       alert("delete")
-      axios.delete('http://localhost:3002/forResrvation/delete/equipment/'+`${id}`).then(response => response.status)
+      axios.delete(url+'forResrvation/delete/equipment/'+`${id}`).then(response => response.status)
       .then((status) => {
           alert("status : " + status)
         //  var element = document.getElementById(id);

@@ -15,7 +15,7 @@ import navItems from './navItems';
 import navItemsuser from './navitemsuser';
 import navitemsguest from './navItemsguest';
 import { setSidebarToggleMobile } from '../../reducers/ThemeOptions';
-
+const url = require('../../../src/cfg')()
 const Sidebar = props => {
   const {
     setSidebarToggleMobile,
@@ -27,7 +27,7 @@ const Sidebar = props => {
   const [userrole, setuserrole] = useState("");
   useEffect(() => {
     const fetchData = async () => {
-      await axios.get("http://localhost:3002/role").then((res) => {
+      await axios.get(url+"role").then((res) => {
         setuserrole(res.data);
         console.log(res.data);
       });

@@ -20,7 +20,7 @@ import {
   } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { FormLabel, FormGroup } from '@material-ui/core';
-
+const url = require('../../../src/cfg')()
 const currencies = [
   {
     value: 'USD',
@@ -86,7 +86,7 @@ URL.createObjectURL(event.target.files[0])
        
        
 
-       axios.post("http://localhost:3002/forResrvation/add/equipment", values).then(response => response.status)
+       axios.post(url+"forResrvation/add/equipment", values).then(response => response.status)
             .then((status) => {
                alert(JSON.stringify({"User Added": values.image}))
                 if (status == 200) setOpen1(false)

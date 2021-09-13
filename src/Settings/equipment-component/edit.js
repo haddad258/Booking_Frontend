@@ -15,10 +15,10 @@ import {
   } from '@material-ui/core';
 
 
-import cfg from '../../cfg';
+  const url = require('../../../src/cfg')()
 
-const url = cfg.url+'forReservation/equipment/';
-const API_URL = 'http://localhost:3002/forResrvation/list/equipment/'
+const API_URL = url+'forReservation/equipment/';
+
  
 
 const Edit = (props) => {
@@ -56,7 +56,7 @@ URL.createObjectURL(event.target.files[0]) )
     const submitValue = async () => {
         alert(JSON.stringify(values))
    
-        axios.put(url + `${id}`, values).then(response => response.status)
+        axios.put(API_URL + `${id}`, values).then(response => response.status)
             .then((status) => {
                 alert(JSON.stringify({"Content" : values, "status ": status}))
                 if (status === 200) handleClose()

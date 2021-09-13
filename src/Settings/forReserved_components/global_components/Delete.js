@@ -14,8 +14,8 @@ import {
   } from '@material-ui/core';
 
 
-import cfg from '../../../cfg';
-const url = cfg.url;
+  const url = require('../../../src/cfg')()
+
 
  
 

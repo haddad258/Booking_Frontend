@@ -18,8 +18,9 @@ import {
 import cfg from '../../cfg';
 import Champ from './Champ'
 import SelectChamp from './SelectChamp';
-const url = cfg.url+'forReservation/transport_tools/';
-const API_URL = 'http://localhost:3002/forResrvation/list/transport_tools/'
+const urll = require('../../../src/cfg')()
+const url = urll+'forReservation/transport_tools/';
+
  
 
 const Edit = (props) => {

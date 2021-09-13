@@ -8,7 +8,7 @@ import axios from "axios";
 import { useHistory, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import "./LandingPage.scss";
-
+const url = require('../../../src/cfg')()
 function LandingPage() {
   const history = useHistory();
   const [errCnx, setErrCnx] = useState(false);
@@ -19,7 +19,7 @@ function LandingPage() {
     setSpinnerCheck(true);
     setErrCnx(false);
     axios
-      .post("http://localhost:3002/api/signin", data)
+      .post(url+"api/signin", data)
       .then((res) => {
         console.log(res.data);
         setSpinnerCheck(false);
@@ -37,7 +37,7 @@ function LandingPage() {
     setSpinnerCheck(true);
 
     axios
-      .post("http://localhost:3002/api/google", response.profileObj)
+      .post(url+"api/google", response.profileObj)
       .then((res) => {
         setSpinnerCheck(false);
         Cookies.set("token", res.data);

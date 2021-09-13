@@ -18,7 +18,8 @@ import {
 import Addtransport from './Addtransport'
 import Edit from './edit'
 import Display from './Display'
-const API_URL = 'http://localhost:3002/forResrvation/list/transport_tools'
+const url = require('../../../src/cfg')()
+const API_URL = url+'forResrvation/list/transport_tools'
   
 export default function MyCompcaronent() {
     const [error, setError] = useState(null);
@@ -41,22 +42,14 @@ export default function MyCompcaronent() {
     const deletecar = (id) => {
       values.type="transport_tools"
       alert("delete")
-      axios.delete('http://localhost:3002/forResrvation/delete/transport_tools/'+`${id}`).then(response => response.status)
+      axios.delete(url+'forResrvation/delete/transport_tools/'+`${id}`).then(response => response.status)
       .then((status) => {
           alert("status : " + status)
         //  var element = document.getElementById(id);
         //  element.parentNode.removeChild(element);
       }).catch(err => alert("status : " + err))
     }
-    const addcar = (id) => {
-      alert("delete")
-      axios.delete('/forResrvation/delete/transport_tools/'+`${id}`).then(response => response.status)
-      .then((status) => {
-          alert("status : " + status)
-        //  var element = document.getElementById(id);
-        //  element.parentNode.removeChild(element);
-      }).catch(err => alert("status : " + err))
-    }
+   
     
     if (error) {
       return <div>Erreur : {error.message}</div>;

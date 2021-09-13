@@ -17,6 +17,7 @@ import {
 
 import axios from "axios";
 import { Link } from "react-router-dom";
+const url = require('../../../src/cfg')()
 export default function HeaderUserbox() {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -32,7 +33,7 @@ export default function HeaderUserbox() {
   
   useEffect(() => {
     const fetchUsers = async () => {
-      await axios.get("http://localhost:3002/userInformation").then((res) => {
+      await axios.get(url+"userInformation").then((res) => {
         setUser({
           name: `${res.data.firstName} ${res.data.lastName}`,
           image: res.data.avatar,

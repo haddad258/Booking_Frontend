@@ -10,8 +10,8 @@ import {
   } from '@material-ui/core';
   import VisibilityIcon from '@material-ui/icons/Visibility';
 
-import cfg from '../../cfg';
-const url = cfg.url;
+  const url = require('../../../src/cfg')()
+
 const RoomBookings = (props) => {
     const {room} = props
     const [open1, setOpen] = useState(false);

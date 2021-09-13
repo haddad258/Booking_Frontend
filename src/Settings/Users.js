@@ -8,7 +8,7 @@ import {
 import NewUsers from "./users_components/NewUsers"
 import ApprovedUsers from "./users_components/ApprovedUsers"
   
-const url = cfg.url;
+const url = require('../../../src/cfg')()
 const requestUsers =url + "users/list";
 const requestPrivileges = url + "privilege/list";
 

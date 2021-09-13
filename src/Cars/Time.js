@@ -14,7 +14,8 @@ import TimeRangeSlider from 'react-time-range-slider';
 import Reservation from './reservation';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-
+const url = require('../../../src/cfg')()
+const API_URL = url+'forResrvation/calendar/transport_tools'
 const API_URL = 'http://localhost:3002/calendar/transport_tools'
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,6 +49,18 @@ function Car(props) {
   const handleClick2 = () => {
     setOpen3(!open3);
   };
+  const yearn = (new Date()).getFullYear();
+const years = Array.from(new Array(20),(val, index) => index + yearn);
+var getDaysArray = function(year, month) {
+  var monthIndex = month - 1; // 0..11 instead of 1..12
+  var date = new Date(year, monthIndex, 1);
+  var result = [];
+  while (date.getMonth() == monthIndex) {
+    result.push(date.getDate() );
+    date.setDate(date.getDate() + 1);
+  }
+  return result;
+}
   const [end, setend] = useState("20:00");
   const [idcar, setidcar] =useState("");
   const [isLoaded, setIsLoaded] = useState(false);
@@ -276,46 +289,61 @@ console.log(id)
                   </Row>
    
                   
+                 
                   <Row style={{...classes.container,backgroundColor:item.color}}>
                   
                  <Grid >
                       
-                      <Row style={classes.flexCenter}>
+                      <Row style={{...classes.flexCenter,marginInline:250}}>
                        <h1 style={{...classes.userName,margin: "60px"}} >{item.disponible}</h1>
                       </Row>
-                      { (item.disponible==="Reservé")  && <Row style={classes.flexCenter}>
-                      <div style={{width:"600px",margin: "80px"}}>
-      <div className="time-range">
-				<b>Start Time:</b> {item.from}  <b>End Time:</b> {hours}
-			</div>
-      <div className="time-range-slider">
-                        <TimeRangeSlider
-                          disabled={false}
-                          format={24}
-                          maxValue={"23:59"}
-                          minValue={"00:00"}
-                          name  ={"time_range"}
-                          onChangeStart={changeStartHandler}
-                          onChangeComplete={changeCompleteHandler}
-                          onChange={timeChangeHandler}
-                          step={15}
-                          value={value}/>
-                
-                        </div>
-                        </div>
+                      { (item.disponible==="Reservé")  && 
+                      <div>
+                        <p><span class="gauche">{item.hd}</span><span class="droite">{item.hf}</span></p>
+                      <Row style={{...classes.flexCenter,paddingHorizontal:50,marginInline:60}}>
+
                       
+                       {item.heurereste.map((heur,index)   =>{
+                         if((heur <= hours)){
+                          console.log(item.xd[index])
+                  return(
+                      <Col>
+                     
+                      {(item.xd[index] == 0 )&&<Row >
+                       
+                       <Col item sm={6} xs={6} style={{backgroundColor:"#BCC0C4",height:14}} ></Col><Col item sm={6} xs={6} style={{backgroundColor:"#BCC0C4",height:14}}></Col>
+                      
+                     </Row>}
+                     {(item.xd[index] != 0 )&& <Row >
+                       
+                       <Col item md={11-item.xd[index]} xs={12} style={{backgroundColor:"#BCC0C4",height:14}} ></Col><Col item md={item.xd[index]} xs={12} style={{backgroundColor:"white",height:14}}></Col>
+                      
+                     </Row>}
+                      </Col>
+                  )}
+                  else{
+                    return(
+                      <Col>
+                      <Row >
+                        <Col item sm={6} xs={6} style={{backgroundColor:"white",height:14}} ></Col><Col item sm={6} xs={6} style={{backgroundColor:"white",height:14}}></Col>
                         
-                      </Row>}
-                      <Row style={{...classes.flexCenter,paddingHorizontal:50}}>
-                        <Col size={25} style={{backgroundColor:"#BCC0C4",height:14}} h></Col><Col size={75} style={{backgroundColor:"white",height:14}}></Col>
                       </Row>
+                      </Col>
+                    )
+
+                  }
+                      })}
+                      </Row>
+                      </div>  
+                     }
+                     
                     </Grid>
                   </Row>
                   <Row style={classes.footer}>
-                    <Col style={{paddingTop:10}}>
+                    <Col style={{paddingTop:10,marginInline:250}}>
                     <Grid style={{textAlign: "center"}}>
                       <Row><h1 style={{...classes.nextBooking , height:22,fontSize: 20 }}> {item.event}  </h1></Row>
-                     {(item.disponible==="Reservé")  && <Row><h1 style={{...classes.nextBooking , height:22,fontSize: 20 }}> {item.date} </h1></Row>}
+                     {/* {(item.disponible==="Reservé")  && <Row><h1 style={{...classes.nextBooking , height:22,fontSize: 20 }}> {item.date} </h1></Row>} */}
                     </Grid>
                     </Col>
                     <Col>
@@ -324,7 +352,7 @@ console.log(id)
 
                    
                       <Col >            
-                         <Reservation id={id}/>
+                         <Reservation />
                       </Col>
                      
                        </Grid>
@@ -343,40 +371,39 @@ console.log(id)
                     }
                   
                   >
-                  <ListItem button onClick={handleClick}>
+                  <ListItem button onClick={(e)=>handleClick(e)}>
                   <ListItemText primary="disponibilité de heures pour la date" />
                   <input
                   type="date"
-                  onChange={handleChange}
+                  onChange={(e)=>handleChange(e)}
                   value={date} />
                   {open ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={open} timeout="auto" unmountOnExit>
                 <Grid style={{...classes.flexCenter, paddingHorizontal:40}}>
                    {times.map(time   =>{
-                     console.log(id,date,item.datedebut,item.datedebut.find(element => (element == date)))
-                   if(item.datedebut.find(element => (element == date))!=undefined){
-                    //console.log(item.to.find(element => element > time),time,(item.from[item.to.findIndex(element => element>= time)].split(/[.:]/))[0],((item.from[item.to.findIndex(element => element>= time)] < (time.split(/[.:]/))[0])&&((item.to.find(element => element >= time)!=undefined))))
-                      if(((item.to.find(element => element >= time)!=undefined))&&((item.from[item.to.findIndex(element => element >= time)].split(/[.:]/))[0] <= (time.split(/[.:]/))[0])){
-                        console.log("az")
-                        return(
+                    // console.log(date,item.datedebut,item.datedebut.find(element => (element == date)))
+                   if(item.datetimeline.find(element =>( (element.split(/[.,]/)[0] <= date)&&(element.split(/[.,]/)[1] >= date)&&(element.split(/[.,]/)[0] == element.split(/[.,]/)[1] )))!=undefined){
+                    if(((item.to.find(element => element >= time)!=undefined))&&((item.from[item.to.findIndex(element => element >= time)].split(/[.:]/))[0] <= (time.split(/[.:]/))[0])){
+                      console.log("bilel1",item.datetimeline.find(element => (element.split(/[.,]/)[0] <= date)))
+                      return(
                      <Col>
-                     <Row ><h1 style={{...classes.nextBooking , height:22,fontSize: 12 }}>{time}</h1></Row>
-                     {(item.to.find(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])!=undefined)&&<Grid container item xs={11} spacing={1} >
-                     {(item.x1[item.to.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]!=0)  &&  <Grid item md={12-item.x1[item.to.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]} xs={12} style={{backgroundColor:"red"} }> </Grid>}{(item.x1[item.to.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]!=0)&&<Grid item md={item.x1[item.to.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]} xs={12}  style={{backgroundColor:bgColor} }></Grid>}{ (item.x1[item.to.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]==0)  &&<Grid item md={12} xs={12} style={{backgroundColor:"red"} }> </Grid>}
+                     <Row ><h1 style={{...classes.nextBooking , height:22,fontSize: 15 }}>{time.split(/[.:]/)[0]+":"+time.split(/[.:]/)[1]}</h1></Row>
+                     {(item.to.find(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])!=undefined)&&<Grid container item xs={12} spacing={1} >
+                     {(item.x1[item.to.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]!=0)  &&  <Grid item md={10-item.x1[item.to.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]} xs={12} style={{backgroundColor:"red"} }> </Grid>}{(item.x1[item.to.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]!=0)&&<Grid item md={item.x1[item.to.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]} xs={12}  style={{backgroundColor:bgColor} }></Grid>}{ (item.x1[item.to.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]==0)  &&<Grid item md={12} xs={12} style={{backgroundColor:"red"} }> </Grid>}
                      </Grid>}
-                     {(item.from.find(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])!=undefined)&&<Grid container item xs={11} spacing={1} >
-                     { (item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]!=0)  &&<Grid item md={12-item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]} xs={12} style={{backgroundColor:bgColor} }> </Grid>}{(item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]!=0)&&<Grid item md={item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]} xs={12}  style={{backgroundColor:"red"} }></Grid>}{ (item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]==0)  &&<Grid item md={item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]} xs={12} style={{backgroundColor:"red"} }> </Grid>}
+                     {(item.from.find(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])!=undefined)&&<Grid container item xs={12} spacing={1} >
+                     { (item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]!=0)  &&<Grid item md={10-item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]} xs={12} style={{backgroundColor:bgColor} }> </Grid>}{(item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]!=0)&&<Grid item md={item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]} xs={12}  style={{backgroundColor:"red"} }></Grid>}{ (item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]==0)  &&<Grid item md={item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]} xs={12} style={{backgroundColor:"red"} }> </Grid>}
                      </Grid>}
-                     {(item.to.find(element => (element.split(/[.:]/))[0] > (time.split(/[.:]/))[0])!=undefined)&&(item.from[item.to.findIndex(element => (element.split(/[.:]/))[0]> (time.split(/[.:]/))[0])]<=(time.split(/[.:]/))[0])&&<Grid container item xs={11} spacing={1} >
+                     {(item.to.find(element => (element.split(/[.:]/))[0] > (time.split(/[.:]/))[0])!=undefined)&&(item.from[item.to.findIndex(element => (element.split(/[.:]/))[0]> (time.split(/[.:]/))[0])]<=(time.split(/[.:]/))[0])&&<Grid container item xs={12} spacing={1} >
                      <Grid item md={6} xs={12} style={{backgroundColor:"red"} }> </Grid><Grid item md={6} xs={12}  style={{backgroundColor:"red"} }></Grid>
                      </Grid>}
                      </Col>)}
                     else{
                       return(
                         <Col>
-                        <Row ><h1 style={{...classes.nextBooking , height:22,fontSize: 12 }}>{time}</h1></Row>
-                        <Grid container item xs={11} spacing={1} >
+                        <Row ><h1 style={{...classes.nextBooking , height:22,fontSize: 15 }}>{time.split(/[.:]/)[0]+":"+time.split(/[.:]/)[1]}</h1></Row>
+                        <Grid container item xs={12} spacing={1} >
                    <Grid item md={6} xs={12} style={{backgroundColor:bgColor} }> </Grid><Grid item md={6} xs={12}  style={{backgroundColor:bgColor} }></Grid>
                         </Grid>
    
@@ -384,10 +411,64 @@ console.log(id)
                       )
 
                     }}
-                    else{
+
+                    else 
+                    {console.log("bilel",item.datetimeline.findIndex(element => (element.split(/[.,]/)[1] == date)),item.to[item.datetimeline.findIndex(element => (element.split(/[.,]/)[1] == date))])
+                      if((item.datetimeline.find(element =>( (element.split(/[.,]/)[0] <= date)&&(element.split(/[.,]/)[1] >= date)&&(element.split(/[.,]/)[0] != element.split(/[.,]/)[1] )))!=undefined)) {
+                      console.log("az here 1",item.from[item.datetimeline.findIndex(element => element.split(/[.,]/)[0] == date)] <= time)
+                      if((item.datetimeline.find(element =>( (element.split(/[.,]/)[0] == date)))!=undefined)&&(item.from[item.datetimeline.findIndex(element => element.split(/[.,]/)[0] == date)] <= time)){ 
+                        return(
+                          <Col>
+                          <Row ><h1 style={{...classes.nextBooking , height:22,fontSize: 15 }}>{time.split(/[.:]/)[0]+":"+time.split(/[.:]/)[1]}</h1></Row>
+    
+                          {(item.from.find(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])!=undefined)&&<Grid container item xs={12} spacing={1} >
+                          { (item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]!=0)  &&<Grid item md={10-item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]} xs={12} style={{backgroundColor:bgColor} }> </Grid>}{(item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]!=0)&&<Grid item md={item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]} xs={12}  style={{backgroundColor:"red"} }></Grid>}{ (item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]==0)  &&<Grid item md={item.x[item.from.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]} xs={12} style={{backgroundColor:"red"} }> </Grid>}
+                          </Grid>}
+                          {(item.from[item.datetimeline.findIndex(element => element.split(/[.,]/)[0] == date)] <= time)&&<Grid container item xs={12} spacing={1} >
+                          <Grid item md={6} xs={12} style={{backgroundColor:"red"} }> </Grid><Grid item md={6} xs={12}  style={{backgroundColor:"red"} }></Grid>
+                          </Grid>}
+                          
+                          </Col>)}
+                          if((item.to[item.datetimeline.findIndex(element => element.split(/[.,]/)[1] == date)] >= time)){ 
+                            console.log("here4")
+                            return(
+                              <Col>
+                              <Row ><h1 style={{...classes.nextBooking , height:22,fontSize: 15 }}>{time.split(/[.:]/)[0]+":"+time.split(/[.:]/)[1]}</h1></Row>
+        
+                              {(item.to.find(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])!=undefined)&&<Grid container item xs={12} spacing={1} >
+                              {(item.x1[item.to.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]!=0)  &&  <Grid item md={10-item.x1[item.to.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]} xs={12} style={{backgroundColor:"red"} }> </Grid>}{(item.x1[item.to.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]!=0)&&<Grid item md={item.x1[item.to.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]} xs={12}  style={{backgroundColor:bgColor} }></Grid>}{ (item.x1[item.to.findIndex(element => (element.split(/[.:]/))[0] == (time.split(/[.:]/))[0])]==0)  &&<Grid item md={12} xs={12} style={{backgroundColor:"red"} }> </Grid>}
+                              </Grid>}
+                              {(item.to[item.datetimeline.findIndex(element => element.split(/[.,]/)[1] == date)] >= time)&&<Grid container item xs={12} spacing={1} >
+                              <Grid item md={6} xs={12} style={{backgroundColor:"red"} }> </Grid><Grid item md={6} xs={12}  style={{backgroundColor:"red"} }></Grid>
+                              </Grid>}
+                              
+                              </Col>)}
+                      else {
+                        console.log((item.from[item.datetimeline.findIndex(element => element.split(/[.,]/)[0] > date)] <= time)&&(item.from[item.datetimeline.findIndex(element => element.split(/[.,]/)[0] < date)] <= time),"azhar here2", (item.datetimeline.find(element =>( (element.split(/[.,]/)[1] == date)))!=undefined)
+                        )
+                        return(
+                          <Col>
+                          <Row ><h1 style={{...classes.nextBooking , height:22,fontSize: 15 }}>{time.split(/[.:]/)[0]+":"+time.split(/[.:]/)[1]}</h1></Row>
+                          {item.datetimeline.find(element =>( (element.split(/[.,]/)[0] < date)&&(element.split(/[.,]/)[1] > date)))&&<Grid container item xs={12} spacing={1} >
+                          <Grid item md={6} xs={12} style={{backgroundColor:"red"} }> </Grid><Grid item md={6} xs={12}  style={{backgroundColor:"red"} }></Grid>
+                          </Grid>}
+                          {(item.to[item.datetimeline.findIndex(element => element.split(/[.,]/)[1] == date)]<= time)||(item.from[item.datetimeline.findIndex(element => element.split(/[.,]/)[0] == date)] > time)
+                            &&<Grid container item xs={11} spacing={1} >
+                     <Grid item md={6} xs={12} style={{backgroundColor:bgColor} }> </Grid><Grid item md={6} xs={12}  style={{backgroundColor:bgColor} }></Grid>
+                          </Grid>}
+                          {(item.datetimeline.find(element =>( (element.split(/[.,]/)[1] == date)))!=undefined)&&<Grid container item xs={12} spacing={1} >
+                          <Grid item md={6} xs={12} style={{backgroundColor:"red"} }> </Grid><Grid item md={6} xs={12}  style={{backgroundColor:"red"} }></Grid>
+                          </Grid>}
+     
+                          </Col>  
+                        )
+  
+                      }
+                     }
+                    else {
                       return(
                         <Col>
-                        <Row ><h1 style={{...classes.nextBooking , height:22,fontSize: 12 }}>{time}</h1></Row>
+                        <Row ><h1 style={{...classes.nextBooking , height:22,fontSize: 15 }}>{time.split(/[.:]/)[0]+":"+time.split(/[.:]/)[1]}</h1></Row>
                         <Grid container item xs={11} spacing={1} >
                    <Grid item md={6} xs={12} style={{backgroundColor:bgColor} }> </Grid><Grid item md={6} xs={12}  style={{backgroundColor:bgColor} }></Grid>
                         </Grid>
@@ -398,14 +479,14 @@ console.log(id)
                     }
                   }
                     
-                    
+                }
                     )}
                     
                    </Grid>
                   </Collapse>
-                  <ListItem button onClick={handleClick1}>
+                  <ListItem button onClick={(e)=>handleClick1(e)}>
                   <ListItemText primary="jours du mois de " />
-                  <select id="mois" onChange={change} value={moiss} >
+                  <select id="mois" onChange={(e)=>change(e)} value={moiss} >
                     <option value="current">select</option>
                     <option value="02">Fevrier</option>
                     <option value="03">Mars</option>
@@ -425,14 +506,13 @@ console.log(id)
                 </ListItem>
                 <Collapse in={open2} timeout="auto" unmountOnExitt>
                 <Grid style={{...classes.flexCenter, paddingHorizontal:40}}>
-                   {jours.map(jour   =>{
-                     console.log(((item.datefin.find(element => (element.split(/[.-]/)[2] >= jour))!=undefined)&&(item.datedebut[item.datefin.findIndex(element => (element.split(/[.-]/)[2] >= jour))]<= jour)),item.datedebut[item.datefin.findIndex(element => (element.split(/[.-]/)[2] >= jour))],item.datefin.find(element => (element.split(/[.-]/)[2] >= jour)),date,item.datedebut.find(element => (element.split(/[.-]/)[1] == moiss)))
-                     if(item.datedebut.find(element => (element.split(/[.-]/)[1] == moiss))!=undefined) {
-                   if((item.datefin.find(element => (element.split(/[.-]/)[2] == jour))!=undefined)||(item.datedebut.find(element => (element.split(/[.-]/)[2] == jour))!=undefined)){
+                   {getDaysArray(y,moiss).map(jour   =>{
+                    console.log((item.datetimeline.find(element => ((element.split(/[,]/)[0] <= y+'-'+moiss+'-'+jour)&&(element.split(/[.,]/)[1]>= y+'-'+moiss+'-'+jour)))!=undefined),(item.datetimeline.find(element => ((element.split(/[,]/)[0] <= y+'-'+moiss+'-'+jour)&&(element.split(/[.,]/)[1] >= y+'-'+moiss+'-'+jour)))) )
+                   if(item.datetimeline.find(element => ((element.split(/[.,]/)[0] <= y+'-'+moiss+'-'+jour)&&(element.split(/[.,]/)[1] >= y+'-'+moiss+'-'+jour)))!=undefined){
 
                         return(
                      <Col>
-                     <Row ><h1 style={{...classes.nextBooking , height:22,fontSize: 11 }}>{jour}</h1></Row>
+                     <Row ><h1 style={{...classes.nextBooking , height:22,fontSize: 15 }}>{jour}</h1></Row>
                     <Grid container item xs={11} spacing={1} >
                      <Grid item md={6} xs={12} style={{backgroundColor:"red"} }> </Grid><Grid item md={6} xs={12}  style={{backgroundColor:"red"} }></Grid>
                      </Grid>
@@ -440,7 +520,7 @@ console.log(id)
                     else{
                       return(
                         <Col>
-                        <Row ><h1 style={{...classes.nextBooking , height:22,fontSize: 11 }}>{jour}</h1></Row>
+                        <Row ><h1 style={{...classes.nextBooking , height:22,fontSize: 15 }}>{jour}</h1></Row>
                         <Grid container item xs={11} spacing={1} >
                    <Grid item md={6} xs={12} style={{backgroundColor:bgColor} }> </Grid><Grid item md={6} xs={12}  style={{backgroundColor:bgColor} }></Grid>
                         </Grid>
@@ -449,54 +529,34 @@ console.log(id)
                       )
 
                     }}
-                    else{
-                      return(
-                        <Col>
-                        <Row ><h1 style={{...classes.nextBooking , height:22,fontSize: 11 }}>{jour}</h1></Row>
-                        <Grid container item xs={11} spacing={1} >
-                   <Grid item md={6} xs={12} style={{backgroundColor:bgColor} }> </Grid><Grid item md={6} xs={12}  style={{backgroundColor:bgColor} }></Grid>
-                        </Grid>
-   
-                        </Col>  
-                      )
-
-                    }
-                  }
+                    
+                  
      
                     )}
                     
                    </Grid>
                   </Collapse>
-                  <ListItem button onClick={handleClick2}>
+                  <ListItem button onClick={(e)=>handleClick2(e)}>
                   <ListItemText primary="mois de l'année" />
-                  <select id="mois" onChange={changes} value={year} >
-                    <option value="2010">2010</option>
-                    <option value="2011">2011</option>
-                    <option value="2012">2012</option>
-                    <option value="2009">2009</option>
-                    <option value="2008">2008</option>
-                    <option value="2013">2013</option>
-                    <option value="2014">2014</option>
-                    <option value="2015">2015</option>
-                    <option value="2016">2016</option>
-                    <option value="2017">2017</option>
-                    <option value="2018">2018</option>
-                    <option value="2019">2019</option>
-                    <option value="2020">2020</option>
-                    <option value="2021">2021</option>
-                    <option value="2022">2022</option>
-                    </select>
+                  <select id="mois" onChange={(e)=>changes(e)} value={year} >
+                 
+                    {
+                      years.map((year, index) => {
+                        return <option key={`year${index}`} value={year}>{year}</option>
+                      })
+                    }
+                </select>
                   {open3 ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={open3} timeout="auto" unmountOnExittt>
                 <Grid style={{...classes.flexCenter, paddingHorizontal:40}}>
                    {mois.map(moi   =>{
-                     console.log(date,item.datefin,moi.split(/[.:]/)[1],item.datedebut[item.datefin.findIndex(element => (element.split(/[.-]/)[1] >= moi.split(/[.:]/)[1]))],item.datefin.find(element => (element.split(/[.-]/)[1] >= moi.split(/[.:]/)[1])),(item.datefin.find(element => (element.split(/[.-]/)[1] >= moi.split(/[.:]/)[1]))!=undefined)&&(item.datedebut[item.datefin.findIndex(element => (element.split(/[.-]/)[1] >= moi.split(/[.-]/)[1]))]<= moi.split(/[.:]/)[1]))
+                     //console.log(date,item.datefin,moi.split(/[.:]/)[1],item.datedebut[item.datefin.findIndex(element => (element.split(/[.-]/)[1] >= moi.split(/[.:]/)[1]))],item.datefin.find(element => (element.split(/[.-]/)[1] >= moi.split(/[.:]/)[1])),(item.datefin.find(element => (element.split(/[.-]/)[1] >= moi.split(/[.:]/)[1]))!=undefined)&&(item.datedebut[item.datefin.findIndex(element => (element.split(/[.-]/)[1] >= moi.split(/[.-]/)[1]))]<= moi.split(/[.:]/)[1]))
                      if(item.datedebut.find(element => (element.split(/[.-]/)[0] == year))!=undefined) {
-                     if((item.datefin.find(element => (element.split(/[.-]/)[1] == moi.split(/[.:]/)[1]))!=undefined)||(item.datedebut.find(element => (element.split(/[.-]/)[1] == moi))!=undefined)){
+                     if((item.datefin.find(element => (element.split(/[.-]/)[1] == moi.split(/[.:]/)[1])&&(element.split(/[.-]/)[0] == year))!=undefined)||(item.datedebut.find(element => (element.split(/[.-]/)[1] == moi.split(/[.:]/)[1])&&(element.split(/[.-]/)[0] == year))!=undefined)){
                       return(
                    <Col>
-                   <Row ><h1 style={{...classes.nextBooking , height:22,fontSize: 10 }}>{moi.split(/[.:]/)[0]}</h1></Row>
+                   <Row ><h1 style={{...classes.nextBooking , height:22,fontSize: 15 }}>{moi.split(/[.:]/)[0]}</h1></Row>
                   <Grid container item xs={11} spacing={1} >
                    <Grid item md={6} xs={12} style={{backgroundColor:"red"} }> </Grid><Grid item md={6} xs={12}  style={{backgroundColor:"red"} }></Grid>
                    </Grid>
@@ -504,7 +564,7 @@ console.log(id)
                   else{
                     return(
                       <Col>
-                      <Row ><h1 style={{...classes.nextBooking , height:22,fontSize: 10 }}>{moi.split(/[.:]/)[0]}</h1></Row>
+                      <Row ><h1 style={{...classes.nextBooking , height:22,fontSize: 15 }}>{moi.split(/[.:]/)[0]}</h1></Row>
                       <Grid container item xs={11} spacing={1} >
                  <Grid item md={6} xs={12} style={{backgroundColor:bgColor} }> </Grid><Grid item md={6} xs={12}  style={{backgroundColor:bgColor} }></Grid>
                       </Grid>
@@ -516,7 +576,7 @@ console.log(id)
                   else{
                     return(
                       <Col>
-                      <Row ><h1 style={{...classes.nextBooking , height:22,fontSize: 10 }}>{moi.split(/[.:]/)[0]}</h1></Row>
+                      <Row ><h1 style={{...classes.nextBooking , height:22,fontSize: 15 }}>{moi.split(/[.:]/)[0]}</h1></Row>
                       <Grid container item xs={11} spacing={1} >
                  <Grid item md={6} xs={12} style={{backgroundColor:bgColor} }> </Grid><Grid item md={6} xs={12}  style={{backgroundColor:bgColor} }></Grid>
                       </Grid>

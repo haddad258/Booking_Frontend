@@ -20,7 +20,7 @@ import {
   } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { FormLabel, FormGroup } from '@material-ui/core';
-
+const url = require('../../../src/cfg')()
 
 
 const Addtransport = (props) => {
@@ -55,7 +55,7 @@ const Addtransport = (props) => {
        
        
 
-       axios.post("http://localhost:3002/calendar/create", values).then(response => response.status)
+       axios.post(url+"calendar/create", values).then(response => response.status)
             .then((status) => {
                alert(JSON.stringify("success"))
                 if (status == 200) setOpen1(false)

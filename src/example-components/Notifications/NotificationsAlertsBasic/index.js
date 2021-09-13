@@ -12,7 +12,7 @@ export default function LivePreviewExample() {
   const [userInformation, setUserInformation] = useState({});
   useEffect(() => {
     const fetchData = async () => {
-      await axios.get("http://localhost:3002/userInformation").then((res) => {
+      await axios.get(API_URL+"userInformation").then((res) => {
         setUserInformation(res.data);
         console.log(res.data);
       });
