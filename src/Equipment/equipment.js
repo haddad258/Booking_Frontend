@@ -38,7 +38,7 @@ import {
   import { sizing } from '@material-ui/system';
   import { PageTitle } from '../layout-components';
   import { makeStyles } from "@material-ui/core/styles";
-  const url = require('../../../src/cfg')()
+  const url = require('../cfg')()
 const API_URL = url+'forResrvation/forResrvation/list/equipment'
 
 

@@ -8,7 +8,7 @@ import axios from "axios";
 import { useHistory, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import "./LandingPage.scss";
-const url = require('../../../src/cfg')()
+const url = require('../../cfg')()
 function LandingPage() {
   const history = useHistory();
   const [errCnx, setErrCnx] = useState(false);

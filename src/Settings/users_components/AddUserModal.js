@@ -19,7 +19,7 @@ import {
   } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 
-const url = require('../../../src/cfg')()
+const url = require('../../cfg')()
 const AddUserModal = (props) => {
     const {privileges} = props
     const [open1, setOpen1] = React.useState(false);

@@ -10,7 +10,7 @@ import {
   } from '@material-ui/core';
   import VisibilityIcon from '@material-ui/icons/Visibility';
 
-  const url = require('../../../src/cfg')()
+  const url = require('../../cfg')()
 
 const RoomBookings = (props) => {
     const {room} = props

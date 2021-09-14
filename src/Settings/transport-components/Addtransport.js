@@ -21,7 +21,7 @@ import {
 import AddIcon from '@material-ui/icons/Add';
 import { FormLabel, FormGroup } from '@material-ui/core';
 
-const url = require('../../../src/cfg')()
+const url = require('../../cfg')()
 
 const Addtransport = (props) => {
     const {privileges} = props

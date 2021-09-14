@@ -13,10 +13,9 @@ import {
     TextField,
     Grid
   } from '@material-ui/core';
-
-  const urll = require('../../../src/cfg')()
 import Champ from './Champ'
 import SelectChamp from './SelectChamp';
+  const urll = require('../../../cfg')()
 const url = urll + "/forResrvation/add/home";
 
  

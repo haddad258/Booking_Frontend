@@ -4,7 +4,7 @@ import moment from 'moment'
 import axios from "axios";
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import event from './event'
-const url = require('../../../src/cfg')()
+const url = require('../../cfg')()
 const API_URL = url+'calendar/settings'
 
 const localizer = momentLocalizer(moment)

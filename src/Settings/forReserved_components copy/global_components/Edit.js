@@ -13,15 +13,10 @@ import {
     TextField,
     Grid
   } from '@material-ui/core';
-
-
-  const url = require('../../../src/cfg')()
 import Champ from './Champ'
 import SelectChamp from './SelectChamp';
 
-
- 
-
+  const url = require('../../../cfg')()
 const Edit = (props) => {
     const {target,id, buildings, zones, floors } = props
     const [open, setOpen] = React.useState(false);

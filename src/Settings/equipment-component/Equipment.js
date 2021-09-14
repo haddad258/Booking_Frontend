@@ -17,7 +17,7 @@ import {
 
 import Addequipment from './Addequipment'
 import Edit from './edit'
-const url = require('../../../src/cfg')()
+const url = require('../../cfg')()
 const API_URL = url+'forResrvation/list/equipment'
   
 export default function MyCompcaronent() {

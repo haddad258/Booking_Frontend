@@ -39,7 +39,7 @@ import {
   import { PageTitle } from '../layout-components';
   import { makeStyles } from "@material-ui/core/styles";
   import Time from './Time';
-  const url = require('../../../src/cfg')()
+  const url = require('../cfg')()
   const API_URL = url+'forResrvation/list/transport_tools'
 const API_URL2 = url+'booking/create'
 

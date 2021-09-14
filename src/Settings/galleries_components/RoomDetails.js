@@ -11,10 +11,10 @@ import {
     InputLabel,
   } from '@material-ui/core';
 
-
-
-  const url = require('../../../src/cfg')()
 import RoomBookings from './RoomBookings';
+
+  const url = require('../../cfg')()
+
 
 const RoomDetails = (props) => {
     const {room} = props

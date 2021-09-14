@@ -7,7 +7,7 @@ import PhoneIcon from "@material-ui/icons/Phone";
 import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import axios from "axios";
 import { Link } from "react-router-dom";
-const url = require('../../../src/cfg')()
+const url = require('../../cfg')()
 const UserProfile = (props) => {
   const [userInformation, setUserInformation] = useState({});
 

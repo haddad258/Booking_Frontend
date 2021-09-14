@@ -18,7 +18,7 @@ import {
 import cfg from '../../cfg';
 import Champ from './Champ'
 import SelectChamp from './SelectChamp';
-const urll = require('../../../src/cfg')()
+const urll = require('../../cfg')()
 const url = urll+'forReservation/transport_tools/';
 
  

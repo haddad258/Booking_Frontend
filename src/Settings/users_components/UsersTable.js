@@ -26,7 +26,7 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 
 import axios from 'axios'
 
-const url = require('../../../src/cfg')()
+const url = require('../../cfg')()
 
 
 const useStyles1 = makeStyles(theme => ({

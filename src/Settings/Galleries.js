@@ -8,7 +8,7 @@ import {
 
 import RoomsGallery from "./galleries_components/RoomsGallery";
 
-const url = require('../../../src/cfg')()
+const url = require('../cfg')()
 const buildingsURL = axios.get(url + "buildings/");
 const zonesURL = axios.get(url + "zones/");
 const floorsURL = axios.get(url + "floors/");

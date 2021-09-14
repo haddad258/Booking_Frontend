@@ -15,7 +15,7 @@ import {
   } from '@material-ui/core';
 
 
-  const url = require('../../../src/cfg')()
+  const url = require('../../cfg')()
 
 const API_URL = url+'forReservation/equipment/';
 

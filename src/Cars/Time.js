@@ -14,9 +14,8 @@ import TimeRangeSlider from 'react-time-range-slider';
 import Reservation from './reservation';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-const url = require('../../../src/cfg')()
+const url = require('../cfg')()
 const API_URL = url+'forResrvation/calendar/transport_tools'
-const API_URL = 'http://localhost:3002/calendar/transport_tools'
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',

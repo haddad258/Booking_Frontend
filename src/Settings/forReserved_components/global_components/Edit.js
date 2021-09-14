@@ -13,11 +13,11 @@ import {
     TextField,
     Grid
   } from '@material-ui/core';
-
-
-  const url = require('../../../src/cfg')()
 import Champ from './Champ'
 import SelectChamp from './SelectChamp';
+
+  const url = require('../../../cfg')()
+
 
 
  

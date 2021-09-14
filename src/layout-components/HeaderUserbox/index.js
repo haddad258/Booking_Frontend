@@ -17,7 +17,7 @@ import {
 
 import axios from "axios";
 import { Link } from "react-router-dom";
-const url = require('../../../src/cfg')()
+const url = require('../../cfg')()
 export default function HeaderUserbox() {
   const [anchorEl, setAnchorEl] = React.useState(null);
 

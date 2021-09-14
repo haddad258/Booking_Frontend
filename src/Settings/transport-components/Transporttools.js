@@ -18,7 +18,7 @@ import {
 import Addtransport from './Addtransport'
 import Edit from './edit'
 import Display from './Display'
-const url = require('../../../src/cfg')()
+const url = require('../../cfg')()
 const API_URL = url+'forResrvation/list/transport_tools'
   
 export default function MyCompcaronent() {

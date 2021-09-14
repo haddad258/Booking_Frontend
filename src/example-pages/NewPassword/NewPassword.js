@@ -5,7 +5,7 @@ import "./NewPassword.scss";
 import { Button, Input, Alert, FormGroup } from "reactstrap";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
-const url = require('../../../cfg')()
+const url = require('../../cfg')()
 
 const NewPassword = () => {
   const { register, handleSubmit, errors, watch } = useForm();

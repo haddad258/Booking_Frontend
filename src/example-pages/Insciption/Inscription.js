@@ -9,7 +9,7 @@ import { Toast, ToastBody, ToastHeader, Spinner } from "reactstrap";
 
 import "./Inscription.scss";
 import axios from "axios";
-const url = require('../../../src/cfg')()
+const url = require('../../cfg')()
 function Inscription(props) {
   const { register, handleSubmit, errors, watch } = useForm();
   const password = useRef({});

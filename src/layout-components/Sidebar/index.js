@@ -15,7 +15,7 @@ import navItems from './navItems';
 import navItemsuser from './navitemsuser';
 import navitemsguest from './navItemsguest';
 import { setSidebarToggleMobile } from '../../reducers/ThemeOptions';
-const url = require('../../../src/cfg')()
+const url = require('../../cfg')()
 const Sidebar = props => {
   const {
     setSidebarToggleMobile,
