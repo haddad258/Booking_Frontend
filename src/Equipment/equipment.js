@@ -39,7 +39,7 @@ import {
   import { PageTitle } from '../layout-components';
   import { makeStyles } from "@material-ui/core/styles";
   const url = require('../cfg')()
-const API_URL = url+'forResrvation/forResrvation/list/equipment'
+const API_URL = url+'forResrvation/list/equipment'
 
 
 const { SubMenu, ItemGroup } = Menu;
@@ -58,10 +58,10 @@ function Equipment() {
   const [categoryIds, setCategoryIds] = useState([]);
   const [star, setStar] = useState("");
   const [dispo, setdispo] = useState("");
-  const [disp, setdisp] = useState([  "All",
-  "reservé",
-  "disponible",
-  "encours"
+  const [disp, setdisp] = useState([  "All:2",
+  "reservé:1",
+  "disponible:0",
+  "encours:1"
   
   ]);
   const [sub, setSub] = useState("");
@@ -176,14 +176,14 @@ const classes = {
     const showdisponibilit= () =>
     disp.map((d) => (
       <Radio
-        key={d}
-        value={d}
-        name={d}
+        key={d.split(/[.:]/)[1]}
+        value={d.split(/[.:]/)[1]}
+        name={d.split(/[.:]/)[1]}
         checked={d === dispo}
         onChange={handledisp}
         className="pb-1 pl-4 pr-4"
       >
-        {d}
+        {d.split(/[.:]/)[0]}
       </Radio>
     ));
     const handledisp = (e) => {

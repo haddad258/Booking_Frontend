@@ -20,8 +20,8 @@ import Reservation from './reservation';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
-
-const API_URL = 'http://localhost:3002/calendar/equipment'
+const url = require('../cfg')()
+const API_URL = url+'calendar/equipment'
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
